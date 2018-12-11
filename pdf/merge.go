@@ -10,7 +10,7 @@ import (
 	"os"
 
 	unicommon "github.com/unidoc/unidoc/common"
-	"github.com/unidoc/unidoc/pdf/core"
+	unicore "github.com/unidoc/unidoc/pdf/core"
 	unipdf "github.com/unidoc/unidoc/pdf/model"
 )
 
@@ -255,7 +255,7 @@ func MergeForms(form, form2 *unipdf.PdfAcroForm, docNum int) (*unipdf.PdfAcroFor
 		form.Fields = form2.Fields
 	} else {
 		field := unipdf.NewPdfField()
-		field.T = core.MakeString(fmt.Sprintf("doc%d", docNum))
+		field.T = unicore.MakeString(fmt.Sprintf("doc%d", docNum))
 		field.Kids = []*unipdf.PdfField{}
 		if form2.Fields != nil {
 			for _, subfield := range *form2.Fields {
