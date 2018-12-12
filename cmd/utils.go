@@ -64,7 +64,7 @@ func parsePageRange(pageRange string) ([]int, error) {
 		pages = append(pages, page)
 	}
 
-	pages = UniqueIntSlice(pages)
+	pages = uniqueIntSlice(pages)
 	sort.Ints(pages)
 
 	return pages, nil
@@ -76,7 +76,7 @@ func removeSpaces(s string) string {
 	})
 }
 
-func UniqueIntSlice(items []int) []int {
+func uniqueIntSlice(items []int) []int {
 	uniq := make([]int, len(items))
 
 	index := 0
