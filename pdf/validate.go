@@ -18,6 +18,7 @@ type PDFInfo struct {
 	Pages   int
 	Size    int64
 	Objects map[string]int
+	Version string
 
 	Encrypted      bool
 	EncryptionAlgo string
@@ -35,17 +36,19 @@ func GetPDFInfo(inputPath string, password string) (*PDFInfo, error) {
 	}
 	info.Size = fileInfo.Size()
 
-	// Open and read input file.
+	// Open input file.
 	f, err := os.Open(inputPath)
 	if err != nil {
 		return nil, err
 	}
 	defer f.Close()
 
+	// Read input file.
 	pdfReader, err := unipdf.NewPdfReader(f)
 	if err != nil {
 		return nil, err
 	}
+	info.Version = pdfReader.PdfVersion().String()
 
 	// Check if encrypted and try to decrypt using the specified password.
 	isEncrypted, err := pdfReader.IsEncrypted()

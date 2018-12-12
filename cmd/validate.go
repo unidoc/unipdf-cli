@@ -34,6 +34,7 @@ var validateCmd = &cobra.Command{
 		fmt.Printf("Name: %s\n", inputFile)
 		fmt.Printf("Size: %d bytes\n", info.Size)
 		fmt.Printf("Pages: %d\n", info.Pages)
+		fmt.Printf("PDF Version: %s\n", info.Version)
 
 		if info.Encrypted {
 			fmt.Printf("Encryption: encrypted with %s algorithm\n", info.EncryptionAlgo)
