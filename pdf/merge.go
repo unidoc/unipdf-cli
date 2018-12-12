@@ -100,9 +100,9 @@ func MergeResources(r, r2 *unipdf.PdfPageResources) (*unipdf.PdfPageResources, e
 	if r.XObject == nil {
 		r.XObject = r2.XObject
 	} else {
-		xobjs := GetDict(r.XObject)
+		xobjs := getDict(r.XObject)
 		if r2.XObject != nil {
-			xobjs2 := GetDict(r2.XObject)
+			xobjs2 := getDict(r2.XObject)
 			for _, key := range xobjs2.Keys() {
 				val := xobjs2.Get(key)
 				xobjs.Set(key, val)
@@ -131,10 +131,10 @@ func MergeResources(r, r2 *unipdf.PdfPageResources) (*unipdf.PdfPageResources, e
 	if r.ExtGState == nil {
 		r.ExtGState = r2.ExtGState
 	} else {
-		extgstates := GetDict(r.ExtGState)
+		extgstates := getDict(r.ExtGState)
 
 		if r2.ExtGState != nil {
-			extgstates2 := GetDict(r2.ExtGState)
+			extgstates2 := getDict(r2.ExtGState)
 			for _, key := range extgstates2.Keys() {
 				val := extgstates2.Get(key)
 				extgstates.Set(key, val)
@@ -145,9 +145,9 @@ func MergeResources(r, r2 *unipdf.PdfPageResources) (*unipdf.PdfPageResources, e
 	if r.Shading == nil {
 		r.Shading = r2.Shading
 	} else {
-		shadings := GetDict(r.Shading)
+		shadings := getDict(r.Shading)
 		if r2.Shading != nil {
-			shadings2 := GetDict(r2.Shading)
+			shadings2 := getDict(r2.Shading)
 			for _, key := range shadings2.Keys() {
 				val := shadings2.Get(key)
 				shadings.Set(key, val)
@@ -158,9 +158,9 @@ func MergeResources(r, r2 *unipdf.PdfPageResources) (*unipdf.PdfPageResources, e
 	if r.Pattern == nil {
 		r.Pattern = r2.Pattern
 	} else {
-		shadings := GetDict(r.Pattern)
+		shadings := getDict(r.Pattern)
 		if r2.Pattern != nil {
-			patterns2 := GetDict(r2.Pattern)
+			patterns2 := getDict(r2.Pattern)
 			for _, key := range patterns2.Keys() {
 				val := patterns2.Get(key)
 				shadings.Set(key, val)
@@ -171,9 +171,9 @@ func MergeResources(r, r2 *unipdf.PdfPageResources) (*unipdf.PdfPageResources, e
 	if r.Font == nil {
 		r.Font = r2.Font
 	} else {
-		fonts := GetDict(r.Font)
+		fonts := getDict(r.Font)
 		if r2.Font != nil {
-			fonts2 := GetDict(r2.Font)
+			fonts2 := getDict(r2.Font)
 			for _, key := range fonts2.Keys() {
 				val := fonts2.Get(key)
 				fonts.Set(key, val)
@@ -184,9 +184,9 @@ func MergeResources(r, r2 *unipdf.PdfPageResources) (*unipdf.PdfPageResources, e
 	if r.ProcSet == nil {
 		r.ProcSet = r2.ProcSet
 	} else {
-		procsets := GetDict(r.ProcSet)
+		procsets := getDict(r.ProcSet)
 		if r2.ProcSet != nil {
-			procsets2 := GetDict(r2.ProcSet)
+			procsets2 := getDict(r2.ProcSet)
 			for _, key := range procsets2.Keys() {
 				val := procsets2.Get(key)
 				procsets.Set(key, val)
@@ -197,9 +197,9 @@ func MergeResources(r, r2 *unipdf.PdfPageResources) (*unipdf.PdfPageResources, e
 	if r.Properties == nil {
 		r.Properties = r2.Properties
 	} else {
-		props := GetDict(r.Properties)
+		props := getDict(r.Properties)
 		if r2.Properties != nil {
-			props2 := GetDict(r2.Properties)
+			props2 := getDict(r2.Properties)
 			for _, key := range props2.Keys() {
 				val := props2.Get(key)
 				props.Set(key, val)

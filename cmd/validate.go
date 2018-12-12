@@ -27,6 +27,7 @@ var validateCmd = &cobra.Command{
 		info, err := pdf.GetPDFInfo(inputFile, password)
 		if err != nil {
 			fmt.Println("Could not validate input file")
+			return
 		}
 
 		// Print basic PDF info
