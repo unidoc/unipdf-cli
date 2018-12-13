@@ -15,7 +15,7 @@ import (
 
 // splitCmd represents the split command
 var splitCmd = &cobra.Command{
-	Use:                   "split [FLAG]... PAGES OUTPUT_FILE",
+	Use:                   "split [FLAG]... INPUT_FILE PAGES OUTPUT_FILE",
 	Short:                 "Split PDF files",
 	Long:                  `A longer description that spans multiple lines and likely contains`,
 	Example:               "this is the example",

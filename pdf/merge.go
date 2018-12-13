@@ -7,7 +7,6 @@ package pdf
 
 import (
 	"fmt"
-	"os"
 
 	unicommon "github.com/unidoc/unidoc/common"
 	unicore "github.com/unidoc/unidoc/pdf/core"
@@ -51,25 +50,13 @@ func MergePdfs(inputPaths []string, outputPath string) error {
 		}
 	}
 
-	// Create output file
-	of, err := os.Create(outputPath)
-	if err != nil {
-		return err
-	}
-	defer of.Close()
-
 	// Set the merged forms object.
 	if forms != nil {
 		w.SetForms(forms)
 	}
 
 	// Write output file.
-	err = w.Write(of)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return writePDF(outputPath, &w, false)
 }
 
 func MergeResources(r, r2 *unipdf.PdfPageResources) (*unipdf.PdfPageResources, error) {
@@ -246,4 +233,19 @@ func MergeForms(form, form2 *unipdf.PdfAcroForm, docNum int) (*unipdf.PdfAcroFor
 	}
 
 	return form, nil
+}
+
+func getDict(obj unicore.PdfObject) *unicore.PdfObjectDictionary {
+	if obj == nil {
+		return nil
+	}
+
+	obj = unicore.TraceToDirectObject(obj)
+	dict, ok := obj.(*unicore.PdfObjectDictionary)
+	if !ok {
+		unicommon.Log.Debug("Error type check error (got %T)", obj)
+		return nil
+	}
+
+	return dict
 }

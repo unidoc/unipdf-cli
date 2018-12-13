@@ -6,8 +6,6 @@
 package pdf
 
 import (
-	"os"
-
 	unipdf "github.com/unidoc/unidoc/pdf/model"
 	unioptimize "github.com/unidoc/unidoc/pdf/model/optimize"
 )
@@ -25,7 +23,7 @@ func OptimizePdf(inputPath, outputPath, password string, opts *OptimizeOpts) err
 
 	// Copy input file contents to the output file.
 	w := unipdf.NewPdfWriter()
-	if err = readerToWriter(r, &w); err != nil {
+	if err = readerToWriter(r, &w, nil); err != nil {
 		return err
 	}
 
@@ -45,18 +43,6 @@ func OptimizePdf(inputPath, outputPath, password string, opts *OptimizeOpts) err
 		ImageQuality:                    opts.ImageQuality,
 	}))
 
-	// Create output file.
-	of, err := os.Create(outputPath)
-	if err != nil {
-		return err
-	}
-	defer of.Close()
-
 	// Write output file.
-	err = w.Write(of)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return writePDF(outputPath, &w, false)
 }

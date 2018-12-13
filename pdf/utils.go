@@ -9,8 +9,6 @@ import (
 	"errors"
 	"os"
 
-	unicommon "github.com/unidoc/unidoc/common"
-	unicore "github.com/unidoc/unidoc/pdf/core"
 	unicreator "github.com/unidoc/unidoc/pdf/creator"
 	unipdf "github.com/unidoc/unidoc/pdf/model"
 )
@@ -55,7 +53,41 @@ func readPDF(filepath, password string) (*unipdf.PdfReader, int, bool, error) {
 	return r, pages, encrypted, nil
 }
 
-func readerToWriter(r *unipdf.PdfReader, w *unipdf.PdfWriter) error {
+func writePDF(filepath string, w *unipdf.PdfWriter, safe bool) error {
+	// Create output file.
+	of, err := os.Create(filepath)
+	if err != nil {
+		return err
+	}
+	defer of.Close()
+
+	// Write output file.
+	err = w.Write(of)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func writeCreatorPDF(filepath string, c *unicreator.Creator, safe bool) error {
+	// Create output file.
+	of, err := os.Create(filepath)
+	if err != nil {
+		return err
+	}
+	defer of.Close()
+
+	// Write output file.
+	err = c.Write(of)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func readerToWriter(r *unipdf.PdfReader, w *unipdf.PdfWriter, pages []int) error {
 	if r == nil {
 		return errors.New("Source PDF cannot be null")
 	}
@@ -64,13 +96,17 @@ func readerToWriter(r *unipdf.PdfReader, w *unipdf.PdfWriter) error {
 	}
 
 	// Add pages.
-	numPages, err := r.GetNumPages()
-	if err != nil {
-		return err
+	if len(pages) == 0 {
+		numPages, err := r.GetNumPages()
+		if err != nil {
+			return err
+		}
+
+		pages = createPageRange(numPages)
 	}
 
-	for i := 0; i < numPages; i++ {
-		page, err := r.GetPage(i + 1)
+	for _, pageNum := range pages {
+		page, err := r.GetPage(pageNum)
 		if err != nil {
 			return err
 		}
@@ -88,7 +124,7 @@ func readerToWriter(r *unipdf.PdfReader, w *unipdf.PdfWriter) error {
 	return nil
 }
 
-func readerToCreator(r *unipdf.PdfReader, w *unicreator.Creator) error {
+func readerToCreator(r *unipdf.PdfReader, w *unicreator.Creator, pages []int) error {
 	if r == nil {
 		return errors.New("Source PDF cannot be null")
 	}
@@ -97,13 +133,17 @@ func readerToCreator(r *unipdf.PdfReader, w *unicreator.Creator) error {
 	}
 
 	// Add pages.
-	numPages, err := r.GetNumPages()
-	if err != nil {
-		return err
+	if len(pages) == 0 {
+		numPages, err := r.GetNumPages()
+		if err != nil {
+			return err
+		}
+
+		pages = createPageRange(numPages)
 	}
 
-	for i := 0; i < numPages; i++ {
-		page, err := r.GetPage(i + 1)
+	for _, pageNum := range pages {
+		page, err := r.GetPage(pageNum)
 		if err != nil {
 			return err
 		}
@@ -121,17 +161,15 @@ func readerToCreator(r *unipdf.PdfReader, w *unicreator.Creator) error {
 	return nil
 }
 
-func getDict(obj unicore.PdfObject) *unicore.PdfObjectDictionary {
-	if obj == nil {
-		return nil
+func createPageRange(count int) []int {
+	if count <= 0 {
+		return []int{}
 	}
 
-	obj = unicore.TraceToDirectObject(obj)
-	dict, ok := obj.(*unicore.PdfObjectDictionary)
-	if !ok {
-		unicommon.Log.Debug("Error type check error (got %T)", obj)
-		return nil
+	var pages []int
+	for i := 0; i < count; i++ {
+		pages = append(pages, i+1)
 	}
 
-	return dict
+	return pages
 }
