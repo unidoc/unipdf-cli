@@ -9,7 +9,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	unicommon "github.com/unidoc/unidoc/common"
+	"github.com/unidoc/unipdf/pdf"
 )
 
 const appVersion = "0.1"
@@ -20,7 +20,10 @@ var versionCmd = &cobra.Command{
 	Short: "Output version information and exit",
 	DisableFlagsInUseLine: true,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("unipdf %s\nunidoc %s\n", appVersion, unicommon.Version)
+		version := pdf.Version()
+
+		fmt.Printf("unipdf %s\n", version.App)
+		fmt.Printf("unidoc %s\n", version.Lib)
 	},
 }
 

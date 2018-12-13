@@ -38,7 +38,7 @@ var optimizeCmd = &cobra.Command{
 			ImageQuality: imageQuality,
 		}
 
-		err = pdf.OptimizePdf(inputFile, outputFile, password, opts)
+		err = pdf.Optimize(inputFile, outputFile, password, opts)
 		if err != nil {
 			fmt.Println("Could not optimize input file")
 			return

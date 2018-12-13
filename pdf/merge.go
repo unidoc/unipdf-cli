@@ -13,7 +13,7 @@ import (
 	unipdf "github.com/unidoc/unidoc/pdf/model"
 )
 
-func MergePdfs(inputPaths []string, outputPath string) error {
+func Merge(inputPaths []string, outputPath string) error {
 	w := unipdf.NewPdfWriter()
 
 	var forms *unipdf.PdfAcroForm

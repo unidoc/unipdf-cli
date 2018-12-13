@@ -31,7 +31,7 @@ var splitCmd = &cobra.Command{
 			return
 		}
 
-		err = pdf.SplitPdf(inputPath, outputPath, password, pages)
+		err = pdf.Split(inputPath, outputPath, password, pages)
 		if err != nil {
 			fmt.Printf("Error: %v\n", err)
 		}

@@ -20,7 +20,7 @@ var mergeCmd = &cobra.Command{
 	Example:               "this is the example",
 	DisableFlagsInUseLine: true,
 	Run: func(cmd *cobra.Command, args []string) {
-		if err := pdf.MergePdfs(args[1:], args[0]); err != nil {
+		if err := pdf.Merge(args[1:], args[0]); err != nil {
 			fmt.Printf("Error: %v\n", err)
 		}
 	},

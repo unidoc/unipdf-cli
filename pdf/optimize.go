@@ -14,7 +14,7 @@ type OptimizeOpts struct {
 	ImageQuality int
 }
 
-func OptimizePdf(inputPath, outputPath, password string, opts *OptimizeOpts) error {
+func Optimize(inputPath, outputPath, password string, opts *OptimizeOpts) error {
 	// Read input file.
 	r, _, _, err := readPDF(inputPath, password)
 	if err != nil {

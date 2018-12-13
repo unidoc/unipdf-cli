@@ -9,7 +9,7 @@ import (
 	unipdf "github.com/unidoc/unidoc/pdf/model"
 )
 
-func SplitPdf(inputPath, outputPath, password string, pageNums []int) error {
+func Split(inputPath, outputPath, password string, pageNums []int) error {
 	// Read input file.
 	r, _, _, err := readPDF(inputPath, password)
 	if err != nil {
