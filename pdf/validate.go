@@ -33,7 +33,7 @@ func GetPDFInfo(inputPath string, password string) (*PDFInfo, error) {
 	}
 	info.Size = fileInfo.Size()
 
-	// Read file.
+	// Read input file.
 	r, pages, encrypted, err := readPDF(inputPath, password)
 	if err != nil {
 		return nil, err

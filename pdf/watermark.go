@@ -26,12 +26,7 @@ func Watermark(inputPath, outputPath, watermarkPath, password string, pages []in
 
 	// Add pages.
 	if len(pages) == 0 {
-		numPages, err := r.GetNumPages()
-		if err != nil {
-			return err
-		}
-
-		pages = createPageRange(numPages)
+		pages = createPageRange(pageCount)
 	}
 
 	for i := 0; i < pageCount; i++ {
