@@ -17,35 +17,15 @@ type OptimizeOpts struct {
 }
 
 func OptimizePdf(inputPath, outputPath, password string, opts *OptimizeOpts) error {
-	// Open input file.
-	f, err := os.Open(inputPath)
+	// Read input file.
+	r, _, _, err := readPDF(inputPath, password)
 	if err != nil {
 		return err
-	}
-	defer f.Close()
-
-	// Read PDF file.
-	pdfReader, err := unipdf.NewPdfReader(f)
-	if err != nil {
-		return err
-	}
-
-	// Decrypt file if necessary.
-	isEncrypted, err := pdfReader.IsEncrypted()
-	if err != nil {
-		return err
-	}
-
-	if isEncrypted {
-		_, err = pdfReader.Decrypt([]byte(password))
-		if err != nil {
-			return err
-		}
 	}
 
 	// Copy input file contents to the output file.
-	pdfWriter := unipdf.NewPdfWriter()
-	if err = readerToWriter(pdfReader, &pdfWriter); err != nil {
+	w := unipdf.NewPdfWriter()
+	if err = readerToWriter(r, &w); err != nil {
 		return err
 	}
 
@@ -56,7 +36,7 @@ func OptimizePdf(inputPath, outputPath, password string, opts *OptimizeOpts) err
 		}
 	}
 
-	pdfWriter.SetOptimizer(unioptimize.New(unioptimize.Options{
+	w.SetOptimizer(unioptimize.New(unioptimize.Options{
 		CombineDuplicateDirectObjects:   true,
 		CombineIdenticalIndirectObjects: true,
 		CombineDuplicateStreams:         true,
@@ -65,14 +45,15 @@ func OptimizePdf(inputPath, outputPath, password string, opts *OptimizeOpts) err
 		ImageQuality:                    opts.ImageQuality,
 	}))
 
-	// Write output file.
-	fWrite, err := os.Create(outputPath)
+	// Create output file.
+	of, err := os.Create(outputPath)
 	if err != nil {
 		return err
 	}
-	defer fWrite.Close()
+	defer of.Close()
 
-	err = pdfWriter.Write(fWrite)
+	// Write output file.
+	err = w.Write(of)
 	if err != nil {
 		return err
 	}

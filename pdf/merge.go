@@ -15,59 +15,35 @@ import (
 )
 
 func MergePdfs(inputPaths []string, outputPath string) error {
-	pdfWriter := unipdf.NewPdfWriter()
+	w := unipdf.NewPdfWriter()
 
 	var forms *unipdf.PdfAcroForm
-
-	for docIdx, inputPath := range inputPaths {
-		f, err := os.Open(inputPath)
-		if err != nil {
-			return err
-		}
-		defer f.Close()
-
-		pdfReader, err := unipdf.NewPdfReader(f)
+	for index, inputPath := range inputPaths {
+		// Read file.
+		r, pages, _, err := readPDF(inputPath, "")
 		if err != nil {
 			return err
 		}
 
-		isEncrypted, err := pdfReader.IsEncrypted()
-		if err != nil {
-			return err
-		}
-
-		if isEncrypted {
-			_, err = pdfReader.Decrypt([]byte(""))
-			if err != nil {
-				return err
-			}
-		}
-
-		numPages, err := pdfReader.GetNumPages()
-		if err != nil {
-			return err
-		}
-
-		for i := 0; i < numPages; i++ {
-			pageNum := i + 1
-
-			page, err := pdfReader.GetPage(pageNum)
+		// Add pages.
+		for i := 0; i < pages; i++ {
+			page, err := r.GetPage(i + 1)
 			if err != nil {
 				return err
 			}
 
-			err = pdfWriter.AddPage(page)
+			err = w.AddPage(page)
 			if err != nil {
 				return err
 			}
 		}
 
 		// Handle forms.
-		if pdfReader.AcroForm != nil {
+		if r.AcroForm != nil {
 			if forms == nil {
-				forms = pdfReader.AcroForm
+				forms = r.AcroForm
 			} else {
-				forms, err = MergeForms(forms, pdfReader.AcroForm, docIdx+1)
+				forms, err = MergeForms(forms, r.AcroForm, index+1)
 				if err != nil {
 					return err
 				}
@@ -75,19 +51,20 @@ func MergePdfs(inputPaths []string, outputPath string) error {
 		}
 	}
 
-	fWrite, err := os.Create(outputPath)
+	// Create output file
+	of, err := os.Create(outputPath)
 	if err != nil {
 		return err
 	}
-
-	defer fWrite.Close()
+	defer of.Close()
 
 	// Set the merged forms object.
 	if forms != nil {
-		pdfWriter.SetForms(forms)
+		w.SetForms(forms)
 	}
 
-	err = pdfWriter.Write(fWrite)
+	// Write output file.
+	err = w.Write(of)
 	if err != nil {
 		return err
 	}

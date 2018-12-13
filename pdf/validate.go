@@ -6,11 +6,8 @@
 package pdf
 
 import (
-	"errors"
 	"os"
 	"sort"
-
-	unipdf "github.com/unidoc/unidoc/pdf/model"
 )
 
 type PDFInfo struct {
@@ -36,47 +33,22 @@ func GetPDFInfo(inputPath string, password string) (*PDFInfo, error) {
 	}
 	info.Size = fileInfo.Size()
 
-	// Open input file.
-	f, err := os.Open(inputPath)
+	// Read file.
+	r, pages, encrypted, err := readPDF(inputPath, password)
 	if err != nil {
 		return nil, err
 	}
-	defer f.Close()
 
-	// Read input file.
-	pdfReader, err := unipdf.NewPdfReader(f)
-	if err != nil {
-		return nil, err
-	}
-	info.Version = pdfReader.PdfVersion().String()
-
-	// Check if encrypted and try to decrypt using the specified password.
-	isEncrypted, err := pdfReader.IsEncrypted()
-	if err != nil {
-		return nil, err
-	}
-	info.Encrypted = isEncrypted
-
-	if isEncrypted {
-		info.EncryptionAlgo = pdfReader.GetEncryptionMethod()
-
-		auth, err := pdfReader.Decrypt([]byte(password))
-		if err != nil {
-			return nil, err
-		}
-		if !auth {
-			return nil, errors.New("Unable to decrypt PDF with the specified password")
-		}
+	info.Encrypted = encrypted
+	if encrypted {
+		info.EncryptionAlgo = r.GetEncryptionMethod()
 	}
 
-	// Get number of pages.
-	info.Pages, err = pdfReader.GetNumPages()
-	if err != nil {
-		return nil, err
-	}
+	info.Version = r.PdfVersion().String()
+	info.Pages = pages
 
 	// Read PDF objects.
-	objTypes, err := pdfReader.Inspect()
+	objTypes, err := r.Inspect()
 	if err != nil {
 		return nil, err
 	}

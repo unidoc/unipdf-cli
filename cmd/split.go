@@ -21,13 +21,18 @@ var splitCmd = &cobra.Command{
 	Example:               "this is the example",
 	DisableFlagsInUseLine: true,
 	Run: func(cmd *cobra.Command, args []string) {
+		inputPath := args[0]
+		outputPath := args[2]
+		password, _ := cmd.Flags().GetString("password")
+
 		pages, err := parsePageRange(args[1])
 		if err != nil {
 			fmt.Printf("Error: %v\n", err)
 			return
 		}
 
-		if err := pdf.SplitPdf(args[0], args[2], pages); err != nil {
+		err = pdf.SplitPdf(inputPath, outputPath, password, pages)
+		if err != nil {
 			fmt.Printf("Error: %v\n", err)
 		}
 	},
@@ -42,4 +47,6 @@ var splitCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(splitCmd)
+
+	splitCmd.Flags().StringP("password", "p", "", "PDF file password")
 }
