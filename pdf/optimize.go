@@ -44,5 +44,6 @@ func Optimize(inputPath, outputPath, password string, opts *OptimizeOpts) error 
 	}))
 
 	// Write output file.
-	return writePDF(outputPath, &w, false)
+	safe := inputPath == outputPath
+	return writePDF(outputPath, &w, safe)
 }

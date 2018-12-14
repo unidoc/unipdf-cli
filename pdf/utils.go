@@ -8,14 +8,15 @@ package pdf
 import (
 	"errors"
 	"os"
+	"path/filepath"
 
 	unicreator "github.com/unidoc/unidoc/pdf/creator"
 	unipdf "github.com/unidoc/unidoc/pdf/model"
 )
 
-func readPDF(filepath, password string) (*unipdf.PdfReader, int, bool, error) {
+func readPDF(filename, password string) (*unipdf.PdfReader, int, bool, error) {
 	// Open input file.
-	f, err := os.Open(filepath)
+	f, err := os.Open(filename)
 	if err != nil {
 		return nil, 0, false, err
 	}
@@ -53,9 +54,33 @@ func readPDF(filepath, password string) (*unipdf.PdfReader, int, bool, error) {
 	return r, pages, encrypted, nil
 }
 
-func writePDF(filepath string, w *unipdf.PdfWriter, safe bool) error {
+func writePDF(filename string, w *unipdf.PdfWriter, safe bool) error {
+	var err error
+	if safe {
+		// Make a copy of the original file and restore it if
+		// any error occurs while writing the new file.
+		if _, err = os.Stat(filename); !os.IsNotExist(err) {
+			tempPath := filepath.Join(os.TempDir(), "unipdf_"+filename)
+			if err = os.Rename(filename, tempPath); err != nil {
+				return err
+			}
+			defer func() error {
+				if err == nil {
+					return nil
+				}
+				if err = os.Rename(tempPath, filename); err != nil {
+					return err
+				}
+				if err = os.Remove(tempPath); err != nil {
+					return err
+				}
+				return nil
+			}()
+		}
+	}
+
 	// Create output file.
-	of, err := os.Create(filepath)
+	of, err := os.Create(filename)
 	if err != nil {
 		return err
 	}
@@ -70,17 +95,40 @@ func writePDF(filepath string, w *unipdf.PdfWriter, safe bool) error {
 	return nil
 }
 
-func writeCreatorPDF(filepath string, c *unicreator.Creator, safe bool) error {
+func writeCreatorPDF(filename string, c *unicreator.Creator, safe bool) error {
+	var err error
+	if safe {
+		// Make a copy of the original file and restore it if
+		// any error occurs while writing the new file.
+		if _, err = os.Stat(filename); !os.IsNotExist(err) {
+			tempPath := filepath.Join(os.TempDir(), "unipdf_"+filename)
+			if err = os.Rename(filename, tempPath); err != nil {
+				return err
+			}
+			defer func() error {
+				if err == nil {
+					return nil
+				}
+				if err = os.Rename(tempPath, filename); err != nil {
+					return err
+				}
+				if err = os.Remove(tempPath); err != nil {
+					return err
+				}
+				return nil
+			}()
+		}
+	}
+
 	// Create output file.
-	of, err := os.Create(filepath)
+	of, err := os.Create(filename)
 	if err != nil {
 		return err
 	}
 	defer of.Close()
 
 	// Write output file.
-	err = c.Write(of)
-	if err != nil {
+	if err = c.Write(of); err != nil {
 		return err
 	}
 

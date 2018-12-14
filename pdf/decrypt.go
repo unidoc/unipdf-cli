@@ -21,7 +21,8 @@ func Decrypt(inputPath, outputPath, password string) error {
 	}
 
 	// Save output file.
-	if err = writePDF(outputPath, &w, false); err != nil {
+	safe := inputPath == outputPath
+	if err = writePDF(outputPath, &w, safe); err != nil {
 		return err
 	}
 

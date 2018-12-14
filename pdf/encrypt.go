@@ -42,7 +42,8 @@ func Encrypt(inputPath, outputPath string, opts *EncryptOpts) error {
 	}
 
 	// Save output file.
-	if err = writePDF(outputPath, &w, false); err != nil {
+	safe := inputPath == outputPath
+	if err = writePDF(outputPath, &w, safe); err != nil {
 		return err
 	}
 

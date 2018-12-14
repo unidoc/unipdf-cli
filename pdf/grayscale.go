@@ -57,7 +57,8 @@ func Grayscale(inputPath, outputPath, password string, pages []int) error {
 	}
 
 	// Write output file.
-	return writePDF(outputPath, &w, false)
+	safe := inputPath == outputPath
+	return writePDF(outputPath, &w, safe)
 }
 
 // Replaces color objects on the page with grayscale ones.  Also references XObject Images and Forms

@@ -23,5 +23,6 @@ func Split(inputPath, outputPath, password string, pageNums []int) error {
 	}
 
 	// Write output file.
-	return writePDF(outputPath, &w, false)
+	safe := inputPath == outputPath
+	return writePDF(outputPath, &w, safe)
 }

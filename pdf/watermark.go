@@ -68,5 +68,6 @@ func Watermark(inputPath, outputPath, watermarkPath, password string, pages []in
 	}
 
 	// Write output file.
-	return writeCreatorPDF(outputPath, c, false)
+	safe := inputPath == outputPath
+	return writeCreatorPDF(outputPath, c, safe)
 }
