@@ -10,35 +10,43 @@ import (
 	"os"
 	"path/filepath"
 
+	unisecurity "github.com/unidoc/unidoc/pdf/core/security"
 	unicreator "github.com/unidoc/unidoc/pdf/creator"
 	unipdf "github.com/unidoc/unidoc/pdf/model"
 )
 
-func readPDF(filename, password string) (*unipdf.PdfReader, int, bool, error) {
+func readPDF(filename, password string) (*unipdf.PdfReader, int, bool, unisecurity.Permissions, error) {
 	// Open input file.
 	f, err := os.Open(filename)
 	if err != nil {
-		return nil, 0, false, err
+		return nil, 0, false, 0, err
 	}
 	defer f.Close()
 
 	// Read input file.
 	r, err := unipdf.NewPdfReader(f)
 	if err != nil {
-		return nil, 0, false, err
+		return nil, 0, false, 0, err
 	}
 
 	// Check if file is encrypted.
 	encrypted, err := r.IsEncrypted()
 	if err != nil {
-		return nil, 0, false, err
+		return nil, 0, false, 0, err
 	}
 
 	// Decrypt using the specified password, if necessary.
+	perms := unisecurity.PermOwner
 	if encrypted {
 		passwords := []string{password}
 		if password != "" {
 			passwords = append(passwords, "")
+		}
+
+		// Extract use permissions
+		_, perms, err = r.CheckAccessRights([]byte(password))
+		if err != nil {
+			perms = unisecurity.Permissions(0)
 		}
 
 		var decrypted bool
@@ -52,17 +60,17 @@ func readPDF(filename, password string) (*unipdf.PdfReader, int, bool, error) {
 		}
 
 		if !decrypted {
-			return nil, 0, false, errors.New("Could not decrypt file with the provided password")
+			return nil, 0, false, 0, errors.New("Could not decrypt file with the provided password")
 		}
 	}
 
 	// Get number of pages.
 	pages, err := r.GetNumPages()
 	if err != nil {
-		return nil, 0, false, err
+		return nil, 0, false, 0, err
 	}
 
-	return r, pages, encrypted, nil
+	return r, pages, encrypted, perms, nil
 }
 
 func writePDF(filename string, w *unipdf.PdfWriter, safe bool) error {

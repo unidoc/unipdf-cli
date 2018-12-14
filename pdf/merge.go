@@ -19,7 +19,7 @@ func Merge(inputPaths []string, outputPath string) error {
 	var forms *unipdf.PdfAcroForm
 	for index, inputPath := range inputPaths {
 		// Read file.
-		r, pages, _, err := readPDF(inputPath, "")
+		r, pages, _, _, err := readPDF(inputPath, "")
 		if err != nil {
 			return err
 		}

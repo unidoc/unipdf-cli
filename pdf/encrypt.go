@@ -19,7 +19,7 @@ type EncryptOpts struct {
 
 func Encrypt(inputPath, outputPath string, opts *EncryptOpts) error {
 	// Read input file.
-	r, _, _, err := readPDF(inputPath, "")
+	r, _, _, _, err := readPDF(inputPath, "")
 	if err != nil {
 		return err
 	}
@@ -43,9 +43,5 @@ func Encrypt(inputPath, outputPath string, opts *EncryptOpts) error {
 
 	// Save output file.
 	safe := inputPath == outputPath
-	if err = writePDF(outputPath, &w, safe); err != nil {
-		return err
-	}
-
-	return nil
+	return writePDF(outputPath, &w, safe)
 }

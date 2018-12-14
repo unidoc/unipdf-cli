@@ -11,7 +11,7 @@ import (
 
 func Split(inputPath, outputPath, password string, pageNums []int) error {
 	// Read input file.
-	r, _, _, err := readPDF(inputPath, password)
+	r, _, _, _, err := readPDF(inputPath, password)
 	if err != nil {
 		return err
 	}

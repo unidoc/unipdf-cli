@@ -18,7 +18,7 @@ import (
 
 func Grayscale(inputPath, outputPath, password string, pages []int) error {
 	// Read input file.
-	r, pageCount, _, err := readPDF(inputPath, password)
+	r, pageCount, _, _, err := readPDF(inputPath, password)
 	if err != nil {
 		return err
 	}

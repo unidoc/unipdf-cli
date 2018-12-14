@@ -16,7 +16,7 @@ type OptimizeOpts struct {
 
 func Optimize(inputPath, outputPath, password string, opts *OptimizeOpts) error {
 	// Read input file.
-	r, _, _, err := readPDF(inputPath, password)
+	r, _, _, _, err := readPDF(inputPath, password)
 	if err != nil {
 		return err
 	}

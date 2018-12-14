@@ -5,11 +5,13 @@
 
 package pdf
 
-import unipdf "github.com/unidoc/unidoc/pdf/model"
+import (
+	unipdf "github.com/unidoc/unidoc/pdf/model"
+)
 
-func Decrypt(inputPath, outputPath, password string) error {
+func Passwd(inputPath, outputPath, ownerPassword, newOwnerPassword, newUserPassword string) error {
 	// Read input file.
-	r, _, _, _, err := readPDF(inputPath, password)
+	r, _, _, perms, err := readPDF(inputPath, ownerPassword)
 	if err != nil {
 		return err
 	}
@@ -17,6 +19,16 @@ func Decrypt(inputPath, outputPath, password string) error {
 	// Copy input file contents.
 	w := unipdf.NewPdfWriter()
 	if err := readerToWriter(r, &w, nil); err != nil {
+		return err
+	}
+
+	// Encrypt output file.
+	encryptOpts := &unipdf.EncryptOptions{
+		Permissions: perms,
+	}
+
+	err = w.Encrypt([]byte(newUserPassword), []byte(newOwnerPassword), encryptOpts)
+	if err != nil {
 		return err
 	}
 
