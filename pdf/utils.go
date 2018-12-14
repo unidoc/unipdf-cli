@@ -36,12 +36,23 @@ func readPDF(filename, password string) (*unipdf.PdfReader, int, bool, error) {
 
 	// Decrypt using the specified password, if necessary.
 	if encrypted {
-		auth, err := r.Decrypt([]byte(password))
-		if err != nil {
-			return nil, 0, false, err
+		passwords := []string{password}
+		if password != "" {
+			passwords = append(passwords, "")
 		}
-		if !auth {
-			return nil, 0, false, errors.New("Unable to decrypt the file with the specified password")
+
+		var decrypted bool
+		for _, p := range passwords {
+			if auth, err := r.Decrypt([]byte(p)); err != nil || !auth {
+				continue
+			}
+
+			decrypted = true
+			break
+		}
+
+		if !decrypted {
+			return nil, 0, false, errors.New("Could not decrypt file with the provided password")
 		}
 	}
 
