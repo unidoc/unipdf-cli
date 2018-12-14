@@ -17,7 +17,7 @@ type EncryptOpts struct {
 	Permissions   unisecurity.Permissions
 }
 
-func Encrypt(inputPath string, outputPath string, opts *EncryptOpts) error {
+func Encrypt(inputPath, outputPath string, opts *EncryptOpts) error {
 	// Read input file.
 	r, _, _, err := readPDF(inputPath, "")
 	if err != nil {
