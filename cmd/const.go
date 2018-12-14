@@ -1,0 +1,70 @@
+/*
+ * This file is subject to the terms and conditions defined in
+ * file 'LICENSE.md', which is part of this source code package.
+ */
+
+package cmd
+
+import (
+	"errors"
+	"strings"
+
+	unisecurity "github.com/unidoc/unidoc/pdf/core/security"
+	unipdf "github.com/unidoc/unidoc/pdf/model"
+)
+
+var encryptAlgoMap = map[string]unipdf.EncryptionAlgorithm{
+	"rc4":    unipdf.RC4_128bit,
+	"aes128": unipdf.AES_128bit,
+	"aes256": unipdf.AES_256bit,
+}
+
+func parseEncryptionMode(mode string) (unipdf.EncryptionAlgorithm, error) {
+	algo, ok := encryptAlgoMap[mode]
+	if !ok {
+		return 0, errors.New("Invalid encryption mode")
+	}
+
+	return algo, nil
+}
+
+func parsePermissionList(permStr string) (unisecurity.Permissions, error) {
+	permStr = removeSpaces(permStr)
+	if permStr == "" {
+		return 0, nil
+	}
+	permList := strings.Split(permStr, ",")
+
+	perms := unisecurity.Permissions(0)
+	for _, perm := range permList {
+		if perm == "" {
+			continue
+		}
+
+		switch perm {
+		case "all":
+			perms = unisecurity.PermOwner
+		case "none":
+			perms = unisecurity.Permissions(0)
+		case "print-low-res":
+			perms |= unisecurity.PermPrinting
+		case "print-high-res":
+			perms |= unisecurity.PermFullPrintQuality
+		case "modify":
+			perms |= unisecurity.PermModify
+		case "extract-graphics":
+			perms |= unisecurity.PermExtractGraphics
+		case "annotate":
+			perms |= unisecurity.PermAnnotate
+		case "fill-forms":
+			perms |= unisecurity.PermFillForms
+		case "rotate":
+			perms |= unisecurity.PermRotateInsert
+
+		default:
+			return 0, errors.New("Invalid permission")
+		}
+	}
+
+	return perms, nil
+}
