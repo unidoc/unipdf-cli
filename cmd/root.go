@@ -6,15 +6,12 @@
 package cmd
 
 import (
-	"fmt"
-	"os"
-
 	"github.com/spf13/cobra"
 )
 
 const appName = "unipdf"
 const rootCmdDesc = ` is a CLI application for working with PDF files.
-It supports the most common PDF operations.  A full list of the supported
+It supports the most common PDF operations. A full list of the supported
 operations can be found below.`
 
 var rootCmd = &cobra.Command{
@@ -24,7 +21,6 @@ var rootCmd = &cobra.Command{
 
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		printErr("%s\n", err)
 	}
 }

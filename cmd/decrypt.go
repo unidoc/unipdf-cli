@@ -13,33 +13,41 @@ import (
 	"github.com/unidoc/unipdf/pdf"
 )
 
+const decryptCmdDesc = ``
+
+var decryptCmdExample = fmt.Sprintf("%s\n%s",
+	fmt.Sprintf("%s decrypt -p password sample_file.pdf", appName),
+	fmt.Sprintf("%s decrypt -p password -o output_file.pdf input_file.pdf", appName),
+)
+
 // decryptCmd represents the decrypt command
 var decryptCmd = &cobra.Command{
 	Use:                   "decrypt [FLAG]... INPUT_FILE",
 	Short:                 "Decrypt PDF files",
-	Long:                  `A longer description that spans multiple lines and likely contains`,
-	Example:               "this is the example",
+	Long:                  decryptCmdDesc,
+	Example:               decryptCmdExample,
 	DisableFlagsInUseLine: true,
 	Run: func(cmd *cobra.Command, args []string) {
-		inputFile := args[0]
+		inputPath := args[0]
 		password, _ := cmd.Flags().GetString("password")
 
-		// Parse output file.
-		outputFile, _ := cmd.Flags().GetString("output-file")
-		if outputFile == "" {
-			outputFile = inputFile
+		// Parse output path.
+		outputPath, _ := cmd.Flags().GetString("output-file")
+		if outputPath == "" {
+			outputPath = inputPath
 		}
 
-		if err := pdf.Decrypt(inputFile, outputFile, password); err != nil {
-			fmt.Println("Could not decrypt input file")
-			return
+		// Decrypt input file.
+		if err := pdf.Decrypt(inputPath, outputPath, password); err != nil {
+			printErr("Could not decrypt input file: %s\n", err)
 		}
 
-		fmt.Println("Successfully decrypted input file")
+		fmt.Printf("Successfully decrypted %s\n", inputPath)
+		fmt.Printf("Output file saved to %s\n", outputPath)
 	},
 	Args: func(cmd *cobra.Command, args []string) error {
 		if len(args) < 1 {
-			return errors.New("Must provide the input file\n")
+			return errors.New("Must provide the PDF file to decrypt\n")
 		}
 
 		return nil

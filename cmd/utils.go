@@ -7,6 +7,8 @@ package cmd
 
 import (
 	"errors"
+	"fmt"
+	"os"
 	"sort"
 	"strconv"
 	"strings"
@@ -92,4 +94,9 @@ func uniqueIntSlice(items []int) []int {
 	}
 
 	return uniq[0:index]
+}
+
+func printErr(format string, a ...interface{}) {
+	fmt.Printf(format, a...)
+	os.Exit(1)
 }
