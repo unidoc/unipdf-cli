@@ -13,15 +13,24 @@ import (
 	"github.com/unidoc/unipdf/pdf"
 )
 
+const passwdCmdDesc = `Change owner and user passwords of PDF files.`
+
+var passwdCmdExample = fmt.Sprintf("%s\n%s\n%s\n",
+	fmt.Sprintf("%s passwd -p pass input_file.pdf new_owner_pass", appName),
+	fmt.Sprintf("%s passwd -p pass -o output_file.pdf input_file.pdf new_owner_pass", appName),
+	fmt.Sprintf("%s passwd -p pass -o output_file.pdf input_file.pdf new_owner_pass new_user_pass", appName),
+)
+
 // passwdCmd represents the passwd command
 var passwdCmd = &cobra.Command{
 	Use:                   "passwd [FLAG]... INPUT_FILE NEW_OWNER_PASSWORD [NEW_USER_PASSWORD]",
 	Short:                 "Change PDF passwords",
-	Long:                  `A longer description that spans multiple lines and likely contains`,
-	Example:               "this is the example",
+	Long:                  passwdCmdDesc,
+	Example:               passwdCmdExample,
 	DisableFlagsInUseLine: true,
 	Run: func(cmd *cobra.Command, args []string) {
-		inputFile := args[0]
+		// Parse input parameters.
+		inputPath := args[0]
 		newOwnerPassword := args[1]
 		ownerPassword, _ := cmd.Flags().GetString("password")
 
@@ -31,19 +40,19 @@ var passwdCmd = &cobra.Command{
 		}
 
 		// Parse output file.
-		outputFile, _ := cmd.Flags().GetString("output-file")
-		if outputFile == "" {
-			outputFile = inputFile
+		outputPath, _ := cmd.Flags().GetString("output-file")
+		if outputPath == "" {
+			outputPath = inputPath
 		}
 
 		// Change input file password.
-		err := pdf.Passwd(inputFile, outputFile, ownerPassword, newOwnerPassword, newUserPassword)
+		err := pdf.Passwd(inputPath, outputPath, ownerPassword, newOwnerPassword, newUserPassword)
 		if err != nil {
-			fmt.Println("Could not change input file password")
-			return
+			printErr("Could not change input file password: %s\n", err)
 		}
 
-		fmt.Println("Password successfully changed")
+		fmt.Printf("Password successfully changed\n")
+		fmt.Printf("Output file saved to %s\n", outputPath)
 	},
 	Args: func(cmd *cobra.Command, args []string) error {
 		if len(args) < 2 {
