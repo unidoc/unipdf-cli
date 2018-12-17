@@ -12,12 +12,15 @@ import (
 	"github.com/unidoc/unipdf/pdf"
 )
 
-const appVersion = "0.1"
+var versionCmdExample = fmt.Sprintf("%s\n",
+	fmt.Sprintf("%s version", appName),
+)
 
 // versionCmd represents the version command
 var versionCmd = &cobra.Command{
-	Use:   "version",
-	Short: "Output version information and exit",
+	Use:                   "version",
+	Short:                 "Output version information and exit",
+	Example:               versionCmdExample,
 	DisableFlagsInUseLine: true,
 	Run: func(cmd *cobra.Command, args []string) {
 		version := pdf.Version()
