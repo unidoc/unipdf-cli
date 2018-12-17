@@ -17,9 +17,10 @@ const grayscaleCmdDesc = `Converts the input file to grayscale.
 
 The command can be configured to convert only the specified
 pages to grayscale using the --pages parameter.
+
 An example of the pages parameter: 1-3,4,6-7
-The output file will contain pages 1,2,3 (1-3), 4 and 6,7 (6-7), while page
-number 5 is skipped.
+Only pages 1,2,3 (1-3), 4 and 6,7 (6-7) will be converted to grayscale, while
+page number 5 is skipped.
 `
 
 var grayscaleCmdExample = fmt.Sprintf("%s\n%s\n%s\n%s\n",
