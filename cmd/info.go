@@ -13,12 +13,21 @@ import (
 	"github.com/unidoc/unipdf/pdf"
 )
 
+const infoCmdDesc = `Outputs information about the input file.
+Also provides basic validation.
+`
+
+var infoCmdExample = fmt.Sprintf("%s\n%s\n",
+	fmt.Sprintf("%s info input_file.pdf", appName),
+	fmt.Sprintf("%s info -p pass input_file.pdf", appName),
+)
+
 // infoCmd represents the info command
 var infoCmd = &cobra.Command{
 	Use:                   "info [FLAG]... INPUT_FILE",
 	Short:                 "Info PDF files",
-	Long:                  `A longer description that spans multiple lines and likely contains`,
-	Example:               "this is the example",
+	Long:                  infoCmdDesc,
+	Example:               infoCmdExample,
 	DisableFlagsInUseLine: true,
 	Run: func(cmd *cobra.Command, args []string) {
 		inputFile := args[0]
@@ -26,8 +35,7 @@ var infoCmd = &cobra.Command{
 
 		info, err := pdf.Info(inputFile, password)
 		if err != nil {
-			fmt.Println("Could not retrieve input file information")
-			return
+			printErr("Could not retrieve input file information: %s\n", err)
 		}
 
 		// Print basic PDF info
