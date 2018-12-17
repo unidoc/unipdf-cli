@@ -9,6 +9,7 @@ import (
 	"errors"
 	"strings"
 
+	unicommon "github.com/unidoc/unidoc/common"
 	unisecurity "github.com/unidoc/unidoc/pdf/core/security"
 	unipdf "github.com/unidoc/unidoc/pdf/model"
 )
@@ -19,6 +20,15 @@ var encryptAlgoMap = map[string]unipdf.EncryptionAlgorithm{
 	"aes256": unipdf.AES_256bit,
 }
 
+var logLevelMap = map[string]unicommon.LogLevel{
+	"trace":   unicommon.LogLevelTrace,
+	"debug":   unicommon.LogLevelDebug,
+	"info":    unicommon.LogLevelInfo,
+	"notice":  unicommon.LogLevelNotice,
+	"warning": unicommon.LogLevelWarning,
+	"error":   unicommon.LogLevelError,
+}
+
 func parseEncryptionMode(mode string) (unipdf.EncryptionAlgorithm, error) {
 	algo, ok := encryptAlgoMap[mode]
 	if !ok {
@@ -26,6 +36,20 @@ func parseEncryptionMode(mode string) (unipdf.EncryptionAlgorithm, error) {
 	}
 
 	return algo, nil
+}
+
+func parseLogLevel(levelStr string) (unicommon.LogLevel, error) {
+	levelStr = strings.TrimSpace(levelStr)
+	if levelStr == "" {
+		return unicommon.LogLevelError, nil
+	}
+
+	level, ok := logLevelMap[levelStr]
+	if !ok {
+		return 0, errors.New("Invalid log level")
+	}
+
+	return level, nil
 }
 
 func parsePermissionList(permStr string) (unisecurity.Permissions, error) {
