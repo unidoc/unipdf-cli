@@ -74,7 +74,7 @@ var encryptCmd = &cobra.Command{
 
 		algorithm, err := parseEncryptionMode(mode)
 		if err != nil {
-			printErr("Invalid encryption mode\n")
+			printUsageErr(cmd, "Invalid encryption mode\n")
 		}
 
 		// Parse user permissions
@@ -82,7 +82,7 @@ var encryptCmd = &cobra.Command{
 
 		perms, err := parsePermissionList(permList)
 		if err != nil {
-			printErr("Invalid user permission values\n")
+			printUsageErr(cmd, "Invalid user permission values\n")
 		}
 
 		opts := &pdf.EncryptOpts{

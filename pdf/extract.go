@@ -63,7 +63,7 @@ func ExtractText(inputPath, password string, pages []int) (string, error) {
 	return text, nil
 }
 
-func ExtractImages(inputPath, outputPath, password string, pages []int) error {
+func ExtractImages(inputPath, outputPath, password string, pages []int) (string, error) {
 	if outputPath == "" {
 		dir, name := filepath.Split(inputPath)
 		name = strings.TrimSuffix(name, filepath.Ext(name)) + ".zip"
@@ -73,13 +73,13 @@ func ExtractImages(inputPath, outputPath, password string, pages []int) error {
 	// Read input file.
 	r, pageCount, _, _, err := readPDF(inputPath, password)
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	// Prepare output archive.
 	outputFile, err := os.Create(outputPath)
 	if err != nil {
-		return err
+		return "", err
 	}
 	defer outputFile.Close()
 
@@ -93,35 +93,35 @@ func ExtractImages(inputPath, outputPath, password string, pages []int) error {
 		// Get page.
 		page, err := r.GetPage(pageNum)
 		if err != nil {
-			return err
+			return "", err
 		}
 
 		// List images on the page.
 		rgbImages, err := extractImagesOnPage(page)
 		if err != nil {
-			return err
+			return "", err
 		}
 
 		// Add images to zip file.
 		for i, img := range rgbImages {
 			img, err := img.ToGoImage()
 			if err != nil {
-				return err
+				return "", err
 			}
 
 			filename, err := w.Create(fmt.Sprintf("p%d_%d.jpg", pageNum, i))
 			if err != nil {
-				return err
+				return "", err
 			}
 
 			err = jpeg.Encode(filename, img, &jpeg.Options{Quality: 100})
 			if err != nil {
-				return err
+				return "", err
 			}
 		}
 	}
 
-	return w.Close()
+	return outputPath, w.Close()
 }
 
 func extractImagesOnPage(page *unipdf.PdfPage) ([]*unipdf.Image, error) {

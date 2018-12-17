@@ -13,6 +13,8 @@ import (
 	"strconv"
 	"strings"
 	"unicode"
+
+	"github.com/spf13/cobra"
 )
 
 func parsePageRange(pageRange string) ([]int, error) {
@@ -98,5 +100,11 @@ func uniqueIntSlice(items []int) []int {
 
 func printErr(format string, a ...interface{}) {
 	fmt.Printf(format, a...)
+	os.Exit(1)
+}
+
+func printUsageErr(cmd *cobra.Command, format string, a ...interface{}) {
+	fmt.Printf("Error: "+format+"\n", a...)
+	cmd.Help()
 	os.Exit(1)
 }
