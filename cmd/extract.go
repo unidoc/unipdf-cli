@@ -25,10 +25,19 @@ var extractCmd = &cobra.Command{
 		password, _ := cmd.Flags().GetString("password")
 		outputFile, _ := cmd.Flags().GetString("output-file")
 
+		// Parse page range.
+		pageRange, _ := cmd.Flags().GetString("pages")
+
+		pages, err := parsePageRange(pageRange)
+		if err != nil {
+			fmt.Printf("Error: %v\n", err)
+			return
+		}
+
 		resource, _ := cmd.Flags().GetString("resource")
 		switch resource {
 		case "text":
-			text, err := pdf.ExtractText(inputFile, password)
+			text, err := pdf.ExtractText(inputFile, password, pages)
 			if err != nil {
 				fmt.Println("Could not extract text")
 				return
@@ -36,7 +45,7 @@ var extractCmd = &cobra.Command{
 
 			fmt.Println(text)
 		case "images":
-			err := pdf.ExtractImages(inputFile, outputFile, password)
+			err := pdf.ExtractImages(inputFile, outputFile, password, pages)
 			if err != nil {
 				fmt.Println("Could not extract images")
 				return
@@ -62,4 +71,5 @@ func init() {
 	extractCmd.Flags().StringP("user-password", "p", "", "PDF file password")
 	extractCmd.Flags().StringP("output-file", "o", "", "Output file")
 	extractCmd.Flags().StringP("resource", "r", "", "Resource to extract")
+	extractCmd.Flags().StringP("pages", "P", "", "Pages to extract resources from")
 }

@@ -23,8 +23,9 @@ var grayscaleCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		inputFile := args[0]
 		outputFile := args[1]
-
 		password, _ := cmd.Flags().GetString("password")
+
+		// Parse page range.
 		pageRange, _ := cmd.Flags().GetString("pages")
 
 		pages, err := parsePageRange(pageRange)

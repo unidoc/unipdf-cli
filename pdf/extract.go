@@ -18,18 +18,22 @@ import (
 	unipdf "github.com/unidoc/unidoc/pdf/model"
 )
 
-func ExtractText(inputPath, password string) (string, error) {
+func ExtractText(inputPath, password string, pages []int) (string, error) {
 	// Read input file.
-	r, pages, _, _, err := readPDF(inputPath, password)
+	r, pageCount, _, _, err := readPDF(inputPath, password)
 	if err != nil {
 		return "", err
 	}
 
 	// Extract text.
+	if len(pages) == 0 {
+		pages = createPageRange(pageCount)
+	}
+
 	var text string
-	for i := 0; i < pages; i++ {
+	for _, pageNum := range pages {
 		// Get page.
-		page, err := r.GetPage(i + 1)
+		page, err := r.GetPage(pageNum)
 		if err != nil {
 			return "", err
 		}
@@ -59,7 +63,7 @@ func ExtractText(inputPath, password string) (string, error) {
 	return text, nil
 }
 
-func ExtractImages(inputPath, outputPath, password string) error {
+func ExtractImages(inputPath, outputPath, password string, pages []int) error {
 	if outputPath == "" {
 		dir, name := filepath.Split(inputPath)
 		name = strings.TrimSuffix(name, filepath.Ext(name)) + ".zip"
@@ -67,23 +71,27 @@ func ExtractImages(inputPath, outputPath, password string) error {
 	}
 
 	// Read input file.
-	r, pages, _, _, err := readPDF(inputPath, password)
+	r, pageCount, _, _, err := readPDF(inputPath, password)
 	if err != nil {
 		return err
 	}
 
 	// Prepare output archive.
-	zipf, err := os.Create(outputPath)
+	outputFile, err := os.Create(outputPath)
 	if err != nil {
 		return err
 	}
-	defer zipf.Close()
+	defer outputFile.Close()
 
 	// Extract images.
-	zipw := zip.NewWriter(zipf)
-	for i := 0; i < pages; i++ {
+	if len(pages) == 0 {
+		pages = createPageRange(pageCount)
+	}
+
+	w := zip.NewWriter(outputFile)
+	for _, pageNum := range pages {
 		// Get page.
-		page, err := r.GetPage(i + 1)
+		page, err := r.GetPage(pageNum)
 		if err != nil {
 			return err
 		}
@@ -94,26 +102,26 @@ func ExtractImages(inputPath, outputPath, password string) error {
 			return err
 		}
 
-		// Add images to zip.
-		for idx, img := range rgbImages {
-			gimg, err := img.ToGoImage()
+		// Add images to zip file.
+		for i, img := range rgbImages {
+			img, err := img.ToGoImage()
 			if err != nil {
 				return err
 			}
 
-			imgf, err := zipw.Create(fmt.Sprintf("p%d_%d.jpg", i+1, idx))
+			filename, err := w.Create(fmt.Sprintf("p%d_%d.jpg", pageNum, i))
 			if err != nil {
 				return err
 			}
 
-			err = jpeg.Encode(imgf, gimg, &jpeg.Options{Quality: 100})
+			err = jpeg.Encode(filename, img, &jpeg.Options{Quality: 100})
 			if err != nil {
 				return err
 			}
 		}
 	}
 
-	return zipw.Close()
+	return w.Close()
 }
 
 func extractImagesOnPage(page *unipdf.PdfPage) ([]*unipdf.Image, error) {
@@ -138,7 +146,6 @@ func extractImagesInContentStream(contents string, resources *unipdf.PdfPageReso
 
 	for _, op := range *operations {
 		if op.Operand == "BI" && len(op.Params) == 1 {
-			// BI: Inline image.
 			iimg, ok := op.Params[0].(*unicontent.ContentStreamInlineImage)
 			if !ok {
 				continue
@@ -154,10 +161,8 @@ func extractImagesInContentStream(contents string, resources *unipdf.PdfPageReso
 				return nil, err
 			}
 			if cs == nil {
-				// Default if not specified?
 				cs = unipdf.NewPdfColorspaceDeviceGray()
 			}
-			fmt.Printf("Cs: %T\n", cs)
 
 			rgbImg, err := cs.ImageToRGB(*img)
 			if err != nil {
@@ -166,7 +171,6 @@ func extractImagesInContentStream(contents string, resources *unipdf.PdfPageReso
 
 			rgbImages = append(rgbImages, &rgbImg)
 		} else if op.Operand == "Do" && len(op.Params) == 1 {
-			// Do: XObject.
 			name := op.Params[0].(*unicore.PdfObjectName)
 
 			// Only process each one once.
@@ -178,8 +182,6 @@ func extractImagesInContentStream(contents string, resources *unipdf.PdfPageReso
 
 			_, xtype := resources.GetXObjectByName(*name)
 			if xtype == unipdf.XObjectTypeImage {
-				fmt.Printf(" XObject Image: %s\n", *name)
-
 				ximg, err := resources.GetXObjectImageByName(*name)
 				if err != nil {
 					return nil, err
@@ -207,13 +209,13 @@ func extractImagesInContentStream(contents string, resources *unipdf.PdfPageReso
 					return nil, err
 				}
 
-				// Process the content stream in the Form object too:
+				// Process the content stream in the Form object too.
 				formResources := xform.Resources
 				if formResources == nil {
 					formResources = resources
 				}
 
-				// Process the content stream in the Form object too:
+				// Process the content stream in the Form object too.
 				formRgbImages, err := extractImagesInContentStream(string(formContent), formResources)
 				if err != nil {
 					return nil, err
