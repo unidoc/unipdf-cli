@@ -54,7 +54,7 @@ func readEnv() {
 	licenseCustomer := os.Getenv("UNIDOC_LICENSE_CUSTOMER")
 
 	if licensePath != "" {
-		err := pdf.SetLicense(licensePath, licenseCustomer)
+		pdf.SetLicense(licensePath, licenseCustomer)
 	}
 
 	// Set log level.
