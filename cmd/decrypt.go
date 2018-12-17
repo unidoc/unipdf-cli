@@ -16,7 +16,7 @@ import (
 const decryptCmdDesc = ``
 
 var decryptCmdExample = fmt.Sprintf("%s\n%s\n",
-	fmt.Sprintf("%s decrypt -p password sample_file.pdf", appName),
+	fmt.Sprintf("%s decrypt -p password input_file.pdf", appName),
 	fmt.Sprintf("%s decrypt -p password -o output_file.pdf input_file.pdf", appName),
 )
 

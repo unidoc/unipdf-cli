@@ -38,7 +38,7 @@ Supported user permissions:
 `
 
 var encryptCmdExample = fmt.Sprintf("%s\n%s\n%s\n%s\n%s\n",
-	fmt.Sprintf("%s encrypt sample_file.pdf owner_pass", appName),
+	fmt.Sprintf("%s encrypt input_file.pdf owner_pass", appName),
 	fmt.Sprintf("%s encrypt input_file.pdf owner_pass user_pass", appName),
 	fmt.Sprintf("%s encrypt -o output_file.pdf -m aes256 input_file.pdf owner_pass user_pass", appName),
 	fmt.Sprintf("%s encrypt -o output_file.pdf -P none -m aes256 input_file.pdf owner_pass user_pass", appName),

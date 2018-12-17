@@ -13,38 +13,59 @@ import (
 	"github.com/unidoc/unipdf/pdf"
 )
 
+const grayscaleCmdDesc = `Converts the input file to grayscale.
+
+The command can be configured to convert only the specified
+pages to grayscale using the --pages parameter.
+An example of the pages parameter: 1-3,4,6-7
+The output file will contain pages 1,2,3 (1-3), 4 and 6,7 (6-7), while page
+number 5 is skipped.
+`
+
+var grayscaleCmdExample = fmt.Sprintf("%s\n%s\n%s\n%s\n",
+	fmt.Sprintf("%s grayscale input_file.pdf", appName),
+	fmt.Sprintf("%s grayscale -o output_file input_file.pdf", appName),
+	fmt.Sprintf("%s grayscale -o output_file -P 1-3 input_file.pdf", appName),
+	fmt.Sprintf("%s grayscale -o output_file -P 1-3 -p pass input_file.pdf", appName),
+)
+
 // grayscaleCmd represents the grayscale command
 var grayscaleCmd = &cobra.Command{
-	Use:                   "grayscale [FLAG]... INPUT_FILE OUTPUT_FILE",
+	Use:                   "grayscale [FLAG]... INPUT_FILE",
 	Short:                 "Convert PDF to grayscale",
-	Long:                  `A longer description that spans multiple lines and likely contains`,
-	Example:               "this is the example",
+	Long:                  grayscaleCmdDesc,
+	Example:               grayscaleCmdExample,
 	DisableFlagsInUseLine: true,
 	Run: func(cmd *cobra.Command, args []string) {
-		inputFile := args[0]
-		outputFile := args[1]
+		// Parse input parameters.
+		inputPath := args[0]
 		password, _ := cmd.Flags().GetString("password")
+
+		// Parse output file.
+		outputPath, _ := cmd.Flags().GetString("output-file")
+		if outputPath == "" {
+			outputPath = inputPath
+		}
 
 		// Parse page range.
 		pageRange, _ := cmd.Flags().GetString("pages")
 
 		pages, err := parsePageRange(pageRange)
 		if err != nil {
-			fmt.Printf("Error: %v\n", err)
-			return
+			printUsageErr(cmd, "Invalid page range specified\n")
 		}
 
-		err = pdf.Grayscale(inputFile, outputFile, password, pages)
+		err = pdf.Grayscale(inputPath, outputPath, password, pages)
 		if err != nil {
-			fmt.Println("Could not convert input file to grayscale")
-			return
+			printErr("Could not convert input file to grayscale: %s\n", err)
 		}
 
-		fmt.Println("Successfully converted PDF to grayscale")
+		fmt.Printf("Successfully converted %s to grayscale\n", inputPath)
+		fmt.Printf("Output file saved to %s\n", outputPath)
 	},
 	Args: func(cmd *cobra.Command, args []string) error {
-		if len(args) < 2 {
-			return errors.New("Must provide the input file, and output file\n")
+		if len(args) < 1 {
+			return errors.New("Must provide the input file\n")
 		}
 
 		return nil
@@ -54,6 +75,7 @@ var grayscaleCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(grayscaleCmd)
 
+	grayscaleCmd.Flags().StringP("output-file", "o", "", "Output file")
 	grayscaleCmd.Flags().StringP("password", "p", "", "PDF file password")
 	grayscaleCmd.Flags().StringP("pages", "P", "", "Pages to convert to grayscale")
 }

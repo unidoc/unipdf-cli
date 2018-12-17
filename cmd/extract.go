@@ -33,11 +33,11 @@ number 5 is skipped.
 `
 
 var extractCmdExample = fmt.Sprintf("%s\n%s\n%s\n%s\n%s\n%s\n",
-	fmt.Sprintf("%s extract -r text sample_file.pdf", appName),
+	fmt.Sprintf("%s extract -r text input_file.pdf", appName),
 	fmt.Sprintf("%s extract -r text -P 1-3 input_file.pdf", appName),
 	fmt.Sprintf("%s extract -r text -P 1-3 -p pass input_file.pdf", appName),
-	fmt.Sprintf("%s extract -r images sample_file.pdf", appName),
-	fmt.Sprintf("%s extract -r images -o images.zip sample_file.pdf", appName),
+	fmt.Sprintf("%s extract -r images input_file.pdf", appName),
+	fmt.Sprintf("%s extract -r images -o images.zip input_file.pdf", appName),
 	fmt.Sprintf("%s extract -r images -P 1-3 -p pass -o images.zip input_file.pdf", appName),
 )
 
