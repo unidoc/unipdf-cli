@@ -13,10 +13,10 @@ import (
 	"github.com/unidoc/unipdf/pdf"
 )
 
-// validateCmd represents the validate command
-var validateCmd = &cobra.Command{
-	Use:                   "validate [FLAG]... INPUT_FILE",
-	Short:                 "Validate PDF files",
+// infoCmd represents the info command
+var infoCmd = &cobra.Command{
+	Use:                   "info [FLAG]... INPUT_FILE",
+	Short:                 "Info PDF files",
 	Long:                  `A longer description that spans multiple lines and likely contains`,
 	Example:               "this is the example",
 	DisableFlagsInUseLine: true,
@@ -24,9 +24,9 @@ var validateCmd = &cobra.Command{
 		inputFile := args[0]
 		password, _ := cmd.Flags().GetString("password")
 
-		info, err := pdf.GetPDFInfo(inputFile, password)
+		info, err := pdf.Info(inputFile, password)
 		if err != nil {
-			fmt.Println("Could not validate input file")
+			fmt.Println("Could not retrieve input file information")
 			return
 		}
 
@@ -73,7 +73,7 @@ var validateCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(validateCmd)
+	rootCmd.AddCommand(infoCmd)
 
-	validateCmd.Flags().StringP("password", "p", "", "PDF file password")
+	infoCmd.Flags().StringP("password", "p", "", "PDF file password")
 }

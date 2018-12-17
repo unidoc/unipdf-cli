@@ -21,7 +21,7 @@ type PDFInfo struct {
 	EncryptionAlgo string
 }
 
-func GetPDFInfo(inputPath string, password string) (*PDFInfo, error) {
+func Info(inputPath string, password string) (*PDFInfo, error) {
 	info := &PDFInfo{
 		Name: inputPath,
 	}

@@ -6,6 +6,7 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/spf13/cobra"
@@ -14,7 +15,7 @@ import (
 
 // passwdCmd represents the passwd command
 var passwdCmd = &cobra.Command{
-	Use:                   "passwd [FLAG]... INPUT_FILE NEW_OWNER_PASSWORD NEW_USER_PASSWORD",
+	Use:                   "passwd [FLAG]... INPUT_FILE NEW_OWNER_PASSWORD [NEW_USER_PASSWORD]",
 	Short:                 "Change PDF password",
 	Long:                  `A longer description that spans multiple lines and likely contains`,
 	Example:               "this is the example",
@@ -22,8 +23,12 @@ var passwdCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		inputFile := args[0]
 		newOwnerPassword := args[1]
-		newUserPassword := args[2]
 		ownerPassword, _ := cmd.Flags().GetString("password")
+
+		newUserPassword := ""
+		if len(args) > 2 {
+			newUserPassword = args[2]
+		}
 
 		// Parse output file.
 		outputFile, _ := cmd.Flags().GetString("output-file")
@@ -39,6 +44,13 @@ var passwdCmd = &cobra.Command{
 		}
 
 		fmt.Println("Password successfully changed")
+	},
+	Args: func(cmd *cobra.Command, args []string) error {
+		if len(args) < 2 {
+			return errors.New("Must provide the input file and the new owner password\n")
+		}
+
+		return nil
 	},
 }
 
