@@ -9,27 +9,64 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/davecgh/go-spew/spew"
 	"github.com/spf13/cobra"
 	"github.com/unidoc/unipdf/pdf"
 )
 
+const encryptCmdDesc = `Encrypts the input file using the specified owner password.
+
+The algorithm used for the file encryption is configurable.
+
+Supported encryption algorithms:
+  - rc4 (default)
+  - aes128
+  - aes256
+
+A user password along with a set of permissions can also be specified.
+
+Supported user permissions:
+  - all (default)
+  - none
+  - print-low-res
+  - print-high-res
+  - modify
+  - extract
+  - extract-graphics
+  - annotate
+  - fill-forms
+  - rotate
+`
+
+var encryptCmdExample = fmt.Sprintf("%s\n%s\n%s\n%s\n%s\n",
+	fmt.Sprintf("%s encrypt sample_file.pdf owner_pass", appName),
+	fmt.Sprintf("%s encrypt input_file.pdf owner_pass user_pass", appName),
+	fmt.Sprintf("%s encrypt -o output_file.pdf -m aes256 input_file.pdf owner_pass user_pass", appName),
+	fmt.Sprintf("%s encrypt -o output_file.pdf -P none -m aes256 input_file.pdf owner_pass user_pass", appName),
+	fmt.Sprintf("%s encrypt -o output_file.pdf -P modify,annotate -m aes256 input_file.pdf owner_pass user_pass", appName),
+)
+
 // encryptCmd represents the encrypt command
 var encryptCmd = &cobra.Command{
-	Use:                   "encrypt [FLAG]... INPUT_FILE OWNER_PASSWORD",
+	Use:                   "encrypt [FLAG]... INPUT_FILE OWNER_PASSWORD [USER_PASSWORD]",
 	Short:                 "Encrypt PDF files",
-	Long:                  `A longer description that spans multiple lines and likely contains`,
-	Example:               "this is the example",
+	Long:                  encryptCmdDesc,
+	Example:               encryptCmdExample,
 	DisableFlagsInUseLine: true,
 	Run: func(cmd *cobra.Command, args []string) {
-		inputFile := args[0]
+		// Parse input parameters.
+		inputPath := args[0]
 		ownerPassword := args[1]
-		userPassword, _ := cmd.Flags().GetString("user-password")
+
+		// Parse user password.
+		var userPassword string
+		if len(args) > 2 {
+			userPassword = args[2]
+		}
 
 		// Parse output file.
-		outputFile, _ := cmd.Flags().GetString("output-file")
-		if outputFile == "" {
-			outputFile = inputFile
+		outputPath, _ := cmd.Flags().GetString("output-file")
+		if outputPath == "" {
+			outputPath = inputPath
 		}
 
 		// Parse encryption mode
@@ -37,8 +74,7 @@ var encryptCmd = &cobra.Command{
 
 		algorithm, err := parseEncryptionMode(mode)
 		if err != nil {
-			fmt.Println("Invalid encryption mode")
-			return
+			printErr("Invalid encryption mode\n")
 		}
 
 		// Parse user permissions
@@ -46,8 +82,7 @@ var encryptCmd = &cobra.Command{
 
 		perms, err := parsePermissionList(permList)
 		if err != nil {
-			fmt.Println("Invalid user permissions")
-			return
+			printErr("Invalid user permission values\n")
 		}
 
 		opts := &pdf.EncryptOpts{
@@ -57,14 +92,13 @@ var encryptCmd = &cobra.Command{
 			Permissions:   perms,
 		}
 
-		// Encrypt input file.
-		if err := pdf.Encrypt(inputFile, outputFile, opts); err != nil {
-			fmt.Println("Could not encrypt input file")
-			spew.Dump(err)
-			return
+		// Encrypt file.
+		if err := pdf.Encrypt(inputPath, outputPath, opts); err != nil {
+			printErr("Could not encrypt file: %s\n", err)
 		}
 
-		fmt.Println("File successfully encrypted")
+		fmt.Printf("File %s successfully encrypted\n", inputPath)
+		fmt.Printf("Output file saved to %s\n", outputPath)
 	},
 	Args: func(cmd *cobra.Command, args []string) error {
 		if len(args) < 2 {
@@ -78,7 +112,6 @@ var encryptCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(encryptCmd)
 
-	encryptCmd.Flags().StringP("user-password", "p", "", "PDF file password")
 	encryptCmd.Flags().StringP("output-file", "o", "", "Output file")
 	encryptCmd.Flags().StringP("perms", "P", "all", "User permissions")
 	encryptCmd.Flags().StringP("mode", "m", "rc4", "Algorithm to use for encrypting the file")
