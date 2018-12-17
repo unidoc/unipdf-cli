@@ -162,17 +162,22 @@ func readerToWriter(r *unipdf.PdfReader, w *unipdf.PdfWriter, pages []int) error
 		return errors.New("Destination PDF cannot be null")
 	}
 
+	// Get number of pages.
+	pageCount, err := r.GetNumPages()
+	if err != nil {
+		return err
+	}
+
 	// Add pages.
 	if len(pages) == 0 {
-		numPages, err := r.GetNumPages()
-		if err != nil {
-			return err
-		}
-
-		pages = createPageRange(numPages)
+		pages = createPageRange(pageCount)
 	}
 
 	for _, pageNum := range pages {
+		if pageNum < 1 || pageNum > pageCount {
+			continue
+		}
+
 		page, err := r.GetPage(pageNum)
 		if err != nil {
 			return err
@@ -199,17 +204,22 @@ func readerToCreator(r *unipdf.PdfReader, w *unicreator.Creator, pages []int) er
 		return errors.New("Destination PDF cannot be null")
 	}
 
+	// Get number of pages.
+	pageCount, err := r.GetNumPages()
+	if err != nil {
+		return err
+	}
+
 	// Add pages.
 	if len(pages) == 0 {
-		numPages, err := r.GetNumPages()
-		if err != nil {
-			return err
-		}
-
-		pages = createPageRange(numPages)
+		pages = createPageRange(pageCount)
 	}
 
 	for _, pageNum := range pages {
+		if pageNum < 1 || pageNum > pageCount {
+			continue
+		}
+
 		page, err := r.GetPage(pageNum)
 		if err != nil {
 			return err
