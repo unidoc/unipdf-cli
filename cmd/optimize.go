@@ -13,22 +13,37 @@ import (
 	"github.com/unidoc/unipdf/pdf"
 )
 
+const optimizeCmdDesc = `Optimize PDF files.
+
+The quality of the images in the output file can be configured. (see the --image-quality flag)
+`
+
+var optimizeCmdExample = fmt.Sprintf("%s\n%s\n%s\n%s\n",
+	fmt.Sprintf("%s optimize input_file.pdf", appName),
+	fmt.Sprintf("%s optimize -o output_file input_file.pdf", appName),
+	fmt.Sprintf("%s optimize -o output_file -i 75 input_file.pdf", appName),
+	fmt.Sprintf("%s optimize -o output_file -i 75 -p pass input_file.pdf", appName),
+)
+
 // optimizeCmd represents the optimize command
 var optimizeCmd = &cobra.Command{
 	Use:                   "optimize [FLAG]... INPUT_FILE",
 	Short:                 "Optimize PDF files",
-	Long:                  `A longer description that spans multiple lines and likely contains`,
-	Example:               "this is the example",
+	Long:                  optimizeCmdDesc,
+	Example:               optimizeCmdExample,
 	DisableFlagsInUseLine: true,
 	Run: func(cmd *cobra.Command, args []string) {
-		inputFile := args[0]
+		// Parse input parameters.
+		inputPath := args[0]
 		password, _ := cmd.Flags().GetString("password")
 
-		outputFile, _ := cmd.Flags().GetString("output-file")
-		if outputFile == "" {
-			outputFile = inputFile
+		// Parse output file.
+		outputPath, _ := cmd.Flags().GetString("output-file")
+		if outputPath == "" {
+			outputPath = inputPath
 		}
 
+		// Parse optimization parameters.
 		imageQuality, err := cmd.Flags().GetInt("image-quality")
 		if err != nil {
 			imageQuality = 100
@@ -38,13 +53,14 @@ var optimizeCmd = &cobra.Command{
 			ImageQuality: imageQuality,
 		}
 
-		err = pdf.Optimize(inputFile, outputFile, password, opts)
+		// Optimize PDF.
+		err = pdf.Optimize(inputPath, outputPath, password, opts)
 		if err != nil {
-			fmt.Println("Could not optimize input file")
-			return
+			printErr("Could not optimize input file: %s\n", err)
 		}
 
-		fmt.Println("Input file sucessfully optimized")
+		fmt.Printf("Input file %s sucessfully optimized\n", inputPath)
+		fmt.Printf("Output file saved to %s\n", outputPath)
 	},
 	Args: func(cmd *cobra.Command, args []string) error {
 		if len(args) < 1 {

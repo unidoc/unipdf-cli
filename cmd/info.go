@@ -25,7 +25,7 @@ var infoCmdExample = fmt.Sprintf("%s\n%s\n",
 // infoCmd represents the info command
 var infoCmd = &cobra.Command{
 	Use:                   "info [FLAG]... INPUT_FILE",
-	Short:                 "Info PDF files",
+	Short:                 "Output PDF information",
 	Long:                  infoCmdDesc,
 	Example:               infoCmdExample,
 	DisableFlagsInUseLine: true,

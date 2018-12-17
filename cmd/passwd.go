@@ -16,7 +16,7 @@ import (
 // passwdCmd represents the passwd command
 var passwdCmd = &cobra.Command{
 	Use:                   "passwd [FLAG]... INPUT_FILE NEW_OWNER_PASSWORD [NEW_USER_PASSWORD]",
-	Short:                 "Change PDF password",
+	Short:                 "Change PDF passwords",
 	Long:                  `A longer description that spans multiple lines and likely contains`,
 	Example:               "this is the example",
 	DisableFlagsInUseLine: true,
