@@ -9,7 +9,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	"github.com/unidoc/unipdf/pdf"
+	"github.com/unidoc/unicli/pdf"
 )
 
 var versionCmdExample = fmt.Sprintf("%s\n",
@@ -25,7 +25,7 @@ var versionCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		version := pdf.Version()
 
-		fmt.Printf("unipdf %s\n", version.App)
+		fmt.Printf("%s %s\n", appName, version.App)
 		fmt.Printf("unidoc %s\n", version.Lib)
 		fmt.Printf("\nLicense info\n%s", version.License)
 	},

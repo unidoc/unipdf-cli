@@ -5,7 +5,7 @@
 
 package main
 
-import "github.com/unidoc/unipdf/cmd"
+import "github.com/unidoc/unicli/cmd"
 
 func main() {
 	cmd.Execute()

@@ -10,7 +10,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	"github.com/unidoc/unipdf/pdf"
+	"github.com/unidoc/unicli/pdf"
 )
 
 const encryptCmdDesc = `Encrypts the input file using the specified owner password.

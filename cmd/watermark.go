@@ -10,7 +10,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	"github.com/unidoc/unipdf/pdf"
+	"github.com/unidoc/unicli/pdf"
 )
 
 const watermarkCmdDesc = `Add watermark to PDF files.

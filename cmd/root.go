@@ -9,11 +9,11 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
+	"github.com/unidoc/unicli/pdf"
 	unicommon "github.com/unidoc/unidoc/common"
-	"github.com/unidoc/unipdf/pdf"
 )
 
-const appName = "unipdf"
+const appName = "unicli"
 const appVersion = "0.1"
 
 const rootCmdDesc = ` is a CLI application for working with PDF files.
