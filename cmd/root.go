@@ -12,10 +12,14 @@ import (
 	"github.com/spf13/cobra"
 )
 
+const appName = "unipdf"
+const rootCmdDesc = ` is a CLI application for working with PDF files.
+It supports the most common PDF operations.  A full list of the supported
+operations can be found below.`
+
 var rootCmd = &cobra.Command{
-	Use:   "unipdf",
-	Short: "A brief description of your application",
-	Long:  `A longer description that spans multiple lines and likely contains`,
+	Use:  appName,
+	Long: appName + rootCmdDesc,
 }
 
 func Execute() {
