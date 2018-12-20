@@ -13,6 +13,8 @@ import (
 	unipdf "github.com/unidoc/unidoc/pdf/model"
 )
 
+// Merge merges all the PDF files specified by the inputPaths parameter and
+// saves the result at the location specified by the outputPath parameter.
 func Merge(inputPaths []string, outputPath string) error {
 	w := unipdf.NewPdfWriter()
 
@@ -42,7 +44,7 @@ func Merge(inputPaths []string, outputPath string) error {
 			if forms == nil {
 				forms = r.AcroForm
 			} else {
-				forms, err = MergeForms(forms, r.AcroForm, index+1)
+				forms, err = mergeForms(forms, r.AcroForm, index+1)
 				if err != nil {
 					return err
 				}
@@ -59,7 +61,7 @@ func Merge(inputPaths []string, outputPath string) error {
 	return writePDF(outputPath, &w, false)
 }
 
-func MergeResources(r, r2 *unipdf.PdfPageResources) (*unipdf.PdfPageResources, error) {
+func mergeResources(r, r2 *unipdf.PdfPageResources) (*unipdf.PdfPageResources, error) {
 	// Merge XObject resources.
 	if r.XObject == nil {
 		r.XObject = r2.XObject
@@ -174,8 +176,8 @@ func MergeResources(r, r2 *unipdf.PdfPageResources) (*unipdf.PdfPageResources, e
 	return r, nil
 }
 
-// Merge two interactive forms.
-func MergeForms(form, form2 *unipdf.PdfAcroForm, docNum int) (*unipdf.PdfAcroForm, error) {
+// mergeForms merges two interactive forms.
+func mergeForms(form, form2 *unipdf.PdfAcroForm, docNum int) (*unipdf.PdfAcroForm, error) {
 	if form.NeedAppearances == nil {
 		form.NeedAppearances = form2.NeedAppearances
 	}
@@ -191,7 +193,7 @@ func MergeForms(form, form2 *unipdf.PdfAcroForm, docNum int) (*unipdf.PdfAcroFor
 	if form.DR == nil {
 		form.DR = form2.DR
 	} else if form2.DR != nil {
-		dr, err := MergeResources(form.DR, form2.DR)
+		dr, err := mergeResources(form.DR, form2.DR)
 		if err != nil {
 			return nil, err
 		}

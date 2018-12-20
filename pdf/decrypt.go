@@ -7,6 +7,9 @@ package pdf
 
 import unipdf "github.com/unidoc/unidoc/pdf/model"
 
+// Decrypt decrypts the PDF file specified by the inputPath parameter,
+// using the specified password and saves the result to the destination
+// specified by the outputPath parameter.
 func Decrypt(inputPath, outputPath, password string) error {
 	// Read input file.
 	r, _, _, _, err := readPDF(inputPath, password)

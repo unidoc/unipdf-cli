@@ -10,19 +10,36 @@ import (
 	"sort"
 )
 
-type PDFInfo struct {
-	Name    string
-	Pages   int
-	Size    int64
+// FileInfo contains information about a PDF file.
+type FileInfo struct {
+	// Name represents the name of the PDF file.
+	Name string
+
+	// Pages represents the number of pages the PDF file has.
+	Pages int
+
+	// Size specifies the size in bytes of the PDF file.
+	Size int64
+
+	// Objects contains the types of objects the PDF file contains, along
+	// with the count for each object type.
 	Objects map[string]int
+
+	// Version specifies the PDF version of the file.
 	Version string
 
-	Encrypted      bool
+	// Encrypted specifies if the file is encrypted.
+	Encrypted bool
+
+	// EncryptionAlgo contains the name of the encryption algorithm used
+	// to encrypt the PDF file. The field is empty for non-encrypted files.
 	EncryptionAlgo string
 }
 
-func Info(inputPath string, password string) (*PDFInfo, error) {
-	info := &PDFInfo{
+// Info returns information about the PDF file specified by the inputPath
+// parameter. A password can be passed in for encrypted input files.
+func Info(inputPath string, password string) (*FileInfo, error) {
+	info := &FileInfo{
 		Name: inputPath,
 	}
 
@@ -54,7 +71,7 @@ func Info(inputPath string, password string) (*PDFInfo, error) {
 	}
 
 	keys := []string{}
-	for key, _ := range objTypes {
+	for key := range objTypes {
 		keys = append(keys, key)
 	}
 	sort.Strings(keys)

@@ -12,6 +12,7 @@ import (
 	unilicense "github.com/unidoc/unidoc/common/license"
 )
 
+// SetLicense sets the license for using the Unidoc library.
 func SetLicense(licensePath string, customer string) error {
 	// Read license file
 	content, err := ioutil.ReadFile(licensePath)
@@ -22,6 +23,7 @@ func SetLicense(licensePath string, customer string) error {
 	return unilicense.SetLicenseKey(string(content), "")
 }
 
+// SetLogLevel sets the verbosity of the output produced by the Unidoc library.
 func SetLogLevel(level unicommon.LogLevel) {
 	unicommon.SetLogger(unicommon.NewConsoleLogger(level))
 }

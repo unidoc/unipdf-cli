@@ -25,7 +25,7 @@ var versionCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		version := pdf.Version()
 
-		fmt.Printf("%s %s\n", appName, version.App)
+		fmt.Printf("%s %s\n", appName, appVersion)
 		fmt.Printf("unidoc %s\n", version.Lib)
 		fmt.Printf("\nLicense info\n%s", version.License)
 	},

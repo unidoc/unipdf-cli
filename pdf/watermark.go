@@ -9,6 +9,15 @@ import (
 	unicreator "github.com/unidoc/unidoc/pdf/creator"
 )
 
+// Watermark adds the watermark image specified by the watermarkPath parameter
+// to the pages of the PDF file specified by the inputPath parameter.
+// A password can be passed in for encrypted input files.
+// The resulting file is saved at the location specified by the outputPath
+// parameter.
+// Also, a list of pages to add watermark to can be passed in. Every page that
+// is not included in the pages slice is left intact.
+// If the pages parameter is nil or an empty slice, all the pages of the input
+// file are watermarked.
 func Watermark(inputPath, outputPath, watermarkPath, password string, pages []int) error {
 	// Read input file.
 	r, pageCount, _, _, err := readPDF(inputPath, password)

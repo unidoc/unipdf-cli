@@ -9,6 +9,9 @@ import (
 	unipdf "github.com/unidoc/unidoc/pdf/model"
 )
 
+// Passwd changes the owner and user password of an encrypted PDF file.
+// The resulting PDF file is saved at the location specified by the outputPath
+// parameter.
 func Passwd(inputPath, outputPath, ownerPassword, newOwnerPassword, newUserPassword string) error {
 	// Read input file.
 	r, _, _, perms, err := readPDF(inputPath, ownerPassword)

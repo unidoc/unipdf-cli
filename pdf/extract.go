@@ -18,6 +18,11 @@ import (
 	unipdf "github.com/unidoc/unidoc/pdf/model"
 )
 
+// ExtractText returns all text content from the PDF file specified by the
+// inputPath parameter. A password can be specified for encrypted PDF files.
+// Also, a list of pages from which to extract text can be passed in.
+// If the pages parameter is nil or an empty slice, the text is extracted from
+// all the pages of the file.
 func ExtractText(inputPath, password string, pages []int) (string, error) {
 	// Read input file.
 	r, pageCount, _, _, err := readPDF(inputPath, password)
@@ -63,6 +68,13 @@ func ExtractText(inputPath, password string, pages []int) (string, error) {
 	return text, nil
 }
 
+// ExtractImages extracts all image content from the PDF file specified by the
+// inputPath parameter. The extracted collection of images is saved as a ZIP
+// archive at the location specified by the outputPath parameter.
+// A password can be passed in, if the input file is encrypted.
+// Also, a list of pages from which to extract images can be passed in.
+// If the pages parameter is nil or an empty slice, the images are extracted
+// from all the pages of the file.
 func ExtractImages(inputPath, outputPath, password string, pages []int) (string, error) {
 	if outputPath == "" {
 		dir, name := filepath.Split(inputPath)

@@ -10,10 +10,15 @@ import (
 	unioptimize "github.com/unidoc/unidoc/pdf/model/optimize"
 )
 
+// OptimizeOpts represents the options used for optimizing PDF files.
 type OptimizeOpts struct {
+	// ImageQuality specifies the quality of the optimized images in the file.
 	ImageQuality int
 }
 
+// Optimize optimizes the PDF file specified by the inputPath parameter, using
+// the provided options and saves the result at the location specified by the
+// outputPath parameter. A password can be specified for encrypted input files.
 func Optimize(inputPath, outputPath, password string, opts *OptimizeOpts) error {
 	// Read input file.
 	r, _, _, _, err := readPDF(inputPath, password)

@@ -16,6 +16,12 @@ import (
 	"github.com/unidoc/unidoc/pdf/ps"
 )
 
+// Grayscale converts the pages of the PDF file specified by the inputPath
+// parameter to grayscale. A password can be specified for encrypted PDF files.
+// A list of pages to convert to grayscale can be passed in. Every page that
+// is not included in the pages slice is left intact.
+// If the pages parameter is nil or an empty slice, all the pages of the input
+// file are converted to grayscale.
 func Grayscale(inputPath, outputPath, password string, pages []int) error {
 	// Read input file.
 	r, pageCount, _, _, err := readPDF(inputPath, password)
@@ -61,8 +67,8 @@ func Grayscale(inputPath, outputPath, password string, pages []int) error {
 	return writePDF(outputPath, &w, safe)
 }
 
-// Replaces color objects on the page with grayscale ones.  Also references XObject Images and Forms
-// to convert those to grayscale.
+// convertPageToGrayscale replaces color objects on the page with grayscale
+// ones. Also references XObject Images and Forms to convert those to grayscale.
 func convertPageToGrayscale(page *unipdf.PdfPage) error {
 	// For each page, we go through the resources and look for the images.
 	contents, err := page.GetAllContentStreams()

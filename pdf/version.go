@@ -12,12 +12,14 @@ import (
 
 const appVersion = "0.1"
 
+// VersionInfo contains version and license information
+// about the Unidoc library.
 type VersionInfo struct {
-	App     string
 	Lib     string
 	License string
 }
 
+// Version returns version and license information about the Unidoc library.
 func Version() VersionInfo {
 	var license string
 	if key := unilicense.GetLicenseKey(); key != nil {
@@ -25,7 +27,6 @@ func Version() VersionInfo {
 	}
 
 	return VersionInfo{
-		App:     appVersion,
 		Lib:     unicommon.Version,
 		License: license,
 	}
