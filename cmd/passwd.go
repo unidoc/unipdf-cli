@@ -56,7 +56,7 @@ var passwdCmd = &cobra.Command{
 	},
 	Args: func(cmd *cobra.Command, args []string) error {
 		if len(args) < 2 {
-			return errors.New("must provide the input file and the new owner password\n")
+			return errors.New("must provide the input file and the new owner password")
 		}
 
 		return nil

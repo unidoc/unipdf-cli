@@ -13,7 +13,7 @@ import (
 	"github.com/unidoc/unicli/pdf"
 )
 
-const decryptCmdDesc = ``
+const decryptCmdDesc = `Decrypt PDF files`
 
 var decryptCmdExample = fmt.Sprintf("%s\n%s\n",
 	fmt.Sprintf("%s decrypt -p pass input_file.pdf", appName),
@@ -47,7 +47,7 @@ var decryptCmd = &cobra.Command{
 	},
 	Args: func(cmd *cobra.Command, args []string) error {
 		if len(args) < 1 {
-			return errors.New("must provide the PDF file to decrypt\n")
+			return errors.New("must provide the PDF file to decrypt")
 		}
 
 		return nil

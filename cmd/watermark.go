@@ -68,7 +68,7 @@ var watermarkCmd = &cobra.Command{
 	},
 	Args: func(cmd *cobra.Command, args []string) error {
 		if len(args) < 2 {
-			return errors.New("must provide the input file and the watermark image\n")
+			return errors.New("must provide the input file and the watermark image")
 		}
 
 		return nil

@@ -40,6 +40,9 @@ var rootCmd = &cobra.Command{
 	Long: appName + rootCmdDesc,
 }
 
+// Execute represents the entry point of the application.
+// The method parses the command line arguments and executes the appropriate
+// action.
 func Execute() {
 	readEnv()
 
