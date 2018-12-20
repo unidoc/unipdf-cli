@@ -17,6 +17,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// parsePageRange parses a string of page ranges separated by commas and
+// returns a slice of integer page numbers.
+// Example page range string: 1-3,4,6-7
+// The returned slice of pages contains pages 1,2,3 (1-3), 4 and 6,7 (6-7),
+// while page number 5 is skipped.
 func parsePageRange(pageRange string) ([]int, error) {
 	var pages []int
 
