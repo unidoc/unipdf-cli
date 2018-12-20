@@ -1,3 +1,7 @@
+unipdf
+unicli
+*.pdf
+*.zip
 *.gox
 .idea
 *.mdb
