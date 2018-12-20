@@ -39,7 +39,7 @@ var mergeCmd = &cobra.Command{
 	},
 	Args: func(cmd *cobra.Command, args []string) error {
 		if len(args) < 3 {
-			return errors.New("Must provide the output file and at least two input files\n")
+			return errors.New("must provide the output file and at least two input files\n")
 		}
 
 		return nil

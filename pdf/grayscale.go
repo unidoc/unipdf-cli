@@ -124,12 +124,12 @@ func transformContentStreamToGrayscale(contents string, resources *unipdf.PdfPag
 						cs, ok := resources.ColorSpace.Colorspaces[string(*csname)]
 						if !ok {
 							unicommon.Log.Debug("Undefined colorspace for pattern (%s)", csname)
-							return errors.New("Colorspace not defined")
+							return errors.New("colorspace not defined")
 						}
 
 						patternCS, ok := cs.(*unipdf.PdfColorspaceSpecialPattern)
 						if !ok {
-							return errors.New("Type error")
+							return errors.New("type error")
 						}
 
 						if patternCS.UnderlyingCS != nil {
@@ -160,12 +160,12 @@ func transformContentStreamToGrayscale(contents string, resources *unipdf.PdfPag
 						cs, ok := resources.ColorSpace.Colorspaces[string(*csname)]
 						if !ok {
 							unicommon.Log.Debug("Undefined colorspace for pattern (%s)", csname)
-							return errors.New("Colorspace not defined")
+							return errors.New("colorspace not defined")
 						}
 
 						patternCS, ok := cs.(*unipdf.PdfColorspaceSpecialPattern)
 						if !ok {
-							return errors.New("Type error")
+							return errors.New("type error")
 						}
 
 						if patternCS.UnderlyingCS != nil {
@@ -193,7 +193,7 @@ func transformContentStreamToGrayscale(contents string, resources *unipdf.PdfPag
 
 					patternColor, ok := gs.ColorStroking.(*unipdf.PdfColorPattern)
 					if !ok {
-						return errors.New("Invalid stroking color type")
+						return errors.New("invalid stroking color type")
 					}
 
 					if patternColor.Color != nil {
@@ -219,7 +219,7 @@ func transformContentStreamToGrayscale(contents string, resources *unipdf.PdfPag
 					// Look up the pattern name and convert it.
 					pattern, found := resources.GetPatternByName(patternColor.PatternName)
 					if !found {
-						return errors.New("Undefined pattern name")
+						return errors.New("undefined pattern name")
 					}
 
 					grayPattern, err := convertPatternToGray(pattern)
@@ -255,7 +255,7 @@ func transformContentStreamToGrayscale(contents string, resources *unipdf.PdfPag
 
 					patternColor, ok := gs.ColorNonStroking.(*unipdf.PdfColorPattern)
 					if !ok {
-						return errors.New("Invalid stroking color type")
+						return errors.New("invalid stroking color type")
 					}
 
 					if patternColor.Color != nil {
@@ -281,7 +281,7 @@ func transformContentStreamToGrayscale(contents string, resources *unipdf.PdfPag
 					// Look up the pattern name and convert it.
 					pattern, found := resources.GetPatternByName(patternColor.PatternName)
 					if !found {
-						return errors.New("Undefined pattern name")
+						return errors.New("undefined pattern name")
 					}
 
 					grayPattern, err := convertPatternToGray(pattern)
@@ -341,7 +341,7 @@ func transformContentStreamToGrayscale(contents string, resources *unipdf.PdfPag
 				return nil
 			case "sh": // Paints the shape and color defined by shading dict.
 				if len(op.Params) != 1 {
-					return errors.New("Params to sh operator should be 1")
+					return errors.New("params to sh operator should be 1")
 				}
 				shname, ok := op.Params[0].(*unicore.PdfObjectName)
 				if !ok {
@@ -356,7 +356,7 @@ func transformContentStreamToGrayscale(contents string, resources *unipdf.PdfPag
 
 				shading, found := resources.GetShadingByName(*shname)
 				if !found {
-					return errors.New("Shading not defined in resources")
+					return errors.New("shading not defined in resources")
 				}
 
 				grayShading, err := convertShadingToGray(shading)
@@ -382,7 +382,7 @@ func transformContentStreamToGrayscale(contents string, resources *unipdf.PdfPag
 			iimg, ok := op.Params[0].(*unicontent.ContentStreamInlineImage)
 			if !ok {
 				fmt.Printf("Error: Invalid handling for inline image\n")
-				return errors.New("Invalid inline image parameter")
+				return errors.New("invalid inline image parameter")
 			}
 
 			img, err := iimg.ToImage(resources)
@@ -449,7 +449,7 @@ func transformContentStreamToGrayscale(contents string, resources *unipdf.PdfPag
 		func(op *unicontent.ContentStreamOperation, gs unicontent.GraphicsState, resources *unipdf.PdfPageResources) error {
 			if len(op.Params) < 1 {
 				fmt.Printf("ERROR: Invalid number of params for Do object.\n")
-				return errors.New("Range check")
+				return errors.New("range check")
 			}
 
 			// XObject.
@@ -705,6 +705,6 @@ func convertShadingToGray(shading *unipdf.PdfShading) (*unipdf.PdfShading, error
 		return shading, nil
 	} else {
 		unicommon.Log.Debug("Cannot convert to shading pattern grayscale, color space N = %d", cs.GetNumComponents())
-		return nil, errors.New("Unsupported pattern colorspace for grayscale conversion")
+		return nil, errors.New("unsupported pattern colorspace for grayscale conversion")
 	}
 }

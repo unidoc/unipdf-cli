@@ -60,7 +60,7 @@ func readPDF(filename, password string) (*unipdf.PdfReader, int, bool, unisecuri
 		}
 
 		if !decrypted {
-			return nil, 0, false, 0, errors.New("Could not decrypt file with the provided password")
+			return nil, 0, false, 0, errors.New("could not decrypt file with the provided password")
 		}
 	}
 
@@ -156,10 +156,10 @@ func writeCreatorPDF(filename string, c *unicreator.Creator, safe bool) error {
 
 func readerToWriter(r *unipdf.PdfReader, w *unipdf.PdfWriter, pages []int) error {
 	if r == nil {
-		return errors.New("Source PDF cannot be null")
+		return errors.New("source PDF cannot be null")
 	}
 	if w == nil {
-		return errors.New("Destination PDF cannot be null")
+		return errors.New("destination PDF cannot be null")
 	}
 
 	// Get number of pages.
@@ -198,10 +198,10 @@ func readerToWriter(r *unipdf.PdfReader, w *unipdf.PdfWriter, pages []int) error
 
 func readerToCreator(r *unipdf.PdfReader, w *unicreator.Creator, pages []int) error {
 	if r == nil {
-		return errors.New("Source PDF cannot be null")
+		return errors.New("source PDF cannot be null")
 	}
 	if w == nil {
-		return errors.New("Destination PDF cannot be null")
+		return errors.New("destination PDF cannot be null")
 	}
 
 	// Get number of pages.

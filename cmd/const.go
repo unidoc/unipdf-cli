@@ -32,7 +32,7 @@ var logLevelMap = map[string]unicommon.LogLevel{
 func parseEncryptionMode(mode string) (unipdf.EncryptionAlgorithm, error) {
 	algo, ok := encryptAlgoMap[mode]
 	if !ok {
-		return 0, errors.New("Invalid encryption mode")
+		return 0, errors.New("invalid encryption mode")
 	}
 
 	return algo, nil
@@ -46,7 +46,7 @@ func parseLogLevel(levelStr string) (unicommon.LogLevel, error) {
 
 	level, ok := logLevelMap[levelStr]
 	if !ok {
-		return 0, errors.New("Invalid log level")
+		return 0, errors.New("invalid log level")
 	}
 
 	return level, nil
@@ -86,7 +86,7 @@ func parsePermissionList(permStr string) (unisecurity.Permissions, error) {
 			perms |= unisecurity.PermRotateInsert
 
 		default:
-			return 0, errors.New("Invalid permission")
+			return 0, errors.New("invalid permission")
 		}
 	}
 

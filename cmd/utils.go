@@ -30,27 +30,27 @@ func parsePageRange(pageRange string) ([]int, error) {
 
 		lenIndices := len(indices)
 		if lenIndices > 2 {
-			return nil, errors.New("Invalid page range")
+			return nil, errors.New("invalid page range")
 		}
 		if lenIndices == 2 {
 			start, err := strconv.Atoi(indices[0])
 			if err != nil {
-				return nil, errors.New("Invalid page number")
+				return nil, errors.New("invalid page number")
 			}
 			if start < 1 {
-				return nil, errors.New("Page range start must be greater than 0")
+				return nil, errors.New("page range start must be greater than 0")
 			}
 
 			end, err := strconv.Atoi(indices[1])
 			if err != nil {
-				return nil, errors.New("Invalid page number")
+				return nil, errors.New("invalid page number")
 			}
 			if end < 1 {
-				return nil, errors.New("Page range end must be greater than 0")
+				return nil, errors.New("page range end must be greater than 0")
 			}
 
 			if start > end {
-				return nil, errors.New("Page range end must be greater than the start")
+				return nil, errors.New("page range end must be greater than the start")
 			}
 
 			for page := start; page <= end; page++ {
@@ -62,7 +62,7 @@ func parsePageRange(pageRange string) ([]int, error) {
 
 		page, err := strconv.Atoi(indices[0])
 		if err != nil {
-			return nil, errors.New("Invalid page number")
+			return nil, errors.New("invalid page number")
 		}
 
 		pages = append(pages, page)

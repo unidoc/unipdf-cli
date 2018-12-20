@@ -62,7 +62,7 @@ var splitCmd = &cobra.Command{
 	},
 	Args: func(cmd *cobra.Command, args []string) error {
 		if len(args) < 2 {
-			return errors.New("Must provide at least the input and output files\n")
+			return errors.New("must provide at least the input and output files\n")
 		}
 
 		return nil
