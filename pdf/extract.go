@@ -43,21 +43,8 @@ func ExtractText(inputPath, password string, pages []int) (string, error) {
 			return "", err
 		}
 
-		// Get page streams.
-		streams, err := page.GetContentStreams()
-		if err != nil {
-			return "", err
-		}
-
-		var pageContent string
-		for _, stream := range streams {
-			pageContent += stream
-		}
-
 		// Extract page text.
-		parser := unicontent.NewContentStreamParser(pageContent)
-
-		pageText, err := parser.ExtractText()
+		pageText, err := extractPageText(page)
 		if err != nil {
 			return "", err
 		}
@@ -66,6 +53,23 @@ func ExtractText(inputPath, password string, pages []int) (string, error) {
 	}
 
 	return text, nil
+}
+
+func extractPageText(page *unipdf.PdfPage) (string, error) {
+	// Get page streams.
+	streams, err := page.GetContentStreams()
+	if err != nil {
+		return "", err
+	}
+
+	var pageContent string
+	for _, stream := range streams {
+		pageContent += stream
+	}
+
+	// Extract page text.
+	parser := unicontent.NewContentStreamParser(pageContent)
+	return parser.ExtractText()
 }
 
 // ExtractImages extracts all image content from the PDF file specified by the
