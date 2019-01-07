@@ -28,6 +28,7 @@ var decryptCmd = &cobra.Command{
 	Example:               decryptCmdExample,
 	DisableFlagsInUseLine: true,
 	Run: func(cmd *cobra.Command, args []string) {
+		// Parse input parameters.
 		inputPath := args[0]
 		password, _ := cmd.Flags().GetString("password")
 
