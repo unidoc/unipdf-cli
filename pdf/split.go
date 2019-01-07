@@ -12,7 +12,7 @@ import (
 // Split extracts the provided page list from PDF file specified by the
 // inputPath parameter and saves the resulting file at the location
 // specified by the outputPath parameter. A password can be passed in for
-// encrypted input file.
+// encrypted input files.
 // If the pages parameter is nil or an empty slice, all the pages of the input
 // file are copied to the output file.
 func Split(inputPath, outputPath, password string, pages []int) error {

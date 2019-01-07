@@ -36,9 +36,9 @@ func ExtractText(inputPath, password string, pages []int) (string, error) {
 	}
 
 	var text string
-	for _, pageNum := range pages {
+	for _, numPage := range pages {
 		// Get page.
-		page, err := r.GetPage(pageNum)
+		page, err := r.GetPage(numPage)
 		if err != nil {
 			return "", err
 		}
@@ -101,9 +101,9 @@ func ExtractImages(inputPath, outputPath, password string, pages []int) (string,
 	}
 
 	w := zip.NewWriter(outputFile)
-	for _, pageNum := range pages {
+	for _, numPage := range pages {
 		// Get page.
-		page, err := r.GetPage(pageNum)
+		page, err := r.GetPage(numPage)
 		if err != nil {
 			return "", err
 		}
@@ -121,7 +121,7 @@ func ExtractImages(inputPath, outputPath, password string, pages []int) (string,
 				return "", err
 			}
 
-			filename, err := w.Create(fmt.Sprintf("p%d_%d.jpg", pageNum, i))
+			filename, err := w.Create(fmt.Sprintf("p%d_%d.jpg", numPage, i))
 			if err != nil {
 				return "", err
 			}
