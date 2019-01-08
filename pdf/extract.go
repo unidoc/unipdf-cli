@@ -15,6 +15,7 @@ import (
 
 	unicontent "github.com/unidoc/unidoc/pdf/contentstream"
 	unicore "github.com/unidoc/unidoc/pdf/core"
+	uniextractor "github.com/unidoc/unidoc/pdf/extractor"
 	unipdf "github.com/unidoc/unidoc/pdf/model"
 )
 
@@ -36,28 +37,20 @@ func ExtractText(inputPath, password string, pages []int) (string, error) {
 	}
 
 	var text string
-	for _, pageNum := range pages {
+	for _, numPage := range pages {
 		// Get page.
-		page, err := r.GetPage(pageNum)
+		page, err := r.GetPage(numPage)
 		if err != nil {
 			return "", err
-		}
-
-		// Get page streams.
-		streams, err := page.GetContentStreams()
-		if err != nil {
-			return "", err
-		}
-
-		var pageContent string
-		for _, stream := range streams {
-			pageContent += stream
 		}
 
 		// Extract page text.
-		parser := unicontent.NewContentStreamParser(pageContent)
+		extractor, err := uniextractor.New(page)
+		if err != nil {
+			return "", err
+		}
 
-		pageText, err := parser.ExtractText()
+		pageText, err := extractor.ExtractText()
 		if err != nil {
 			return "", err
 		}
@@ -101,9 +94,9 @@ func ExtractImages(inputPath, outputPath, password string, pages []int) (string,
 	}
 
 	w := zip.NewWriter(outputFile)
-	for _, pageNum := range pages {
+	for _, numPage := range pages {
 		// Get page.
-		page, err := r.GetPage(pageNum)
+		page, err := r.GetPage(numPage)
 		if err != nil {
 			return "", err
 		}
@@ -121,7 +114,7 @@ func ExtractImages(inputPath, outputPath, password string, pages []int) (string,
 				return "", err
 			}
 
-			filename, err := w.Create(fmt.Sprintf("p%d_%d.jpg", pageNum, i))
+			filename, err := w.Create(fmt.Sprintf("p%d_%d.jpg", numPage, i))
 			if err != nil {
 				return "", err
 			}

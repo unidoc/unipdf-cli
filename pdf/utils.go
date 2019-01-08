@@ -173,12 +173,12 @@ func readerToWriter(r *unipdf.PdfReader, w *unipdf.PdfWriter, pages []int) error
 		pages = createPageRange(pageCount)
 	}
 
-	for _, pageNum := range pages {
-		if pageNum < 1 || pageNum > pageCount {
+	for _, numPage := range pages {
+		if numPage < 1 || numPage > pageCount {
 			continue
 		}
 
-		page, err := r.GetPage(pageNum)
+		page, err := r.GetPage(numPage)
 		if err != nil {
 			return err
 		}
@@ -215,12 +215,12 @@ func readerToCreator(r *unipdf.PdfReader, w *unicreator.Creator, pages []int) er
 		pages = createPageRange(pageCount)
 	}
 
-	for _, pageNum := range pages {
-		if pageNum < 1 || pageNum > pageCount {
+	for _, numPage := range pages {
+		if numPage < 1 || numPage > pageCount {
 			continue
 		}
 
-		page, err := r.GetPage(pageNum)
+		page, err := r.GetPage(numPage)
 		if err != nil {
 			return err
 		}

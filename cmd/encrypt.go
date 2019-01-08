@@ -69,7 +69,7 @@ var encryptCmd = &cobra.Command{
 			outputPath = inputPath
 		}
 
-		// Parse encryption mode
+		// Parse encryption mode.
 		mode, _ := cmd.Flags().GetString("mode")
 
 		algorithm, err := parseEncryptionMode(mode)
@@ -77,7 +77,7 @@ var encryptCmd = &cobra.Command{
 			printUsageErr(cmd, "Invalid encryption mode\n")
 		}
 
-		// Parse user permissions
+		// Parse user permissions.
 		permList, _ := cmd.Flags().GetString("perms")
 
 		perms, err := parsePermissionList(permList)
