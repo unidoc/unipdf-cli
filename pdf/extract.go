@@ -15,6 +15,7 @@ import (
 
 	unicontent "github.com/unidoc/unidoc/pdf/contentstream"
 	unicore "github.com/unidoc/unidoc/pdf/core"
+	uniextractor "github.com/unidoc/unidoc/pdf/extractor"
 	unipdf "github.com/unidoc/unidoc/pdf/model"
 )
 
@@ -44,7 +45,12 @@ func ExtractText(inputPath, password string, pages []int) (string, error) {
 		}
 
 		// Extract page text.
-		pageText, err := extractPageText(page)
+		extractor, err := uniextractor.New(page)
+		if err != nil {
+			return "", err
+		}
+
+		pageText, err := extractor.ExtractText()
 		if err != nil {
 			return "", err
 		}
@@ -53,23 +59,6 @@ func ExtractText(inputPath, password string, pages []int) (string, error) {
 	}
 
 	return text, nil
-}
-
-func extractPageText(page *unipdf.PdfPage) (string, error) {
-	// Get page streams.
-	streams, err := page.GetContentStreams()
-	if err != nil {
-		return "", err
-	}
-
-	var pageContent string
-	for _, stream := range streams {
-		pageContent += stream
-	}
-
-	// Extract page text.
-	parser := unicontent.NewContentStreamParser(pageContent)
-	return parser.ExtractText()
 }
 
 // ExtractImages extracts all image content from the PDF file specified by the
