@@ -7,6 +7,8 @@ package pdf
 
 import (
 	"strings"
+
+	uniextractor "github.com/unidoc/unidoc/pdf/extractor"
 )
 
 // SearchResult contains information about a found search term inside a PDF page.
@@ -39,7 +41,12 @@ func Search(inputPath, text, password string) ([]*SearchResult, error) {
 		}
 
 		// Extract page text.
-		pageText, err := extractPageText(page)
+		extractor, err := uniextractor.New(page)
+		if err != nil {
+			return nil, err
+		}
+
+		pageText, err := extractor.ExtractText()
 		if err != nil {
 			return nil, err
 		}
