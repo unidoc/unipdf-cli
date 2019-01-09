@@ -703,8 +703,8 @@ func convertShadingToGray(shading *unipdf.PdfShading) (*unipdf.PdfShading, error
 		shading.ColorSpace = transformcs
 
 		return shading, nil
-	} else {
-		unicommon.Log.Debug("Cannot convert to shading pattern grayscale, color space N = %d", cs.GetNumComponents())
-		return nil, errors.New("unsupported pattern colorspace for grayscale conversion")
 	}
+
+	unicommon.Log.Debug("Cannot convert to shading pattern grayscale, color space N = %d", cs.GetNumComponents())
+	return nil, errors.New("unsupported pattern colorspace for grayscale conversion")
 }
