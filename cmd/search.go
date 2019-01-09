@@ -45,7 +45,7 @@ var searchCmd = &cobra.Command{
 		totalOccurrences := 0
 		for _, result := range results {
 			totalOccurrences += result.Occurrences
-			fmt.Printf("Page %d: %d occurences\n", result.Page, result.Occurrences)
+			fmt.Printf("Page %d: %d occurrences\n", result.Page, result.Occurrences)
 		}
 
 		fmt.Printf("Total occurrences: %d\n", totalOccurrences)

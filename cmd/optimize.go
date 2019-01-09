@@ -59,7 +59,7 @@ var optimizeCmd = &cobra.Command{
 			printErr("Could not optimize input file: %s\n", err)
 		}
 
-		fmt.Printf("Input file %s sucessfully optimized\n", inputPath)
+		fmt.Printf("Input file %s successfully optimized\n", inputPath)
 		fmt.Printf("Output file saved to %s\n", outputPath)
 	},
 	Args: func(cmd *cobra.Command, args []string) error {

@@ -63,7 +63,7 @@ var watermarkCmd = &cobra.Command{
 			printErr("Could not apply watermark to the input file: %s\n", err)
 		}
 
-		fmt.Printf("Watermark sucessfully applied to %s\n", inputPath)
+		fmt.Printf("Watermark successfully applied to %s\n", inputPath)
 		fmt.Printf("Output file saved to %s\n", outputPath)
 	},
 	Args: func(cmd *cobra.Command, args []string) error {

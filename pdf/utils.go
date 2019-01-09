@@ -90,10 +90,8 @@ func writePDF(filename string, w *unipdf.PdfWriter, safe bool) error {
 				if err = os.Rename(tempPath, filename); err != nil {
 					return err
 				}
-				if err = os.Remove(tempPath); err != nil {
-					return err
-				}
-				return nil
+
+				return os.Remove(tempPath)
 			}()
 		}
 	}
@@ -131,10 +129,8 @@ func writeCreatorPDF(filename string, c *unicreator.Creator, safe bool) error {
 				if err = os.Rename(tempPath, filename); err != nil {
 					return err
 				}
-				if err = os.Remove(tempPath); err != nil {
-					return err
-				}
-				return nil
+
+				return os.Remove(tempPath)
 			}()
 		}
 	}
@@ -147,11 +143,7 @@ func writeCreatorPDF(filename string, c *unicreator.Creator, safe bool) error {
 	defer of.Close()
 
 	// Write output file.
-	if err = c.Write(of); err != nil {
-		return err
-	}
-
-	return nil
+	return c.Write(of)
 }
 
 func readerToWriter(r *unipdf.PdfReader, w *unipdf.PdfWriter, pages []int) error {
