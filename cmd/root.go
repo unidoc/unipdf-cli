@@ -23,14 +23,14 @@ operations can be found below.
 If you have a license for Unidoc, you can set it through the
 UNIDOC_LICENSE_FILE and UNIDOC_LICENSE_CUSTOMER environment variables.
 
-EXPORT UNIDOC_LICENSE_FILE="PATH_TO_LICENSE_FILE"
-EXPORT UNIDOC_LICENSE_CUSTOMER="CUSTOMER_NAME"
+export UNIDOC_LICENSE_FILE="PATH_TO_LICENSE_FILE"
+export UNIDOC_LICENSE_CUSTOMER="CUSTOMER_NAME"
 
 By default, the application only displays error messages on command execution
 failure. To change the verbosity of the output, set the UNIDOC_LOG_LEVEL
 environment variable.
 
-EXPORT UNIDOC_LOG_LEVEL="DEBUG"
+export UNIDOC_LOG_LEVEL="DEBUG"
 
 Supported log levels: trace, debug, info, notice, warning, error (default)
 `
