@@ -15,9 +15,9 @@ import (
 	unipdf "github.com/unidoc/unidoc/pdf/model"
 )
 
-// Explode extracts the specified pages from the PDF file specified by the
-// inputPath parameter. The extracted collection of single page PDF files is
-// saved as a ZIP archive at the location specified by the outputPath parameter.
+// Explode splits the PDF file specified by the inputPath parameter into single
+// page PDF files. The extracted collection of PDF files is saved as a ZIP
+// archive at the location specified by the outputPath parameter.
 // A password can be passed in, if the input file is encrypted.
 // If the pages parameter is nil or an empty slice, all pages are extracted.
 func Explode(inputPath, outputPath, password string, pages []int) (string, error) {

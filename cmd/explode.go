@@ -13,13 +13,13 @@ import (
 	"github.com/unidoc/unicli/pdf"
 )
 
-const explodeCmdDesc = `Explodes the input file into separate single page PDF files.
+const explodeCmdDesc = `Splits the input file into separate single page PDF files.
 
 The resulting PDF files are saved in a ZIP archive at the location specified
 by the --output-file parameter. If no output file is specified, the ZIP file
 is saved in the same directory as the input file.
 
-The command can be configured to explode only the specified pages using
+The command can be configured to extract only the specified pages using
 the --pages parameter.
 
 An example of the pages parameter: 1-3,4,6-7
