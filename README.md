@@ -11,6 +11,7 @@ powered by the [UniDoc](https://github.com/unidoc/unidoc) PDF library.
 
 - [Merge PDF files](#merge)
 - [Split PDF files](#split)
+- [Explode PDF files](#explode)
 - [Encrypt PDF files](#encrypt)
 - [Decrypt PDF files](#decrypt)
 - [Change user/owner password](#passwd)
@@ -73,6 +74,31 @@ unicli split -p pass input_file.pd output_file.pdf 1-2,4
 PAGES parameter example: 1-3,4,6-7
 Only pages 1,2,3 (1-3), 4 and 6,7 (6-7) will be present in the output file,
 while page number 5 is skipped.
+```
+
+#### Explode
+
+Splits the input file into separate single page PDF files and saves the result
+as a ZIP archive.
+
+```
+Usage:
+unicli explode [FLAG]... INPUT_FILE
+
+Flags:
+-o, --output-file string   Output file
+-P, --pages string         Pages to extract from the input file
+-p, --password string      Input file password
+
+Examples:
+unicli explode input_file.pdf
+unicli explode -o pages.zip input_file.pdf
+unicli explode -o pages.zip -P 1-3 input_file.pdf
+unicli explode -o pages.zip -P 1-3 -p pass input_file.pdf
+
+Pages parameter example: 1-3,4,6-7
+Pages 1,2,3 (1-3), 4 and 6,7 (6-7) will be extracted, while page
+number 5 is skipped.
 ```
 
 #### Encrypt
@@ -186,8 +212,8 @@ unicli watermark -o output file.png -P 1-3 input_file.pdf watermark.png
 unicli watermark -o output file.png -P 1-3 -p pass input_file.pdf watermark.png
 
 Pages parameter example: 1-3,4,6-7
-Only pages 1,2,3 (1-3), 4 and 6,7 (6-7) will be present in the output file,
-while page number 5 is skipped.
+Watermark will only be applied to pages 1,2,3 (1-3), 4 and 6,7 (6-7), while
+page number 5 is skipped.
 ```
 
 #### Grayscale
@@ -209,8 +235,8 @@ unicli grayscale -o output_file -P 1-3 input_file.pdf
 unicli grayscale -o output_file -P 1-3 -p pass input_file.pdf
 
 Pages parameter example: 1-3,4,6-7
-Only pages 1,2,3 (1-3), 4 and 6,7 (6-7) will be present in the output file,
-while page number 5 is skipped.
+Only pages 1,2,3 (1-3), 4 and 6,7 (6-7) will be converted to grayscale, while
+page number 5 is skipped.
 ```
 
 #### Info
@@ -250,7 +276,7 @@ unicli extract -r images -o images.zip input_file.pdf
 unicli extract -r images -P 1-3 -p pass -o images.zip input_file.pdf
 
 Pages parameter example: 1-3,4,6-7
-Only pages 1,2,3 (1-3), 4 and 6,7 (6-7) will be present in the output file,
+Resources will only be extracted from pages 1,2,3 (1-3), 4 and 6,7 (6-7),
 while page number 5 is skipped.
 
 Supported resources:

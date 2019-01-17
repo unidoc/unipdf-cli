@@ -69,6 +69,7 @@ func ExtractText(inputPath, password string, pages []int) (string, error) {
 // If the pages parameter is nil or an empty slice, the images are extracted
 // from all the pages of the file.
 func ExtractImages(inputPath, outputPath, password string, pages []int) (string, error) {
+	// Use input file directory if no output path is specified.
 	if outputPath == "" {
 		dir, name := filepath.Split(inputPath)
 		name = strings.TrimSuffix(name, filepath.Ext(name)) + ".zip"

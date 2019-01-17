@@ -97,7 +97,7 @@ var extractCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(extractCmd)
 
-	extractCmd.Flags().StringP("user-password", "p", "", "Input file password")
+	extractCmd.Flags().StringP("password", "p", "", "Input file password")
 	extractCmd.Flags().StringP("output-file", "o", "", "Output file")
 	extractCmd.Flags().StringP("resource", "r", "", "Resource to extract")
 	extractCmd.Flags().StringP("pages", "P", "", "Pages to extract resources from")
