@@ -29,8 +29,22 @@ powered by the [UniDoc](https://github.com/unidoc/unidoc) PDF library.
 
 ## Installation
 
+Minimum required Go version: 1.11
+
 ```
-go get github.com/unidoc/unicli
+git clone git@github.com:unidoc/unicli.git
+cd unicli
+go build
+```
+
+Go modules are disabled by default in GOPATH/src. If you choose to clone the
+project somewhere in this location, you must explicitly enable Go modules.
+
+```
+git clone git@github.com:unidoc/unicli.git
+cd unicli
+export GO111MODULE=on
+go build
 ```
 
 ## Showcase
