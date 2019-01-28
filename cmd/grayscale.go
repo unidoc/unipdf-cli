@@ -56,6 +56,7 @@ var grayscaleCmd = &cobra.Command{
 			printUsageErr(cmd, "Invalid page range specified\n")
 		}
 
+		// Convert file to grayscale.
 		err = pdf.Grayscale(inputPath, outputPath, password, pages)
 		if err != nil {
 			printErr("Could not convert input file to grayscale: %s\n", err)

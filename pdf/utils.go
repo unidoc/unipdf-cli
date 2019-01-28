@@ -188,7 +188,7 @@ func readerToWriter(r *unipdf.PdfReader, w *unipdf.PdfWriter, pages []int) error
 	return nil
 }
 
-func readerToCreator(r *unipdf.PdfReader, w *unicreator.Creator, pages []int) error {
+func readerToCreator(r *unipdf.PdfReader, w *unicreator.Creator, pages []int, rotationAngle int) error {
 	if r == nil {
 		return errors.New("source PDF cannot be null")
 	}
@@ -219,6 +219,12 @@ func readerToCreator(r *unipdf.PdfReader, w *unicreator.Creator, pages []int) er
 
 		if err = w.AddPage(page); err != nil {
 			return err
+		}
+
+		if rotationAngle != 0 {
+			if err = w.RotateDeg(int64(rotationAngle)); err != nil {
+				return err
+			}
 		}
 	}
 
