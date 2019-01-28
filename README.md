@@ -1,5 +1,6 @@
 # unicli
 
+[![Build Status](https://travis-ci.org/unidoc/unicli.svg?branch=master)](https://travis-ci.org/unidoc/unicli)
 [![GoDoc](https://godoc.org/github.com/unidoc/unicli?status.svg)](https://godoc.org/github.com/unidoc/unicli)
 [![Go Report Card](https://goreportcard.com/badge/github.com/unidoc/unicli)](https://goreportcard.com/report/github.com/unidoc/unicli)
 
