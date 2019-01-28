@@ -160,6 +160,11 @@ func readerToWriter(r *unipdf.PdfReader, w *unipdf.PdfWriter, pages []int) error
 		return err
 	}
 
+	// Add optional properties
+	if ocProps, err := r.GetOCProperties(); err == nil {
+		w.SetOCProperties(ocProps)
+	}
+
 	// Add pages.
 	if len(pages) == 0 {
 		pages = createPageRange(pageCount)
