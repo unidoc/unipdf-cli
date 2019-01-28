@@ -2,13 +2,8 @@ language: go
 sudo: false
 go:
   - tip
-before_install:
-  - go get github.com/mattn/goveralls
-  - go get golang.org/x/tools/cmd/cover
 env:
   - GO111MODULE=on
-script:
-  - $HOME/gopath/bin/goveralls -service=travis-ci
 deploy:
 - provider: script
   skip_cleanup: true
