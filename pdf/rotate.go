@@ -52,8 +52,38 @@ func Rotate(inputPath, outputPath string, angle int, password string, pages []in
 	}
 
 	c := unicreator.New()
-	if err = readerToCreator(r, c, pages, angle); err != nil {
-		return "", err
+	for i := 0; i < pageCount; i++ {
+		numPage := i + 1
+
+		page, err := r.GetPage(numPage)
+		if err != nil {
+			return "", err
+		}
+
+		var rotate bool
+		for _, page := range pages {
+			if page == numPage {
+				rotate = true
+				break
+			}
+		}
+
+		if err = c.AddPage(page); err != nil {
+			return "", err
+		}
+
+		if !rotate || angle == 0 {
+			continue
+		}
+
+		if err = c.RotateDeg(int64(angle)); err != nil {
+			return "", err
+		}
+	}
+
+	// Add forms.
+	if r.AcroForm != nil {
+		c.SetForms(r.AcroForm)
 	}
 
 	// Write output file.
