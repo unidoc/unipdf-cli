@@ -51,6 +51,11 @@ func Rotate(inputPath, outputPath string, angle int, password string, pages []in
 		pages = createPageRange(pageCount)
 	}
 
+	selectedPages := map[int]bool{}
+	for _, page := range pages {
+		selectedPages[page] = true
+	}
+
 	c := unicreator.New()
 	for i := 0; i < pageCount; i++ {
 		numPage := i + 1
@@ -60,18 +65,11 @@ func Rotate(inputPath, outputPath string, angle int, password string, pages []in
 			return "", err
 		}
 
-		var rotate bool
-		for _, page := range pages {
-			if page == numPage {
-				rotate = true
-				break
-			}
-		}
-
 		if err = c.AddPage(page); err != nil {
 			return "", err
 		}
 
+		rotate, _ := selectedPages[numPage]
 		if !rotate || angle == 0 {
 			continue
 		}
