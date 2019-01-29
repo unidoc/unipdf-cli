@@ -17,6 +17,7 @@ powered by the [UniDoc](https://github.com/unidoc/unidoc) PDF library.
 - [Decrypt PDF files](#decrypt)
 - [Change user/owner password](#passwd)
 - [Optimize PDF files](#optimize)
+- [Rotate PDF pages](#rotate)
 - [Add watermark images to PDF files](#watermark)
 - [Convert PDF files to grayscale](#grayscale)
 - [Validate and print PDF file information](#info)
@@ -86,7 +87,7 @@ Examples:
 unicli split input_file.pdf output_file.pdf 1-2
 unicli split -p pass input_file.pd output_file.pdf 1-2,4
 
-PAGES parameter example: 1-3,4,6-7
+PAGES argument example: 1-3,4,6-7
 Only pages 1,2,3 (1-3), 4 and 6,7 (6-7) will be present in the output file,
 while page number 5 is skipped.
 ```
@@ -111,7 +112,7 @@ unicli explode -o pages.zip input_file.pdf
 unicli explode -o pages.zip -P 1-3 input_file.pdf
 unicli explode -o pages.zip -P 1-3 -p pass input_file.pdf
 
-Pages parameter example: 1-3,4,6-7
+Pages flag example: 1-3,4,6-7
 Pages 1,2,3 (1-3), 4 and 6,7 (6-7) will be extracted, while page
 number 5 is skipped.
 ```
@@ -208,6 +209,31 @@ unicli optimize -o output_file -i 75 input_file.pdf
 unicli optimize -o output_file -i 75 -p pass input_file.pdf
 ```
 
+#### Rotate
+
+Rotate PDF file pages by a specified angle. The angle argument is specified in
+degrees and it must be a multiple of 90.
+
+```
+unicli rotate [FLAG]... INPUT_FILE ANGLE
+
+Flags:
+-o, --output-file string   Output file
+-P, --pages string         Pages to rotate
+-p, --password string      PDF file password
+
+Examples:
+unicli rotate input_file.pdf 90
+unicli rotate -- input_file.pdf -270
+unicli rotate -o output_file.pdf input_file.pdf 90
+unicli rotate -o output_file.pdf -P 1-3 input_file.pdf 90
+unicli rotate -o output_file.pdf -P 1-3 -p pass input_file.pdf 90
+
+Pages flag example: 1-3,4,6-7
+Only pages 1,2,3 (1-3), 4 and 6,7 (6-7) will be rotated, while
+page number 5 is skipped.
+```
+
 #### Watermark
 
 Add watermark images to PDF files.
@@ -226,7 +252,7 @@ unicli watermark -o output file.png input_file.pdf watermark.png
 unicli watermark -o output file.png -P 1-3 input_file.pdf watermark.png
 unicli watermark -o output file.png -P 1-3 -p pass input_file.pdf watermark.png
 
-Pages parameter example: 1-3,4,6-7
+Pages flag example: 1-3,4,6-7
 Watermark will only be applied to pages 1,2,3 (1-3), 4 and 6,7 (6-7), while
 page number 5 is skipped.
 ```
@@ -249,7 +275,7 @@ unicli grayscale -o output_file input_file.pdf
 unicli grayscale -o output_file -P 1-3 input_file.pdf
 unicli grayscale -o output_file -P 1-3 -p pass input_file.pdf
 
-Pages parameter example: 1-3,4,6-7
+Pages flag example: 1-3,4,6-7
 Only pages 1,2,3 (1-3), 4 and 6,7 (6-7) will be converted to grayscale, while
 page number 5 is skipped.
 ```
@@ -290,7 +316,7 @@ unicli extract -r images input_file.pdf
 unicli extract -r images -o images.zip input_file.pdf
 unicli extract -r images -P 1-3 -p pass -o images.zip input_file.pdf
 
-Pages parameter example: 1-3,4,6-7
+Pages flag example: 1-3,4,6-7
 Resources will only be extracted from pages 1,2,3 (1-3), 4 and 6,7 (6-7),
 while page number 5 is skipped.
 
