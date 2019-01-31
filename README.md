@@ -191,22 +191,38 @@ unicli passwd -p pass -o output_file.pdf input_file.pdf new_owner_pass new_user_
 
 #### Optimize
 
-Optimize PDF files by removing redundant objects. The quality of the
-contained images can also be configured.
+Optimize PDF files by removing redundant objects.
+
+The command can take multiple files and directories as input parameters.
+By default, each PDF file is saved in the same location as the original file,
+appending the "_optimized" suffix to the file name. Use the --overwrite flag
+to overwrite the original files.
+In addition, the optimized output files can be saved to a different directory
+by using the --target-dir flag.
+The command can search for PDF files inside the subdirectories of the
+specified input directories by using the --recursive flag.
+
+The quality of the images in the output files can be configured through
+the --image-quality flag.
 
 ```
-unicli optimize [FLAG]... INPUT_FILE
+unicli optimize [FLAG]... INPUT_FILES...
 
 Flags:
--q, --image-quality int    Optimized image quality (default 100)
--o, --output-file string   Output file
--p, --password string      File password
+-q, --image-quality int   Optimized image quality (default 100)
+-O, --overwrite           Overwrite input files
+-p, --password string     File password
+-r, --recursive           Search PDF files in subdirectories
+-t, --target-dir string   Output directory
 
 Examples:
-unicli optimize input_file.pdf
-unicli optimize -o output_file input_file.pdf
-unicli optimize -o output_file -i 75 input_file.pdf
-unicli optimize -o output_file -i 75 -p pass input_file.pdf
+unicli optimize file_1.pdf file_n.pdf
+unicli optimize -O file_1.pdf file_n.pdf
+unicli optimize -O -r file_1.pdf file_n.pdf dir_1 dir_n
+unicli optimize -t output_dir file_1.pdf file_n.pdf dir_1 dir_n
+unicli optimize -t output_dir -r file_1.pdf file_n.pdf dir_1 dir_n
+unicli optimize -t output_dir -r -i 75 file_1.pdf file_n.pdf dir_1 dir_n
+unicli optimize -t output_dir -r -i 75 -p pass file_1.pdf file_n.pdf dir_1 dir_n
 ```
 
 #### Rotate
