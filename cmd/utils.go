@@ -8,7 +8,9 @@ package cmd
 import (
 	"errors"
 	"fmt"
+	"io/ioutil"
 	"os"
+	"path/filepath"
 	"sort"
 	"strconv"
 	"strings"
@@ -16,6 +18,8 @@ import (
 
 	"github.com/spf13/cobra"
 )
+
+type fileMatcher func(string) bool
 
 // parsePageRange parses a string of page ranges separated by commas and
 // returns a slice of integer page numbers.
@@ -77,6 +81,80 @@ func parsePageRange(pageRange string) ([]int, error) {
 	sort.Ints(pages)
 
 	return pages, nil
+}
+
+func parseInputPaths(inputPaths []string, recursive bool, matcher fileMatcher) ([]string, error) {
+	var files []string
+	for _, inputPath := range inputPaths {
+		fi, err := os.Stat(inputPath)
+		if err != nil {
+			return nil, err
+		}
+
+		switch mode := fi.Mode(); {
+		case mode.IsDir():
+			dirFiles, err := parseInputDir(inputPath, recursive, matcher)
+			if err != nil {
+				return nil, err
+			}
+			files = append(files, dirFiles...)
+		case mode.IsRegular():
+			if matcher == nil || matcher(inputPath) {
+				files = append(files, inputPath)
+			}
+		}
+	}
+
+	return files, nil
+}
+
+func parseInputDir(dir string, recursive bool, matcher fileMatcher) ([]string, error) {
+	dirFiles, err := ioutil.ReadDir(dir)
+	if err != nil {
+		return nil, err
+	}
+
+	var files []string
+	for _, dirFile := range dirFiles {
+		inputPath := filepath.Join(dir, dirFile.Name())
+
+		switch mode := dirFile.Mode(); {
+		case mode.IsDir():
+			if !recursive {
+				continue
+			}
+
+			subdirFiles, err := parseInputDir(inputPath, recursive, matcher)
+			if err != nil {
+				return nil, err
+			}
+			files = append(files, subdirFiles...)
+		case mode.IsRegular():
+			if matcher == nil || matcher(inputPath) {
+				files = append(files, inputPath)
+			}
+		}
+	}
+
+	return files, nil
+}
+
+func isPDF(inputPath string) bool {
+	return strings.ToLower(filepath.Ext(inputPath)) == ".pdf"
+}
+
+func generateOutputPath(inputPath, outputDir, nameSuffix string, overwrite bool) string {
+	if overwrite {
+		return inputPath
+	}
+
+	dir, name := filepath.Split(inputPath)
+	if outputDir != "" {
+		return filepath.Join(outputDir, name)
+	}
+
+	name = strings.TrimSuffix(name, filepath.Ext(name))
+	return filepath.Join(dir, fmt.Sprintf("%s_%s.pdf", name, nameSuffix))
 }
 
 func removeSpaces(s string) string {
