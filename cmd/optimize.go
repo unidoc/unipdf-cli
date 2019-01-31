@@ -65,7 +65,7 @@ var optimizeCmd = &cobra.Command{
 		}
 
 		// Parse input parameters.
-		inputPaths, err := parseInputPaths(args, recursive, isPDF)
+		inputPaths, err := parseInputPaths(args, recursive, pdfMatcher)
 		if err != nil {
 			printErr("Could not parse input files: %s\n", err)
 		}
@@ -101,7 +101,7 @@ var optimizeCmd = &cobra.Command{
 	},
 	Args: func(cmd *cobra.Command, args []string) error {
 		if len(args) < 1 {
-			return errors.New("must provide at least on input file")
+			return errors.New("must provide at least one input file")
 		}
 
 		return nil

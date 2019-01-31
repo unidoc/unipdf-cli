@@ -21,6 +21,10 @@ import (
 
 type fileMatcher func(string) bool
 
+func pdfMatcher(inputPath string) bool {
+	return strings.ToLower(filepath.Ext(inputPath)) == ".pdf"
+}
+
 // parsePageRange parses a string of page ranges separated by commas and
 // returns a slice of integer page numbers.
 // Example page range string: 1-3,4,6-7
@@ -137,10 +141,6 @@ func parseInputDir(dir string, recursive bool, matcher fileMatcher) ([]string, e
 	}
 
 	return files, nil
-}
-
-func isPDF(inputPath string) bool {
-	return strings.ToLower(filepath.Ext(inputPath)) == ".pdf"
 }
 
 func generateOutputPath(inputPath, outputDir, nameSuffix string, overwrite bool) string {
