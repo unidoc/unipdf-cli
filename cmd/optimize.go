@@ -61,7 +61,7 @@ var optimizeCmd = &cobra.Command{
 		}
 
 		opts := &pdf.OptimizeOpts{
-			ImageQuality: imageQuality,
+			ImageQuality: clampInt(imageQuality, 10, 100),
 		}
 
 		// Parse input parameters.

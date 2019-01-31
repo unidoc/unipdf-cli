@@ -157,6 +157,17 @@ func generateOutputPath(inputPath, outputDir, nameSuffix string, overwrite bool)
 	return filepath.Join(dir, fmt.Sprintf("%s_%s.pdf", name, nameSuffix))
 }
 
+func clampInt(val, min, max int) int {
+	if val < min {
+		return min
+	}
+	if val > max {
+		return max
+	}
+
+	return val
+}
+
 func removeSpaces(s string) string {
 	return strings.TrimFunc(s, func(r rune) bool {
 		return unicode.IsSpace(r)
