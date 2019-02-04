@@ -27,17 +27,21 @@ The command can search for PDF files inside the subdirectories of the
 specified input directories by using the --recursive flag.
 
 The quality of the images in the output files can be configured through
-the --image-quality flag.
+the --image-quality flag (default 90).
+The resolution of the output images can be controlled using the --image-ppi flag.
+Common pixels per inch values are 100 (screen), 150-300 (print), 600 (art). If
+not specified, the PPI of the output images is 100.
 `
 
-var optimizeCmdExample = fmt.Sprintf("%s\n%s\n%s\n%s\n%s\n%s\n%s\n",
+var optimizeCmdExample = fmt.Sprintf("%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n",
 	fmt.Sprintf("%s optimize file_1.pdf file_n.pdf", appName),
 	fmt.Sprintf("%s optimize -O file_1.pdf file_n.pdf", appName),
 	fmt.Sprintf("%s optimize -O -r file_1.pdf file_n.pdf dir_1 dir_n", appName),
-	fmt.Sprintf("%s optimize -t output_dir file_1.pdf file_n.pdf dir_1 dir_n", appName),
-	fmt.Sprintf("%s optimize -t output_dir -r file_1.pdf file_n.pdf dir_1 dir_n", appName),
-	fmt.Sprintf("%s optimize -t output_dir -r -i 75 file_1.pdf file_n.pdf dir_1 dir_n", appName),
-	fmt.Sprintf("%s optimize -t output_dir -r -i 75 -p pass file_1.pdf file_n.pdf dir_1 dir_n", appName),
+	fmt.Sprintf("%s optimize -t out_dir file_1.pdf file_n.pdf dir_1 dir_n", appName),
+	fmt.Sprintf("%s optimize -t out_dir -r file_1.pdf file_n.pdf dir_1 dir_n", appName),
+	fmt.Sprintf("%s optimize -t out_dir -r -q 75 file_1.pdf file_n.pdf dir_1 dir_n", appName),
+	fmt.Sprintf("%s optimize -t out_dir -r -q 75 -P 100 file_1.pdf file_n.pdf dir_1 dir_n", appName),
+	fmt.Sprintf("%s optimize -t out_dir -r -q 75 -P 100 -p pass file_1.pdf file_n.pdf dir_1 dir_n", appName),
 )
 
 // optimizeCmd represents the optimize command
@@ -57,11 +61,17 @@ var optimizeCmd = &cobra.Command{
 		// Parse optimization parameters.
 		imageQuality, err := cmd.Flags().GetInt("image-quality")
 		if err != nil {
-			imageQuality = 100
+			imageQuality = 90
+		}
+
+		imagePPI, err := cmd.Flags().GetFloat64("image-ppi")
+		if err != nil {
+			imagePPI = 100
 		}
 
 		opts := &pdf.OptimizeOpts{
 			ImageQuality: clampInt(imageQuality, 10, 100),
+			ImagePPI:     imagePPI,
 		}
 
 		// Parse input parameters.
@@ -111,9 +121,10 @@ var optimizeCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(optimizeCmd)
 
-	optimizeCmd.Flags().StringP("target-dir", "t", "", "Output directory")
-	optimizeCmd.Flags().BoolP("overwrite", "O", false, "Overwrite input files")
-	optimizeCmd.Flags().BoolP("recursive", "r", false, "Search PDF files in subdirectories")
-	optimizeCmd.Flags().StringP("password", "p", "", "File password")
-	optimizeCmd.Flags().IntP("image-quality", "q", 100, "Optimized image quality")
+	optimizeCmd.Flags().StringP("target-dir", "t", "", "output directory")
+	optimizeCmd.Flags().BoolP("overwrite", "O", false, "overwrite input files")
+	optimizeCmd.Flags().BoolP("recursive", "r", false, "search PDF files in subdirectories")
+	optimizeCmd.Flags().StringP("password", "p", "", "file password")
+	optimizeCmd.Flags().IntP("image-quality", "q", 90, "output JPEG image quality")
+	optimizeCmd.Flags().Float64P("image-ppi", "P", 100, "output images pixels per inch")
 }
