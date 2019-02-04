@@ -8,7 +8,6 @@ package cmd
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"sort"
@@ -88,59 +87,162 @@ func parsePageRange(pageRange string) ([]int, error) {
 }
 
 func parseInputPaths(inputPaths []string, recursive bool, matcher fileMatcher) ([]string, error) {
+	var err error
 	var files []string
-	for _, inputPath := range inputPaths {
-		fi, err := os.Stat(inputPath)
+	acc := map[string]bool{}
+	lenInputPaths := len(inputPaths)
+
+	for i := 0; i < lenInputPaths; i++ {
+		// Convert relative paths to absolute ones.
+		inputPath := inputPaths[i]
+		if !filepath.IsAbs(inputPath) {
+			inputPath, err = filepath.Abs(inputPath)
+			if err != nil {
+				return nil, err
+			}
+		}
+
+		// Add visited file to the accumulator.
+		if _, ok := acc[inputPath]; ok {
+			continue
+		}
+		acc[inputPath] = true
+
+		// Get file info.
+		inputFile, err := os.Lstat(inputPath)
 		if err != nil {
 			return nil, err
 		}
 
-		switch mode := fi.Mode(); {
-		case mode.IsDir():
-			dirFiles, err := parseInputDir(inputPath, recursive, matcher)
-			if err != nil {
-				return nil, err
-			}
-			files = append(files, dirFiles...)
+		// Check file type.
+		switch mode := inputFile.Mode(); {
 		case mode.IsRegular():
 			if matcher == nil || matcher(inputPath) {
 				files = append(files, inputPath)
 			}
+		case mode.IsDir():
+			dirFiles, err := parseInputDir(inputPath, recursive, acc, matcher)
+			if err != nil {
+				return nil, err
+			}
+			files = append(files, dirFiles...)
+		case mode&os.ModeSymlink != 0:
+			// If file is a symlink, resolve it then parse the real path.
+			realPath, err := resolveSymlink(inputPath, 3)
+			if err != nil {
+				continue
+			}
+
+			inputPaths[i] = realPath
+			i--
 		}
 	}
 
 	return files, nil
 }
 
-func parseInputDir(dir string, recursive bool, matcher fileMatcher) ([]string, error) {
-	dirFiles, err := ioutil.ReadDir(dir)
+func parseInputDir(dir string, recursive bool, acc map[string]bool, matcher fileMatcher) ([]string, error) {
+	dirFiles, err := dirFileNames(dir)
 	if err != nil {
 		return nil, err
 	}
 
 	var files []string
-	for _, dirFile := range dirFiles {
-		inputPath := filepath.Join(dir, dirFile.Name())
+	var lenDirFiles = len(dirFiles)
 
+	for i := 0; i < lenDirFiles; i++ {
+		// Convert relative paths to absolute ones.
+		inputPath := dirFiles[i]
+		if !filepath.IsAbs(inputPath) {
+			inputPath, err = filepath.Abs(inputPath)
+			if err != nil {
+				return nil, err
+			}
+		}
+
+		// Get file info.
+		dirFile, err := os.Lstat(inputPath)
+		if err != nil {
+			return nil, err
+		}
+
+		// Add visited file to the accumulator.
+		if _, ok := acc[inputPath]; ok {
+			continue
+		}
+		acc[inputPath] = true
+
+		// Check file type.
 		switch mode := dirFile.Mode(); {
+		case mode.IsRegular():
+			if matcher == nil || matcher(inputPath) {
+				files = append(files, inputPath)
+			}
 		case mode.IsDir():
 			if !recursive {
 				continue
 			}
 
-			subdirFiles, err := parseInputDir(inputPath, recursive, matcher)
+			subdirFiles, err := parseInputDir(inputPath, recursive, acc, matcher)
 			if err != nil {
 				return nil, err
 			}
 			files = append(files, subdirFiles...)
-		case mode.IsRegular():
-			if matcher == nil || matcher(inputPath) {
-				files = append(files, inputPath)
+		case mode&os.ModeSymlink != 0:
+			// If file is a symlink, resolve it then parse the real path.
+			realPath, err := resolveSymlink(inputPath, 3)
+			if err != nil {
+				continue
 			}
+
+			dirFiles[i] = realPath
+			i--
 		}
 	}
 
 	return files, nil
+}
+
+func dirFileNames(inputPath string) ([]string, error) {
+	f, err := os.Open(inputPath)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+
+	dirFiles, err := f.Readdirnames(-1)
+	if err != nil {
+		return nil, err
+	}
+
+	lenDirFiles := len(dirFiles)
+	for i := 0; i < lenDirFiles; i++ {
+		dirFiles[i] = filepath.Join(inputPath, dirFiles[i])
+	}
+
+	return dirFiles, nil
+}
+
+func resolveSymlink(inputPath string, level int) (string, error) {
+	if level <= 0 {
+		return "", errors.New("maximum recursion level exceeded")
+	}
+
+	filePath, err := os.Readlink(inputPath)
+	if err != nil {
+		return "", err
+	}
+
+	fi, err := os.Lstat(filePath)
+	if err != nil {
+		return "", err
+	}
+
+	if fi.Mode()&os.ModeSymlink != 0 {
+		return resolveSymlink(filePath, level-1)
+	}
+
+	return filePath, nil
 }
 
 func generateOutputPath(inputPath, outputDir, nameSuffix string, overwrite bool) string {
