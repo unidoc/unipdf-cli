@@ -191,7 +191,7 @@ unicli passwd -p pass -o output_file.pdf input_file.pdf new_owner_pass new_user_
 
 #### Optimize
 
-Optimize PDF files by removing redundant objects.
+Optimize PDF files by optimizing structure, compression and image quality.
 
 The command can take multiple files and directories as input parameters.
 By default, each PDF file is saved in the same location as the original file,
