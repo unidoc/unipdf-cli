@@ -203,26 +203,31 @@ The command can search for PDF files inside the subdirectories of the
 specified input directories by using the --recursive flag.
 
 The quality of the images in the output files can be configured through
-the --image-quality flag.
+the --image-quality flag (default 90).
+The resolution of the output images can be controlled using the --image-ppi flag.
+Common pixels per inch values are 100 (screen), 150-300 (print), 600 (art). If
+not specified, the PPI of the output images is 100.
 
 ```
 unicli optimize [FLAG]... INPUT_FILES...
 
 Flags:
--q, --image-quality int   Optimized image quality (default 100)
--O, --overwrite           Overwrite input files
--p, --password string     File password
--r, --recursive           Search PDF files in subdirectories
--t, --target-dir string   Output directory
+-P, --image-ppi float     output images pixels per inch (default 100)
+-q, --image-quality int   output JPEG image quality (default 90)
+-O, --overwrite           overwrite input files
+-p, --password string     file password
+-r, --recursive           search PDF files in subdirectories
+-t, --target-dir string   output directory
 
 Examples:
 unicli optimize file_1.pdf file_n.pdf
 unicli optimize -O file_1.pdf file_n.pdf
 unicli optimize -O -r file_1.pdf file_n.pdf dir_1 dir_n
-unicli optimize -t output_dir file_1.pdf file_n.pdf dir_1 dir_n
-unicli optimize -t output_dir -r file_1.pdf file_n.pdf dir_1 dir_n
-unicli optimize -t output_dir -r -i 75 file_1.pdf file_n.pdf dir_1 dir_n
-unicli optimize -t output_dir -r -i 75 -p pass file_1.pdf file_n.pdf dir_1 dir_n
+unicli optimize -t out_dir file_1.pdf file_n.pdf dir_1 dir_n
+unicli optimize -t out_dir -r file_1.pdf file_n.pdf dir_1 dir_n
+unicli optimize -t out_dir -r -q 75 file_1.pdf file_n.pdf dir_1 dir_n
+unicli optimize -t out_dir -r -q 75 -P 100 file_1.pdf file_n.pdf dir_1 dir_n
+unicli optimize -t out_dir -r -q 75 -P 100 -p pass file_1.pdf file_n.pdf dir_1 dir_n
 ```
 
 #### Rotate
