@@ -147,6 +147,10 @@ func parseInputDir(dir string, recursive bool, acc map[string]bool, matcher file
 		return nil, err
 	}
 
+	if acc == nil {
+		acc = map[string]bool{}
+	}
+
 	var files []string
 	var lenDirFiles = len(dirFiles)
 
