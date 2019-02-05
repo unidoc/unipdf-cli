@@ -191,22 +191,43 @@ unicli passwd -p pass -o output_file.pdf input_file.pdf new_owner_pass new_user_
 
 #### Optimize
 
-Optimize PDF files by removing redundant objects. The quality of the
-contained images can also be configured.
+Optimize PDF files by optimizing structure, compression and image quality.
+
+The command can take multiple files and directories as input parameters.
+By default, each PDF file is saved in the same location as the original file,
+appending the "_optimized" suffix to the file name. Use the --overwrite flag
+to overwrite the original files.
+In addition, the optimized output files can be saved to a different directory
+by using the --target-dir flag.
+The command can search for PDF files inside the subdirectories of the
+specified input directories by using the --recursive flag.
+
+The quality of the images in the output files can be configured through
+the --image-quality flag (default 90).
+The resolution of the output images can be controlled using the --image-ppi flag.
+Common pixels per inch values are 100 (screen), 150-300 (print), 600 (art). If
+not specified, the PPI of the output images is 100.
 
 ```
-unicli optimize [FLAG]... INPUT_FILE
+unicli optimize [FLAG]... INPUT_FILES...
 
 Flags:
--q, --image-quality int    Optimized image quality (default 100)
--o, --output-file string   Output file
--p, --password string      File password
+-P, --image-ppi float     output images pixels per inch (default 100)
+-q, --image-quality int   output JPEG image quality (default 90)
+-O, --overwrite           overwrite input files
+-p, --password string     file password
+-r, --recursive           search PDF files in subdirectories
+-t, --target-dir string   output directory
 
 Examples:
-unicli optimize input_file.pdf
-unicli optimize -o output_file input_file.pdf
-unicli optimize -o output_file -i 75 input_file.pdf
-unicli optimize -o output_file -i 75 -p pass input_file.pdf
+unicli optimize file_1.pdf file_n.pdf
+unicli optimize -O file_1.pdf file_n.pdf
+unicli optimize -O -r file_1.pdf file_n.pdf dir_1 dir_n
+unicli optimize -t out_dir file_1.pdf file_n.pdf dir_1 dir_n
+unicli optimize -t out_dir -r file_1.pdf file_n.pdf dir_1 dir_n
+unicli optimize -t out_dir -r -q 75 file_1.pdf file_n.pdf dir_1 dir_n
+unicli optimize -t out_dir -r -q 75 -P 100 file_1.pdf file_n.pdf dir_1 dir_n
+unicli optimize -t out_dir -r -q 75 -P 100 -p pass file_1.pdf file_n.pdf dir_1 dir_n
 ```
 
 #### Rotate

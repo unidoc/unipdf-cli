@@ -9,6 +9,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"path/filepath"
 	"sort"
 	"strconv"
 	"strings"
@@ -16,6 +17,12 @@ import (
 
 	"github.com/spf13/cobra"
 )
+
+type fileMatcher func(string) bool
+
+func pdfMatcher(inputPath string) bool {
+	return strings.ToLower(filepath.Ext(inputPath)) == ".pdf"
+}
 
 // parsePageRange parses a string of page ranges separated by commas and
 // returns a slice of integer page numbers.
@@ -77,6 +84,140 @@ func parsePageRange(pageRange string) ([]int, error) {
 	sort.Ints(pages)
 
 	return pages, nil
+}
+
+func parseInputPaths(inputPaths []string, recursive bool, matcher fileMatcher) ([]string, error) {
+	var err error
+	var files []string
+	acc := map[string]bool{}
+
+	for _, inputPath := range inputPaths {
+		// Convert relative paths to absolute ones.
+		if !filepath.IsAbs(inputPath) {
+			inputPath, err = filepath.Abs(inputPath)
+			if err != nil {
+				return nil, err
+			}
+		}
+
+		// Add visited file to the accumulator.
+		if _, ok := acc[inputPath]; ok {
+			continue
+		}
+		acc[inputPath] = true
+
+		// Get file info.
+		inputFile, err := os.Lstat(inputPath)
+		if err != nil {
+			return nil, err
+		}
+
+		// Check file type.
+		switch mode := inputFile.Mode(); {
+		case mode.IsRegular():
+			if matcher == nil || matcher(inputPath) {
+				files = append(files, inputPath)
+			}
+		case mode.IsDir():
+			dirFiles, err := parseInputDir(inputPath, recursive, acc, matcher)
+			if err != nil {
+				return nil, err
+			}
+			files = append(files, dirFiles...)
+		}
+	}
+
+	return files, nil
+}
+
+func parseInputDir(dir string, recursive bool, acc map[string]bool, matcher fileMatcher) ([]string, error) {
+	inputPaths, err := dirFiles(dir)
+	if err != nil {
+		return nil, err
+	}
+
+	if acc == nil {
+		acc = map[string]bool{}
+	}
+
+	var files []string
+	for _, inputPath := range inputPaths {
+		// Convert relative paths to absolute ones.
+		inputPath = filepath.Join(dir, inputPath)
+		if !filepath.IsAbs(inputPath) {
+			inputPath, err = filepath.Abs(inputPath)
+			if err != nil {
+				return nil, err
+			}
+		}
+
+		// Add visited file to the accumulator.
+		if _, ok := acc[inputPath]; ok {
+			continue
+		}
+		acc[inputPath] = true
+
+		// Get file info.
+		inputFile, err := os.Lstat(inputPath)
+		if err != nil {
+			return nil, err
+		}
+
+		// Check file type.
+		switch mode := inputFile.Mode(); {
+		case mode.IsRegular():
+			if matcher == nil || matcher(inputPath) {
+				files = append(files, inputPath)
+			}
+		case mode.IsDir():
+			if !recursive {
+				continue
+			}
+
+			subdirFiles, err := parseInputDir(inputPath, recursive, acc, matcher)
+			if err != nil {
+				return nil, err
+			}
+			files = append(files, subdirFiles...)
+		}
+	}
+
+	return files, nil
+}
+
+func dirFiles(dir string) ([]string, error) {
+	f, err := os.Open(dir)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+
+	return f.Readdirnames(-1)
+}
+
+func generateOutputPath(inputPath, outputDir, nameSuffix string, overwrite bool) string {
+	if overwrite {
+		return inputPath
+	}
+
+	dir, name := filepath.Split(inputPath)
+	if outputDir != "" {
+		return filepath.Join(outputDir, name)
+	}
+
+	name = strings.TrimSuffix(name, filepath.Ext(name))
+	return filepath.Join(dir, fmt.Sprintf("%s_%s.pdf", name, nameSuffix))
+}
+
+func clampInt(val, min, max int) int {
+	if val < min {
+		return min
+	}
+	if val > max {
+		return max
+	}
+
+	return val
 }
 
 func removeSpaces(s string) string {

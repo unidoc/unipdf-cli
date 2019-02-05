@@ -12,8 +12,11 @@ import (
 
 // OptimizeOpts represents the options used for optimizing PDF files.
 type OptimizeOpts struct {
-	// ImageQuality specifies the quality of the optimized images in the file.
+	// ImageQuality specifies the quality of the optimized images.
 	ImageQuality int
+
+	// ImagePPI specifies the maximum pixels per inch of the optimized images.
+	ImagePPI float64
 }
 
 // Optimize optimizes the PDF file specified by the inputPath parameter, using
@@ -46,6 +49,7 @@ func Optimize(inputPath, outputPath, password string, opts *OptimizeOpts) error 
 		CompressStreams:                 true,
 		UseObjectStreams:                true,
 		ImageQuality:                    opts.ImageQuality,
+		ImageUpperPPI:                   opts.ImagePPI,
 	}))
 
 	// Write output file.
