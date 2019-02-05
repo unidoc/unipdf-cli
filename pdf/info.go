@@ -10,16 +10,21 @@ import (
 	"sort"
 )
 
+// FileStat contains basic information about a file.
+type FileStat struct {
+	// Name represents the name of the file.
+	Name string
+
+	// Size specifies the size in bytes of the file.
+	Size int64
+}
+
 // FileInfo contains information about a PDF file.
 type FileInfo struct {
-	// Name represents the name of the PDF file.
-	Name string
+	FileStat
 
 	// Pages represents the number of pages the PDF file has.
 	Pages int
-
-	// Size specifies the size in bytes of the PDF file.
-	Size int64
 
 	// Objects contains the types of objects the PDF file contains, along
 	// with the count for each object type.
@@ -39,16 +44,15 @@ type FileInfo struct {
 // Info returns information about the PDF file specified by the inputPath
 // parameter. A password can be passed in for encrypted input files.
 func Info(inputPath string, password string) (*FileInfo, error) {
-	info := &FileInfo{
-		Name: inputPath,
-	}
+	info := &FileInfo{}
+	info.Name = inputPath
 
 	// Get file stat.
-	fileInfo, err := os.Stat(inputPath)
+	fi, err := os.Stat(inputPath)
 	if err != nil {
 		return nil, err
 	}
-	info.Size = fileInfo.Size()
+	info.Size = fi.Size()
 
 	// Read input file.
 	r, pages, encrypted, _, err := readPDF(inputPath, password)

@@ -6,6 +6,9 @@
 package pdf
 
 import (
+	"os"
+	"time"
+
 	unipdf "github.com/unidoc/unidoc/pdf/model"
 	unioptimize "github.com/unidoc/unidoc/pdf/model/optimize"
 )
@@ -19,20 +22,41 @@ type OptimizeOpts struct {
 	ImagePPI float64
 }
 
+// OptimizeResult contains information about the optimization process.
+type OptimizeResult struct {
+	// Original contains information about the original file.
+	Original FileStat
+
+	// Optimized contains information about the optimized file.
+	Optimized FileStat
+
+	// Duration specifies the optimization processing time in nanoseconds.
+	Duration time.Duration
+}
+
 // Optimize optimizes the PDF file specified by the inputPath parameter, using
 // the provided options and saves the result at the location specified by the
 // outputPath parameter. A password can be specified for encrypted input files.
-func Optimize(inputPath, outputPath, password string, opts *OptimizeOpts) error {
+func Optimize(inputPath, outputPath, password string, opts *OptimizeOpts) (*OptimizeResult, error) {
+	// Initialize starting time.
+	start := time.Now()
+
+	// Get input file stat.
+	inputFileInfo, err := os.Stat(inputPath)
+	if err != nil {
+		return nil, err
+	}
+
 	// Read input file.
 	r, _, _, _, err := readPDF(inputPath, password)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	// Copy input file contents to the output file.
 	w := unipdf.NewPdfWriter()
 	if err = readerToWriter(r, &w, nil); err != nil {
-		return err
+		return nil, err
 	}
 
 	// Add optimizer.
@@ -54,5 +78,25 @@ func Optimize(inputPath, outputPath, password string, opts *OptimizeOpts) error 
 
 	// Write output file.
 	safe := inputPath == outputPath
-	return writePDF(outputPath, &w, safe)
+	if err = writePDF(outputPath, &w, safe); err != nil {
+		return nil, err
+	}
+
+	// Get output file stat.
+	outputFileInfo, err := os.Stat(outputPath)
+	if err != nil {
+		return nil, err
+	}
+
+	return &OptimizeResult{
+		Original: FileStat{
+			Name: inputPath,
+			Size: inputFileInfo.Size(),
+		},
+		Optimized: FileStat{
+			Name: outputPath,
+			Size: outputFileInfo.Size(),
+		},
+		Duration: time.Since(start),
+	}, nil
 }

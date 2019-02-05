@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/spf13/cobra"
 	"github.com/unidoc/unicli/pdf"
@@ -99,13 +100,23 @@ var optimizeCmd = &cobra.Command{
 			outputPath := generateOutputPath(inputPath, outputDir, "optimized", overwrite)
 
 			// Optimize input file.
-			err = pdf.Optimize(inputPath, outputPath, password, opts)
+			res, err := pdf.Optimize(inputPath, outputPath, password, opts)
 			if err != nil {
 				printErr("Could not optimize input file: %s\n", err)
 			}
 
+			inSize := res.Original.Size
+			outSize := res.Optimized.Size
+			ratio := 100.0 - (float64(outSize) / float64(inSize) * 100.0)
+			duration := float64(res.Duration) / float64(time.Millisecond)
+
+			fmt.Printf("Original: %s\n", res.Original.Name)
+			fmt.Printf("Original size: %d bytes\n", inSize)
+			fmt.Printf("Optimized: %s\n", res.Optimized.Name)
+			fmt.Printf("Optimized size: %d bytes\n", outSize)
+			fmt.Printf("Compression ratio: %.2f%%\n", ratio)
+			fmt.Printf("Processing time: %.2f ms\n", duration)
 			fmt.Println("Status: success")
-			fmt.Printf("Output file: %s\n", outputPath)
 			fmt.Println(strings.Repeat("-", 10))
 		}
 	},
