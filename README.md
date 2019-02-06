@@ -39,8 +39,8 @@ cd unicli
 go build
 ```
 
-Go modules are disabled by default in GOPATH/src. If you choose to clone the
-project somewhere in this location, you must explicitly enable Go modules.
+In Go 1.11 modules are disabled by default in GOPATH/src (`GO111MODULE=auto`). If you choose to clone the
+project somewhere in this location, you must explicitly enable Go modules. Newer versions will have Go modules enabled by default.
 
 ```
 git clone git@github.com:unidoc/unicli.git
