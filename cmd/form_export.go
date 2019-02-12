@@ -20,7 +20,8 @@ const formExportCmdDesc = `Export JSON representation of form fields.
 By default, the resulting JSON content is printed to STDOUT. The output can be
 saved to a file by using the --output-file flag (see the Examples section).
 
-The exported JSON can be used to fill PDF forms using the "form fill" command.
+The exported JSON template can be used to fill PDF forms using the
+"form fill" command.
 `
 
 var formExportCmdExample = fmt.Sprintf("%s\n%s\n%s\n%s\n",
