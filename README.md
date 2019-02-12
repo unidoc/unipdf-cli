@@ -24,6 +24,9 @@ powered by the [UniDoc](https://github.com/unidoc/unidoc) PDF library.
 - [Extract text from PDF files](#extract)
 - [Extract images from PDF files](#extract)
 - [Search text in PDF files](#search)
+- [Export PDF form fields as JSON](#form-export)
+- [Fill PDF form fields from JSON file](#form-fill)
+- [Flatten PDF form fields](#form-flatten)
 
 ## Short demo
 
@@ -39,8 +42,9 @@ cd unicli
 go build
 ```
 
-In Go 1.11 modules are disabled by default in GOPATH/src (`GO111MODULE=auto`). If you choose to clone the
-project somewhere in this location, you must explicitly enable Go modules. Newer versions will have Go modules enabled by default.
+In Go 1.11 modules are disabled by default in GOPATH/src (`GO111MODULE=auto`).
+Newer versions will have Go modules enabled by default. If you choose to clone
+the project somewhere in this location, you must explicitly enable Go modules.
 
 ```
 git clone git@github.com:unidoc/unicli.git
@@ -359,6 +363,99 @@ Flags:
 Examples:
 unicli search input_file.pdf text_to_search
 unicli search -p pass input_file.pdf text_to_search
+```
+
+#### Form Export
+
+Export JSON representation of form fields.
+
+By default, the resulting JSON content is printed to STDOUT. The output can be
+saved to a file by using the --output-file flag.
+
+```
+unicli form export [FLAG]... INPUT_FILE
+
+Flags:
+-o, --output-file string   output file
+
+Examples:
+unicli form export in_file.pdf
+unicli form export in_file.pdf > out_file.json
+unicli form export -o out_file.json in_file.pdf
+```
+
+#### Form Fill
+
+Fill form fields from JSON file.
+
+The field values specified in the JSON file template are used to fill the form
+fields in the input PDF files. In addition, the output file form fields can be
+flattened by using the --flatten flag. The flattening process makes the form
+fields of the output files read-only by appending the form field annotation
+XObject Form data to the page content stream, thus making it part of the page
+contents.
+
+The command can take multiple files and directories as input parameters.
+By default, each PDF file is saved in the same location as the original file,
+appending the "_filled" suffix to the file name. Use the --overwrite flag
+to overwrite the original files.
+In addition, the filled output files can be saved to a different directory
+by using the --target-dir flag.
+The command can search for PDF files inside the subdirectories of the
+specified input directories by using the --recursive flag.
+
+```
+unicli form fill [FLAG]... JSON_FILE INPUT_FILES...
+
+Flags:
+-f, --flatten             flatten form annotations
+-O, --overwrite           overwrite input files
+-p, --password string     input file password
+-r, --recursive           search PDF files in subdirectories
+-t, --target-dir string   output directory
+
+Examples:
+unicli form fill fields.json file_1.pdf file_n.pdf
+unicli form fill -O fields.json file_1.pdf file_n.pdf
+unicli form fill -O -r -f fields.json file_1.pdf file_n.pdf dir_1 dir_n
+unicli form fill -t out_dir fields.json file_1.pdf file_n.pdf dir_1 dir_n
+unicli form fill -t out_dir -r fields.json file_1.pdf file_n.pdf dir_1 dir_n
+unicli form fill -t out_dir -r -p pass fields.json file_1.pdf file_n.pdf dir_1 dir_n
+```
+
+#### Form Flatten
+
+Flatten PDF file form annotations.
+
+The flattening process makes the form fields of the output files read-only by
+appending the form field annotation XObject Form data to the page content
+stream, thus making it part of the page contents.
+
+The command can take multiple files and directories as input parameters.
+By default, each PDF file is saved in the same location as the original file,
+appending the "_flattened" suffix to the file name. Use the --overwrite flag
+to overwrite the original files.
+In addition, the flattened output files can be saved to a different directory
+by using the --target-dir flag.
+The command can search for PDF files inside the subdirectories of the
+specified input directories by using the --recursive flag.
+
+```
+unicli form flatten [FLAG]... INPUT_FILES...
+
+Flags:
+-O, --overwrite           overwrite input files
+-p, --password string     input file password
+-r, --recursive           search PDF files in subdirectories
+-t, --target-dir string   output directory
+
+Examples:
+unicli form flatten file_1.pdf file_n.pdf
+unicli form flatten -O file_1.pdf file_n.pdf
+unicli form flatten -O -r file_1.pdf file_n.pdf dir_1 dir_n
+unicli form flatten -t out_dir file_1.pdf file_n.pdf dir_1 dir_n
+unicli form flatten -t out_dir -r file_1.pdf file_n.pdf dir_1 dir_n
+unicli form flatten -t out_dir -r -p pass file_1.pdf file_n.pdf dir_1 dir_n
 ```
 
 ## License

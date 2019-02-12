@@ -79,7 +79,7 @@ func writePDF(filename string, w *unipdf.PdfWriter, safe bool) error {
 		// Make a copy of the original file and restore it if
 		// any error occurs while writing the new file.
 		if _, err = os.Stat(filename); !os.IsNotExist(err) {
-			tempPath := filepath.Join(os.TempDir(), "unipdf_"+filename)
+			tempPath := filepath.Join(os.TempDir(), "unicli_"+filepath.Base(filename))
 			if err = os.Rename(filename, tempPath); err != nil {
 				return err
 			}
@@ -118,7 +118,7 @@ func writeCreatorPDF(filename string, c *unicreator.Creator, safe bool) error {
 		// Make a copy of the original file and restore it if
 		// any error occurs while writing the new file.
 		if _, err = os.Stat(filename); !os.IsNotExist(err) {
-			tempPath := filepath.Join(os.TempDir(), "unipdf_"+filename)
+			tempPath := filepath.Join(os.TempDir(), "unicli_"+filepath.Base(filename))
 			if err = os.Rename(filename, tempPath); err != nil {
 				return err
 			}
