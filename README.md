@@ -390,8 +390,10 @@ Fill form fields from JSON file.
 
 The field values specified in the JSON file template are used to fill the form
 fields in the input PDF files. In addition, the output file form fields can be
-flattend by using the --flatten flag. The flatenning process makes the form
-fields of the output files read-only.
+flattened by using the --flatten flag. The flattening process makes the form
+fields of the output files read-only by appending the form field annotation
+XObject Form data to the page content stream, thus making it part of the page
+contents.
 
 The command can take multiple files and directories as input parameters.
 By default, each PDF file is saved in the same location as the original file,
@@ -424,11 +426,14 @@ unicli form fill -t out_dir -r -p pass fields.json file_1.pdf file_n.pdf dir_1 d
 #### Form Flatten
 
 Flatten PDF file form annotations.
-The flatenning process makes the form fields of the output files read-only.
+
+The flattening process makes the form fields of the output files read-only by
+appending the form field annotation XObject Form data to the page content
+stream, thus making it part of the page contents.
 
 The command can take multiple files and directories as input parameters.
 By default, each PDF file is saved in the same location as the original file,
-appending the "_flatenned" suffix to the file name. Use the --overwrite flag
+appending the "_flattened" suffix to the file name. Use the --overwrite flag
 to overwrite the original files.
 In addition, the flattened output files can be saved to a different directory
 by using the --target-dir flag.

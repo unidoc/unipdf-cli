@@ -16,11 +16,14 @@ import (
 )
 
 const formFlattenCmdDesc = `Flatten PDF file form annotations.
-The flatenning process makes the form fields of the output files read-only.
+
+The flattening process makes the form fields of the output files read-only by
+appending the form field annotation XObject Form data to the page content
+stream, thus making it part of the page contents.
 
 The command can take multiple files and directories as input parameters.
 By default, each PDF file is saved in the same location as the original file,
-appending the "_flatenned" suffix to the file name. Use the --overwrite flag
+appending the "_flattened" suffix to the file name. Use the --overwrite flag
 to overwrite the original files.
 In addition, the flattened output files can be saved to a different directory
 by using the --target-dir flag.
@@ -37,7 +40,7 @@ var formFlattenCmdExample = fmt.Sprintf("%s\n%s\n%s\n%s\n%s\n%s\n",
 	fmt.Sprintf("%s form flatten -t out_dir -r -p pass file_1.pdf file_n.pdf dir_1 dir_n", appName),
 )
 
-// formFlattenCmd represents the form export command
+// formFlattenCmd represents the form flatten command
 var formFlattenCmd = &cobra.Command{
 	Use:                   "flatten [FLAG]... INPUT_FILES...",
 	Short:                 "Flatten form annotations",

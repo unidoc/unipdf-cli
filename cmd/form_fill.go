@@ -19,8 +19,10 @@ const formFillCmdDesc = `Fill form fields from JSON file.
 
 The field values specified in the JSON file template are used to fill the form
 fields in the input PDF files. In addition, the output file form fields can be
-flattend by using the --flatten flag. The flatenning process makes the form
-fields of the output files read-only.
+flattened by using the --flatten flag. The flattening process makes the form
+fields of the output files read-only by appending the form field annotation
+XObject Form data to the page content stream, thus making it part of the page
+contents.
 
 The command can take multiple files and directories as input parameters.
 By default, each PDF file is saved in the same location as the original file,
@@ -44,7 +46,7 @@ var formFillCmdExample = fmt.Sprintf("%s\n%s\n%s\n%s\n%s\n%s\n",
 	fmt.Sprintf("%s form fill -t out_dir -r -p pass fields.json file_1.pdf file_n.pdf dir_1 dir_n", appName),
 )
 
-// formFillCmd represents the form export command
+// formFillCmd represents the form fill command
 var formFillCmd = &cobra.Command{
 	Use:                   "fill [FLAG]... JSON_FILE INPUT_FILES...",
 	Short:                 "Fill form fields from JSON file",
