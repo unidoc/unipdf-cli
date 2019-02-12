@@ -24,7 +24,7 @@ The exported JSON template can be used to fill PDF forms using the
 "form fill" command.
 `
 
-var formExportCmdExample = fmt.Sprintf("%s\n%s\n%s\n%s\n",
+var formExportCmdExample = fmt.Sprintf("%s\n%s\n%s\n",
 	fmt.Sprintf("%s form export in_file.pdf", appName),
 	fmt.Sprintf("%s form export in_file.pdf > out_file.json", appName),
 	fmt.Sprintf("%s form export -o out_file.json in_file.pdf", appName),
