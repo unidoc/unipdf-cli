@@ -16,7 +16,6 @@ import (
 )
 
 const formFlattenCmdDesc = `Flatten PDF file form annotations.
-
 The flatenning process makes the form fields of the output files read-only.
 
 The command can take multiple files and directories as input parameters.
