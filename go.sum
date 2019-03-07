@@ -1,9 +1,13 @@
 github.com/boombuler/barcode v1.0.0/go.mod h1:paBWMcWSl3LHKBqUq+rly7CNSldXjb2rDl3JlRe0mD8=
+github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/inconshreveable/mousetrap v1.0.0/go.mod h1:PxqpIevigyE2G7u3NXJIT2ANytuPF1OarO4DADm73n8=
+github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/spf13/cobra v0.0.3 h1:ZlrZ4XsMRm04Fr5pSFxBgfND2EBVa1nLpiy1stUsX/8=
 github.com/spf13/cobra v0.0.3/go.mod h1:1l0Ry5zgKvJasoi3XT1TypsSe7PqH0Sj9dhYf7v3XqQ=
 github.com/spf13/pflag v1.0.3 h1:zPAT6CGy6wXeQ7NtTnaTerfKOsV6V6F8agHXFiazDkg=
 github.com/spf13/pflag v1.0.3/go.mod h1:DYY7MBk1bdzusC3SYhjObp+wFpr4gzcvqqNjLnInEg4=
+github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
+github.com/stretchr/testify v1.3.0/go.mod h1:M5WIy9Dh21IEIfnGCwXGc5bZfKNJtfHm1UVUgZn+9EI=
 github.com/unidoc/unidoc v0.0.0-20190107220337-61c13118eea9 h1:LAs8hbb7IvutjEfMGVJnn1W8CLek4Aw1gDwvOmorVow=
 github.com/unidoc/unidoc v0.0.0-20190107220337-61c13118eea9/go.mod h1:Q2TZQ4OTZg5sXOPVggJmDRROXEKSGOqUMGZFO4GTCsA=
 github.com/unidoc/unidoc v0.0.0-20190111105045-ebe3a3e57401 h1:P4NSuanPUU4e4hi/dCdZAbuoHgDI5evXAOULRZlVqoE=
@@ -12,6 +16,8 @@ github.com/unidoc/unidoc v0.0.0-20190111182447-82906a29bbf1 h1:GUa5ZQjVxha+780Vi
 github.com/unidoc/unidoc v0.0.0-20190111182447-82906a29bbf1/go.mod h1:Q2TZQ4OTZg5sXOPVggJmDRROXEKSGOqUMGZFO4GTCsA=
 github.com/unidoc/unidoc v3.0.0-alpha.1+incompatible h1:ykLCS2tM9g4SoXNfc2c43n7ZxyUB3qvRM5LZGGrKC9k=
 github.com/unidoc/unidoc v3.0.0-alpha.1+incompatible/go.mod h1:Q2TZQ4OTZg5sXOPVggJmDRROXEKSGOqUMGZFO4GTCsA=
+github.com/unidoc/unidoc v3.0.0-alpha.2+incompatible h1:u+JWm3Vm44gogyJOwNsTRguBNhiZjznHOpLV9D41obw=
+github.com/unidoc/unidoc v3.0.0-alpha.2+incompatible/go.mod h1:wEA4BQRuWYeb+l24P2SkMVqR9abp3xjMxoHqeY2uq14=
 golang.org/x/image v0.0.0-20181116024801-cd38e8056d9b h1:VHyIDlv3XkfCa5/a81uzaoDkHH4rr81Z62g+xlnO8uM=
 golang.org/x/image v0.0.0-20181116024801-cd38e8056d9b/go.mod h1:ux5Hcp/YLpHSI86hEcLt0YII63i6oz57MZXIpbrjZUs=
 golang.org/x/text v0.3.0 h1:g61tztE5qeGQ89tm6NTjjM9VPIm088od1l6aSorWRWg=

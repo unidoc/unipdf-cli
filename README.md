@@ -21,8 +21,8 @@ powered by the [UniDoc](https://github.com/unidoc/unidoc) PDF library.
 - [Add watermark images to PDF files](#watermark)
 - [Convert PDF files to grayscale](#grayscale)
 - [Validate and print PDF file information](#info)
-- [Extract text from PDF files](#extract)
-- [Extract images from PDF files](#extract)
+- [Extract text from PDF files](#extract-text)
+- [Extract images from PDF files](#extract-images)
 - [Search text in PDF files](#search)
 - [Export PDF form fields as JSON](#form-export)
 - [Fill PDF form fields from JSON file](#form-fill)
@@ -320,34 +320,49 @@ unicli info input_file.pdf
 unicli info -p pass input_file.pdf
 ```
 
-#### Extract
+#### Extract text
 
-Extract resources (text, images) from PDF files.
+Extracts PDF text. The extracted text is always printed to STDOUT.
+
+```
+unicli extract text [FLAG]... INPUT_FILE
+
+Flags:
+-P, --pages string           Pages to extract text from
+-p, --user-password string   Input file password
+
+Examples:
+unicli extract text input_file.pdf
+unicli extract text -P 1-3 input_file.pdf
+unicli extract text -P 1-3 -p pass input_file.pdf
+
+Pages flag example: 1-3,4,6-7
+Text will only be extracted from pages 1,2,3 (1-3), 4 and 6,7 (6-7), while
+page number 5 is skipped.
+```
+
+#### Extract images
+
+Extracts PDF images. The images are extracted in a ZIP file and saved at the
+destination specified by the --output-file parameter. If no output file is
+specified, the ZIP archive is saved in the same directory as the input file.
 
 ```
 unicli extract [FLAG]... INPUT_FILE
 
 Flags:
 -o, --output-file string     Output file
--P, --pages string           Pages to extract resources from
--r, --resource string        Resource to extract
+-P, --pages string           Pages to extract images from
 -p, --user-password string   Input file password
 
 Examples:
-unicli extract -r text input_file.pdf
-unicli extract -r text -P 1-3 input_file.pdf
-unicli extract -r text -P 1-3 -p pass input_file.pdf
-unicli extract -r images input_file.pdf
-unicli extract -r images -o images.zip input_file.pdf
-unicli extract -r images -P 1-3 -p pass -o images.zip input_file.pdf
+unicli extract images input_file.pdf
+unicli extract images -o images.zip input_file.pdf
+unicli extract images -P 1-3 -p pass -o images.zip input_file.pdf
 
 Pages flag example: 1-3,4,6-7
-Resources will only be extracted from pages 1,2,3 (1-3), 4 and 6,7 (6-7),
-while page number 5 is skipped.
-
-Supported resources:
-- text
-- images
+Images will only be extracted from pages 1,2,3 (1-3), 4 and 6,7 (6-7), while
+page number 5 is skipped.
 ```
 
 #### Search
