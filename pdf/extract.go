@@ -14,6 +14,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
 	uniextractor "github.com/unidoc/unidoc/pdf/extractor"
 )
@@ -89,6 +90,7 @@ func ExtractImages(inputPath, outputPath, password string, pages []int) (string,
 	// Create zip file.
 	zipBuffer := bytes.NewBuffer(nil)
 	w := zip.NewWriter(zipBuffer)
+	now := time.Now()
 	var countImages int
 
 	for _, numPage := range pages {
@@ -119,7 +121,10 @@ func ExtractImages(inputPath, outputPath, password string, pages []int) (string,
 				return "", 0, err
 			}
 
-			filename, err := w.Create(fmt.Sprintf("p%d_%d.jpg", numPage, i))
+			filename, err := w.CreateHeader(&zip.FileHeader{
+				Name:     (fmt.Sprintf("p%d_%d.jpg", numPage, i)),
+				Modified: now,
+			})
 			if err != nil {
 				return "", 0, err
 			}
