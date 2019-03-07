@@ -44,7 +44,7 @@ func FormFillJSON(inputPath, jsonPath, outputPath, password string, flatten bool
 
 // FormFillFDF fills the form field values from the PDF file specified by the
 // inputPath parameter, using the values from the FDF file specified by the
-// jsonPath parameter. The output PDF file is saved at the location specified
+// fdfPath parameter. The output PDF file is saved at the location specified
 // by the outputPath parameter. The output file form annotations can be
 // flattened by using the flatten parameter.
 // A password can be specified for encrypted input files.
