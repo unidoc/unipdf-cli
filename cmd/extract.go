@@ -74,13 +74,16 @@ var extractCmd = &cobra.Command{
 
 			fmt.Println(text)
 		case "images":
-			outputPath, err = pdf.ExtractImages(inputPath, outputPath, password, pages)
+			outputPath, count, err := pdf.ExtractImages(inputPath, outputPath, password, pages)
 			if err != nil {
 				printErr("Could not extract images: %s\n", err)
 				return
 			}
-
-			fmt.Printf("Images successfully extracted to %s\n", outputPath)
+			if count == 0 {
+				fmt.Printf("Input file does not contain any images to extract\n")
+			} else {
+				fmt.Printf("Images successfully extracted to %s\n", outputPath)
+			}
 		default:
 			printUsageErr(cmd, "Invalid resource type\n")
 		}

@@ -7,8 +7,10 @@ package pdf
 
 import (
 	"archive/zip"
+	"bytes"
 	"fmt"
 	"image/jpeg"
+	"io"
 	"os"
 	"path/filepath"
 	"strings"
@@ -65,7 +67,7 @@ func ExtractText(inputPath, password string, pages []int) (string, error) {
 // Also, a list of pages from which to extract images can be passed in.
 // If the pages parameter is nil or an empty slice, the images are extracted
 // from all the pages of the file.
-func ExtractImages(inputPath, outputPath, password string, pages []int) (string, error) {
+func ExtractImages(inputPath, outputPath, password string, pages []int) (string, int, error) {
 	// Use input file directory if no output path is specified.
 	if outputPath == "" {
 		dir, name := filepath.Split(inputPath)
@@ -76,58 +78,77 @@ func ExtractImages(inputPath, outputPath, password string, pages []int) (string,
 	// Read input file.
 	r, pageCount, _, _, err := readPDF(inputPath, password)
 	if err != nil {
-		return "", err
+		return "", 0, err
 	}
-
-	// Prepare output archive.
-	outputFile, err := os.Create(outputPath)
-	if err != nil {
-		return "", err
-	}
-	defer outputFile.Close()
 
 	// Extract images.
 	if len(pages) == 0 {
 		pages = createPageRange(pageCount)
 	}
 
-	w := zip.NewWriter(outputFile)
+	// Create zip file.
+	zipBuffer := bytes.NewBuffer(nil)
+	w := zip.NewWriter(zipBuffer)
+	var countImages int
+
 	for _, numPage := range pages {
 		// Get page.
 		page, err := r.GetPage(numPage)
 		if err != nil {
-			return "", err
+			return "", 0, err
 		}
 
 		// Extract page images.
 		extractor, err := uniextractor.New(page)
 		if err != nil {
-			return "", err
+			return "", 0, err
 		}
 
 		pageImages, err := extractor.ExtractPageImages()
 		if err != nil {
-			return "", err
+			return "", 0, err
 		}
 
 		// Add images to zip file.
-		for i, pageImage := range pageImages.Images {
+		images := pageImages.Images
+		countImages += len(images)
+
+		for i, pageImage := range images {
 			img, err := pageImage.Image.ToGoImage()
 			if err != nil {
-				return "", err
+				return "", 0, err
 			}
 
 			filename, err := w.Create(fmt.Sprintf("p%d_%d.jpg", numPage, i))
 			if err != nil {
-				return "", err
+				return "", 0, err
 			}
 
 			err = jpeg.Encode(filename, img, &jpeg.Options{Quality: 100})
 			if err != nil {
-				return "", err
+				return "", 0, err
 			}
 		}
 	}
 
-	return outputPath, w.Close()
+	if err := w.Close(); err != nil {
+		return "", 0, nil
+	}
+
+	if countImages == 0 {
+		return "", 0, nil
+	}
+
+	// Write output file.
+	outputFile, err := os.Create(outputPath)
+	if err != nil {
+		return "", 0, err
+	}
+	defer outputFile.Close()
+
+	if _, err := io.Copy(outputFile, zipBuffer); err != nil {
+		return "", 0, err
+	}
+
+	return outputPath, countImages, nil
 }
