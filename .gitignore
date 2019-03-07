@@ -1,6 +1,7 @@
 unipdf
 unicli
 *.pdf
+*.fdf
 *.zip
 *.gox
 .idea
@@ -51,7 +52,5 @@ gin-bin
 pkg/buildinfo/buildinfo.go
 temp/
 buildinfo.json
-
 pdf/font.go
-
 fuzz.go

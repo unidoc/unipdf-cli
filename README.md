@@ -26,6 +26,7 @@ powered by the [UniDoc](https://github.com/unidoc/unidoc) PDF library.
 - [Search text in PDF files](#search)
 - [Export PDF form fields as JSON](#form-export)
 - [Fill PDF form fields from JSON file](#form-fill)
+- [Fill PDF form fields from FDF file](#fdf-merge)
 - [Flatten PDF form fields](#form-flatten)
 
 ## Short demo
@@ -436,6 +437,45 @@ unicli form fill -O -r -f fields.json file_1.pdf file_n.pdf dir_1 dir_n
 unicli form fill -t out_dir fields.json file_1.pdf file_n.pdf dir_1 dir_n
 unicli form fill -t out_dir -r fields.json file_1.pdf file_n.pdf dir_1 dir_n
 unicli form fill -t out_dir -r -p pass fields.json file_1.pdf file_n.pdf dir_1 dir_n
+```
+#### FDF Merge
+
+Fill form fields from FDF file.
+
+The field values specified in the FDF file template are used to fill the form
+fields in the input PDF files. In addition, the output file form fields can be
+flattened by using the --flatten flag. The flattening process makes the form
+fields of the output files read-only by appending the form field annotation
+XObject Form data to the page content stream, thus making it part of the page
+contents.
+
+The command can take multiple files and directories as input parameters.
+By default, each PDF file is saved in the same location as the original file,
+appending the "_filled" suffix to the file name. Use the --overwrite flag
+to overwrite the original files.
+In addition, the filled output files can be saved to a different directory
+by using the --target-dir flag.
+The command can search for PDF files inside the subdirectories of the
+specified input directories by using the --recursive flag.
+
+```
+Usage:
+unicli form fdfmerge [FLAG]... FDF_FILE INPUT_FILES...
+
+Flags:
+-f, --flatten             flatten form annotations
+-O, --overwrite           overwrite input files
+-p, --password string     input file password
+-r, --recursive           search PDF files in subdirectories
+-t, --target-dir string   output directory
+
+Examples:
+unicli form fdfmerge fields.fdf file_1.pdf file_n.pdf
+unicli form fdfmerge -O fields.fdf file_1.pdf file_n.pdf
+unicli form fdfmerge -O -r -f fields.fdf file_1.pdf file_n.pdf dir_1 dir_n
+unicli form fdfmerge -t out_dir fields.fdf file_1.pdf file_n.pdf dir_1 dir_n
+unicli form fdfmerge -t out_dir -r fields.fdf file_1.pdf file_n.pdf dir_1 dir_n
+unicli form fdfmerge -t out_dir -r -p pass fields.fdf file_1.pdf file_n.pdf dir_1 dir_n
 ```
 
 #### Form Flatten
