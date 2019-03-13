@@ -352,9 +352,10 @@ specified, the ZIP archive is saved in the same directory as the input file.
 unicli extract [FLAG]... INPUT_FILE
 
 Flags:
--o, --output-file string     Output file
--P, --pages string           Pages to extract images from
--p, --user-password string   Input file password
+-S, --include-inline-stencil-masks   Include inline stencil masks
+-o, --output-file string             Output file
+-P, --pages string                   Pages to extract images from
+-p, --password string                Input file password
 
 Examples:
 unicli extract images input_file.pdf
