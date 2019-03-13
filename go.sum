@@ -14,6 +14,8 @@ github.com/unidoc/unidoc v0.0.0-20190111105045-ebe3a3e57401 h1:P4NSuanPUU4e4hi/d
 github.com/unidoc/unidoc v0.0.0-20190111105045-ebe3a3e57401/go.mod h1:Q2TZQ4OTZg5sXOPVggJmDRROXEKSGOqUMGZFO4GTCsA=
 github.com/unidoc/unidoc v0.0.0-20190111182447-82906a29bbf1 h1:GUa5ZQjVxha+780VimxoKo2RN6TO800LQ/RrGJSgl5o=
 github.com/unidoc/unidoc v0.0.0-20190111182447-82906a29bbf1/go.mod h1:Q2TZQ4OTZg5sXOPVggJmDRROXEKSGOqUMGZFO4GTCsA=
+github.com/unidoc/unidoc v0.0.0-20190312142732-9d714ad63969 h1:x1ASxyYHMsaP825N7hsl7Lr9D+7+dlrNOc65RBNL4Qc=
+github.com/unidoc/unidoc v0.0.0-20190312142732-9d714ad63969/go.mod h1:wEA4BQRuWYeb+l24P2SkMVqR9abp3xjMxoHqeY2uq14=
 github.com/unidoc/unidoc v3.0.0-alpha.1+incompatible h1:ykLCS2tM9g4SoXNfc2c43n7ZxyUB3qvRM5LZGGrKC9k=
 github.com/unidoc/unidoc v3.0.0-alpha.1+incompatible/go.mod h1:Q2TZQ4OTZg5sXOPVggJmDRROXEKSGOqUMGZFO4GTCsA=
 github.com/unidoc/unidoc v3.0.0-alpha.2+incompatible h1:u+JWm3Vm44gogyJOwNsTRguBNhiZjznHOpLV9D41obw=
