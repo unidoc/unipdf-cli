@@ -68,6 +68,9 @@ func ExtractText(inputPath, password string, pages []int) (string, error) {
 // Also, a list of pages from which to extract images can be passed in.
 // If the pages parameter is nil or an empty slice, the images are extracted
 // from all the pages of the file.
+// In addition, the image extraction process can be controlled by using the
+// options parameter. If the options parameter is nil, the default image
+// extraction options are used.
 func ExtractImages(inputPath, outputPath, password string, pages []int,
 	options *uniextractor.ImageExtractOptions) (string, int, error) {
 	// Use input file directory if no output path is specified.
