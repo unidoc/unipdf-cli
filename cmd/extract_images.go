@@ -11,6 +11,8 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/unidoc/unicli/pdf"
+
+	uniextractor "github.com/unidoc/unidoc/pdf/extractor"
 )
 
 const extractImagesCmdDesc = `Extracts PDF images.
@@ -27,10 +29,11 @@ Images will only be extracted from pages 1,2,3 (1-3), 4 and 6,7 (6-7), while pag
 number 5 is skipped.
 `
 
-var extractImagesCmdExample = fmt.Sprintf("%s\n%s\n%s\n",
+var extractImagesCmdExample = fmt.Sprintf("%s\n%s\n%s\n%s\n",
 	fmt.Sprintf("%s extract images input_file.pdf", appName),
 	fmt.Sprintf("%s extract images -o images.zip input_file.pdf", appName),
 	fmt.Sprintf("%s extract images -P 1-3 -p pass -o images.zip input_file.pdf", appName),
+	fmt.Sprintf("%s extract images -P 1-3 -p pass -o images.zip -S input_file.pdf", appName),
 )
 
 // extractImagesCmd represents the extract images command
@@ -46,6 +49,13 @@ var extractImagesCmd = &cobra.Command{
 		password, _ := cmd.Flags().GetString("password")
 		outputPath, _ := cmd.Flags().GetString("output-file")
 
+		// Parse image extraction options.
+		includeSM, _ := cmd.Flags().GetBool("include-inline-stencil-masks")
+
+		extractOptions := &uniextractor.ImageExtractOptions{
+			IncludeInlineStencilMasks: includeSM,
+		}
+
 		// Parse page range.
 		pageRange, _ := cmd.Flags().GetString("pages")
 
@@ -55,7 +65,13 @@ var extractImagesCmd = &cobra.Command{
 		}
 
 		// Extract images.
-		outputPath, count, err := pdf.ExtractImages(inputPath, outputPath, password, pages)
+		outputPath, count, err := pdf.ExtractImages(
+			inputPath,
+			outputPath,
+			password,
+			pages,
+			extractOptions,
+		)
 		if err != nil {
 			printErr("Could not extract images: %s\n", err)
 			return
@@ -82,4 +98,5 @@ func init() {
 	extractImagesCmd.Flags().StringP("password", "p", "", "Input file password")
 	extractImagesCmd.Flags().StringP("output-file", "o", "", "Output file")
 	extractImagesCmd.Flags().StringP("pages", "P", "", "Pages to extract images from")
+	extractImagesCmd.Flags().BoolP("include-inline-stencil-masks", "S", false, "Include inline stencil masks")
 }
