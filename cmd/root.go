@@ -14,7 +14,7 @@ import (
 )
 
 const appName = "unicli"
-const appVersion = "0.1.0"
+const appVersion = "0.2.0"
 
 const rootCmdDesc = ` is a CLI application for working with PDF files.
 It supports the most common PDF operations. A full list of the supported
