@@ -1,5 +1,6 @@
 github.com/boombuler/barcode v1.0.0/go.mod h1:paBWMcWSl3LHKBqUq+rly7CNSldXjb2rDl3JlRe0mD8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/gunnsth/pkcs7 v0.0.0-20181213175627-3cffc6fbfe83/go.mod h1:xaGEIRenAiJcGgd9p62zbiP4993KaV3PdjczwGnP50I=
 github.com/inconshreveable/mousetrap v1.0.0/go.mod h1:PxqpIevigyE2G7u3NXJIT2ANytuPF1OarO4DADm73n8=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/spf13/cobra v0.0.3 h1:ZlrZ4XsMRm04Fr5pSFxBgfND2EBVa1nLpiy1stUsX/8=
@@ -20,7 +21,11 @@ github.com/unidoc/unidoc v3.0.0-alpha.1+incompatible h1:ykLCS2tM9g4SoXNfc2c43n7Z
 github.com/unidoc/unidoc v3.0.0-alpha.1+incompatible/go.mod h1:Q2TZQ4OTZg5sXOPVggJmDRROXEKSGOqUMGZFO4GTCsA=
 github.com/unidoc/unidoc v3.0.0-alpha.2+incompatible h1:u+JWm3Vm44gogyJOwNsTRguBNhiZjznHOpLV9D41obw=
 github.com/unidoc/unidoc v3.0.0-alpha.2+incompatible/go.mod h1:wEA4BQRuWYeb+l24P2SkMVqR9abp3xjMxoHqeY2uq14=
+github.com/unidoc/unidoc v3.0.0-alpha.3+incompatible h1:HPOvsbQvgXIeo6jXssupBHB8kRaIYonTP4qm7D4nvRQ=
+github.com/unidoc/unidoc v3.0.0-alpha.3+incompatible/go.mod h1:jcOm4b3qenouFC8+a9jNdXrOPXpJY1q+hOkvNF1xhO0=
+golang.org/x/crypto v0.0.0-20190325154230-a5d413f7728c/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
 golang.org/x/image v0.0.0-20181116024801-cd38e8056d9b h1:VHyIDlv3XkfCa5/a81uzaoDkHH4rr81Z62g+xlnO8uM=
 golang.org/x/image v0.0.0-20181116024801-cd38e8056d9b/go.mod h1:ux5Hcp/YLpHSI86hEcLt0YII63i6oz57MZXIpbrjZUs=
+golang.org/x/sys v0.0.0-20190215142949-d0b11bdaac8a/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
 golang.org/x/text v0.3.0 h1:g61tztE5qeGQ89tm6NTjjM9VPIm088od1l6aSorWRWg=
 golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
