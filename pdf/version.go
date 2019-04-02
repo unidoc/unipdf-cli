@@ -10,8 +10,6 @@ import (
 	unilicense "github.com/unidoc/unidoc/common/license"
 )
 
-const appVersion = "0.1"
-
 // VersionInfo contains version and license information
 // about the Unidoc library.
 type VersionInfo struct {
