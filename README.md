@@ -518,7 +518,7 @@ unicli form flatten -t out_dir -r -p pass file_1.pdf file_n.pdf dir_1 dir_n
 
 The application is licensed under the same conditions as the
 [UniDoc](https://github.com/unidoc/unidoc) library.
-Is has a dual license, a commercial one suitable for closed source projects
+It has a dual license, a commercial one suitable for closed source projects
 and an AGPL license that can be used in open source software.
 
 Depending on your needs, you can choose one of them and follow its policies.
