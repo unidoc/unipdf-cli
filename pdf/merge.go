@@ -8,9 +8,9 @@ package pdf
 import (
 	"fmt"
 
-	unicommon "github.com/unidoc/unidoc/common"
-	unicore "github.com/unidoc/unidoc/pdf/core"
-	unipdf "github.com/unidoc/unidoc/pdf/model"
+	unicommon "github.com/unidoc/unipdf/v3/common"
+	unicore "github.com/unidoc/unipdf/v3/core"
+	unipdf "github.com/unidoc/unipdf/v3/model"
 )
 
 // Merge merges all the PDF files specified by the inputPaths parameter and
@@ -77,18 +77,26 @@ func mergeResources(r, r2 *unipdf.PdfPageResources) (*unipdf.PdfPageResources, e
 	}
 
 	// Merge Colorspace resources.
-	if r.ColorSpace == nil {
-		r.ColorSpace = r2.ColorSpace
+	colorspaces, err := r.GetColorspaces()
+	if err != nil {
+		return nil, err
+	}
+	colorspaces2, err := r2.GetColorspaces()
+	if err != nil {
+		return nil, err
+	}
+
+	if colorspaces == nil {
+		r.SetColorSpace(colorspaces2)
 	} else {
-		if r2.ColorSpace != nil {
-			for key, val := range r2.ColorSpace.Colorspaces {
-				// Add the r2 colorspaces to r.
-				// Overwrite if duplicate.
+		if colorspaces2 != nil {
+			for key, val := range colorspaces2.Colorspaces {
+				// Add the r2 colorspaces to r. Overwrite if duplicate.
 				// Ensure only present once in Names.
-				if _, has := r.ColorSpace.Colorspaces[key]; !has {
-					r.ColorSpace.Names = append(r.ColorSpace.Names, key)
+				if _, has := colorspaces.Colorspaces[key]; !has {
+					colorspaces.Names = append(colorspaces.Names, key)
 				}
-				r.ColorSpace.Colorspaces[key] = val
+				r.SetColorspaceByName(unicore.PdfObjectName(key), val)
 			}
 		}
 	}

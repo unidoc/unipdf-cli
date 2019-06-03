@@ -6,8 +6,8 @@
 package pdf
 
 import (
-	unisecurity "github.com/unidoc/unidoc/pdf/core/security"
-	unipdf "github.com/unidoc/unidoc/pdf/model"
+	unisecurity "github.com/unidoc/unipdf/v3/core/security"
+	unipdf "github.com/unidoc/unipdf/v3/model"
 )
 
 // EncryptOpts contains settings for encrypting a PDF file.

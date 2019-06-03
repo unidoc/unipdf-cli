@@ -10,9 +10,9 @@ import (
 	"os"
 	"path/filepath"
 
-	unisecurity "github.com/unidoc/unidoc/pdf/core/security"
-	unicreator "github.com/unidoc/unidoc/pdf/creator"
-	unipdf "github.com/unidoc/unidoc/pdf/model"
+	unisecurity "github.com/unidoc/unipdf/v3/core/security"
+	unicreator "github.com/unidoc/unipdf/v3/creator"
+	unipdf "github.com/unidoc/unipdf/v3/model"
 )
 
 func readPDF(filename, password string) (*unipdf.PdfReader, int, bool, unisecurity.Permissions, error) {

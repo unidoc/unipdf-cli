@@ -9,11 +9,11 @@ import (
 	"errors"
 	"fmt"
 
-	unicommon "github.com/unidoc/unidoc/common"
-	unicontent "github.com/unidoc/unidoc/pdf/contentstream"
-	unicore "github.com/unidoc/unidoc/pdf/core"
-	unipdf "github.com/unidoc/unidoc/pdf/model"
-	"github.com/unidoc/unidoc/pdf/ps"
+	unicommon "github.com/unidoc/unipdf/v3/common"
+	unicontent "github.com/unidoc/unipdf/v3/contentstream"
+	unicore "github.com/unidoc/unipdf/v3/core"
+	unipdf "github.com/unidoc/unipdf/v3/model"
+	"github.com/unidoc/unipdf/v3/ps"
 )
 
 // Grayscale converts the pages of the PDF file specified by the inputPath
@@ -121,7 +121,7 @@ func transformContentStreamToGrayscale(contents string, resources *unipdf.PdfPag
 					csname := op.Params[0].(*unicore.PdfObjectName)
 					if *csname != "Pattern" {
 						// Update if referring to an external colorspace in resources.
-						cs, ok := resources.ColorSpace.Colorspaces[string(*csname)]
+						cs, ok := resources.GetColorspaceByName(*csname)
 						if !ok {
 							unicommon.Log.Debug("Undefined colorspace for pattern (%s)", csname)
 							return errors.New("colorspace not defined")
@@ -137,7 +137,7 @@ func transformContentStreamToGrayscale(contents string, resources *unipdf.PdfPag
 							patternCS.UnderlyingCS = unipdf.NewPdfColorspaceDeviceGray()
 						}
 
-						resources.ColorSpace.Colorspaces[string(*csname)] = patternCS
+						resources.SetColorspaceByName(*csname, patternCS)
 					}
 					*processedOperations = append(*processedOperations, op)
 					return nil
@@ -157,7 +157,7 @@ func transformContentStreamToGrayscale(contents string, resources *unipdf.PdfPag
 					csname := op.Params[0].(*unicore.PdfObjectName)
 					if *csname != "Pattern" {
 						// Update if referring to an external colorspace in resources.
-						cs, ok := resources.ColorSpace.Colorspaces[string(*csname)]
+						cs, ok := resources.GetColorspaceByName(*csname)
 						if !ok {
 							unicommon.Log.Debug("Undefined colorspace for pattern (%s)", csname)
 							return errors.New("colorspace not defined")
@@ -173,7 +173,7 @@ func transformContentStreamToGrayscale(contents string, resources *unipdf.PdfPag
 							patternCS.UnderlyingCS = unipdf.NewPdfColorspaceDeviceGray()
 						}
 
-						resources.ColorSpace.Colorspaces[string(*csname)] = patternCS
+						resources.SetColorspaceByName(*csname, patternCS)
 					}
 					*processedOperations = append(*processedOperations, op)
 					return nil

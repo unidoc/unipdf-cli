@@ -18,8 +18,8 @@ github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+
 github.com/stretchr/objx v0.1.1/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/testify v1.3.0 h1:TivCn/peBQ7UY8ooIcPgZFpTNSz0Q2U6UrFlUfqbe0Q=
 github.com/stretchr/testify v1.3.0/go.mod h1:M5WIy9Dh21IEIfnGCwXGc5bZfKNJtfHm1UVUgZn+9EI=
-github.com/unidoc/unidoc v3.0.0-alpha.3+incompatible h1:HPOvsbQvgXIeo6jXssupBHB8kRaIYonTP4qm7D4nvRQ=
-github.com/unidoc/unidoc v3.0.0-alpha.3+incompatible/go.mod h1:jcOm4b3qenouFC8+a9jNdXrOPXpJY1q+hOkvNF1xhO0=
+github.com/unidoc/unipdf/v3 v3.0.0 h1:qHvKUVGNYGJG2Dgb0x8U4+yefO8/rZzRkQSk6WI2nIM=
+github.com/unidoc/unipdf/v3 v3.0.0/go.mod h1:xq0X+xxSAgPpoQNyPtXmKOdGV3iZBPQQxuV2roDhECw=
 golang.org/x/crypto v0.0.0-20190325154230-a5d413f7728c h1:Vj5n4GlwjmQteupaxJ9+0FNOmBrHfq7vN4btdGoDZgI=
 golang.org/x/crypto v0.0.0-20190325154230-a5d413f7728c/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
 golang.org/x/image v0.0.0-20181116024801-cd38e8056d9b h1:VHyIDlv3XkfCa5/a81uzaoDkHH4rr81Z62g+xlnO8uM=

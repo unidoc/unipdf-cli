@@ -10,7 +10,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/unidoc/unicli/pdf"
-	unicommon "github.com/unidoc/unidoc/common"
+	unicommon "github.com/unidoc/unipdf/v3/common"
 )
 
 const appName = "unicli"

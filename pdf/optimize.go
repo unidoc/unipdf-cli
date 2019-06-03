@@ -9,8 +9,8 @@ import (
 	"os"
 	"time"
 
-	unipdf "github.com/unidoc/unidoc/pdf/model"
-	unioptimize "github.com/unidoc/unidoc/pdf/model/optimize"
+	unipdf "github.com/unidoc/unipdf/v3/model"
+	unioptimize "github.com/unidoc/unipdf/v3/model/optimize"
 )
 
 // OptimizeOpts represents the options used for optimizing PDF files.

@@ -6,10 +6,10 @@
 package pdf
 
 import (
-	"github.com/unidoc/unidoc/pdf/annotator"
-	"github.com/unidoc/unidoc/pdf/fdf"
-	"github.com/unidoc/unidoc/pdf/fjson"
-	unipdf "github.com/unidoc/unidoc/pdf/model"
+	"github.com/unidoc/unipdf/v3/annotator"
+	"github.com/unidoc/unipdf/v3/fdf"
+	"github.com/unidoc/unipdf/v3/fjson"
+	unipdf "github.com/unidoc/unipdf/v3/model"
 )
 
 // FormExport exports all form field values from the PDF file specified

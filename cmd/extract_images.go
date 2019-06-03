@@ -12,7 +12,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/unidoc/unicli/pdf"
 
-	uniextractor "github.com/unidoc/unidoc/pdf/extractor"
+	uniextractor "github.com/unidoc/unipdf/v3/extractor"
 )
 
 const extractImagesCmdDesc = `Extracts PDF images.

@@ -12,7 +12,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	unicreator "github.com/unidoc/unidoc/pdf/creator"
+	unicreator "github.com/unidoc/unipdf/v3/creator"
 )
 
 // Rotate rotates the pages of the PDF file specified by the inputPath

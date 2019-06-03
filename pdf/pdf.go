@@ -8,8 +8,8 @@ package pdf
 import (
 	"io/ioutil"
 
-	unicommon "github.com/unidoc/unidoc/common"
-	unilicense "github.com/unidoc/unidoc/common/license"
+	unicommon "github.com/unidoc/unipdf/v3/common"
+	unilicense "github.com/unidoc/unipdf/v3/common/license"
 )
 
 // SetLicense sets the license for using the Unidoc library.
