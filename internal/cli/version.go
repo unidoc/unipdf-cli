@@ -3,13 +3,13 @@
  * file 'LICENSE.md', which is part of this source code package.
  */
 
-package cmd
+package cli
 
 import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	"github.com/unidoc/unicli/pdf"
+	"github.com/unidoc/unipdf-cli/pkg/pdf"
 )
 
 var versionCmdExample = fmt.Sprintf("%s\n",

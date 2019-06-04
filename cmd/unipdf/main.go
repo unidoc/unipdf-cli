@@ -5,8 +5,10 @@
 
 package main
 
-import "github.com/unidoc/unicli/cmd"
+import (
+	"github.com/unidoc/unipdf-cli/internal/cli"
+)
 
 func main() {
-	cmd.Execute()
+	cli.Execute()
 }

@@ -1,5 +1,4 @@
-unipdf
-unicli
+cmd/unipdf/unipdf
 *.pdf
 *.fdf
 *.zip
