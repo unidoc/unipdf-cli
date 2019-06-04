@@ -3,17 +3,17 @@
  * file 'LICENSE.md', which is part of this source code package.
  */
 
-package cmd
+package cli
 
 import (
 	"os"
 
 	"github.com/spf13/cobra"
-	"github.com/unidoc/unicli/pdf"
+	"github.com/unidoc/unipdf-cli/pkg/pdf"
 	unicommon "github.com/unidoc/unipdf/v3/common"
 )
 
-const appName = "unicli"
+const appName = "unipdf"
 const appVersion = "0.2.0"
 
 const rootCmdDesc = ` is a CLI application for working with PDF files.

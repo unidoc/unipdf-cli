@@ -3,7 +3,7 @@
  * file 'LICENSE.md', which is part of this source code package.
  */
 
-package cmd
+package cli
 
 import (
 	"errors"
@@ -11,7 +11,7 @@ import (
 	"strconv"
 
 	"github.com/spf13/cobra"
-	"github.com/unidoc/unicli/pdf"
+	"github.com/unidoc/unipdf-cli/pkg/pdf"
 )
 
 const rotateCmdDesc = `Rotate PDF file pages by a specified angle.

@@ -3,7 +3,7 @@
  * file 'LICENSE.md', which is part of this source code package.
  */
 
-package cmd
+package cli
 
 import (
 	"errors"
@@ -13,7 +13,7 @@ import (
 	"time"
 
 	"github.com/spf13/cobra"
-	"github.com/unidoc/unicli/pdf"
+	"github.com/unidoc/unipdf-cli/pkg/pdf"
 )
 
 const optimizeCmdDesc = `Optimize PDF files by optimizing structure, compression and image quality.

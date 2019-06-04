@@ -3,7 +3,7 @@
  * file 'LICENSE.md', which is part of this source code package.
  */
 
-package cmd
+package cli
 
 import (
 	"errors"
@@ -12,7 +12,7 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
-	"github.com/unidoc/unicli/pdf"
+	"github.com/unidoc/unipdf-cli/pkg/pdf"
 )
 
 const formExportCmdDesc = `Export JSON representation of form fields.
