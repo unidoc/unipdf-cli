@@ -1,12 +1,14 @@
-project_name: unicli
+project_name: unipdf-cli
 
 release:
   github:
     owner: unidoc
-    name: unicli
-
+    name: unipdf-cli
+before:
+  hooks:
+    - go mod download
 builds:
-- binary: unicli
+- binary: unipdf
   goos:
   - darwin
   - windows
@@ -17,25 +19,23 @@ builds:
   env:
   - CGO_ENABLED=0
   - GO111MODULE=on
-  main: .
-
-archive:
-  format: tar.gz
-  wrap_in_directory: true
-  format_overrides:
-  - goos: windows
-    format: zip
-  name_template: '{{ .Binary }}-{{ .Version }}-{{ .Os }}-{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
-  files:
-  - LICENSE
-  - README.md
-
+  main: ./cmd/unipdf/main.go
+archives:
+  - id: default
+    format: tar.gz
+    wrap_in_directory: true
+    format_overrides:
+    - goos: windows
+      format: zip
+    name_template: '{{ .Binary }}-{{ .Version }}-{{ .Os }}-{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+    files:
+    - LICENSE
+    - README.md
+dist: bin
 snapshot:
   name_template: SNAPSHOT-{{ .Commit }}
-
 checksum:
   name_template: '{{ .ProjectName }}-{{ .Version }}-checksums.txt'
-
 changelog:
   sort: asc
   filters:
