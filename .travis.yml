@@ -4,3 +4,6 @@ go:
   - tip
 env:
   - GO111MODULE=on
+script:
+    go vet ./...
+    golint ./...
