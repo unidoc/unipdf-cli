@@ -39,7 +39,7 @@ Minimum required Go version: 1.11
 
 ```
 git clone git@github.com:unidoc/unipdf-cli.git
-cd unipdf-cli
+cd unipdf-cli/cmd/unipdf
 go build
 ```
 
@@ -49,7 +49,7 @@ the project somewhere in this location, you must explicitly enable Go modules.
 
 ```
 git clone git@github.com:unidoc/unipdf-cli.git
-cd unipdf-cli
+cd unipdf-cli/cmd/unipdf
 export GO111MODULE=on
 go build
 ```
@@ -71,10 +71,10 @@ go build
 Merge multiple PDF files into a single output file.
 
 ```
-unipdf-cli merge OUTPUT_FILE INPUT_FILE...
+unipdf merge OUTPUT_FILE INPUT_FILE...
 
 Examples:
-unipdf-cli merge output_file.pdf input_file1.pdf input_file2.pdf
+unipdf merge output_file.pdf input_file1.pdf input_file2.pdf
 ```
 
 #### Split
@@ -83,14 +83,14 @@ Extract one or more page ranges from PDF file and save the result as a
 single output file.
 
 ```
-unipdf-cli split [FLAG]... INPUT_FILE OUTPUT_FILE [PAGES]
+unipdf split [FLAG]... INPUT_FILE OUTPUT_FILE [PAGES]
 
 Flags:
 -p, --password string   PDF file password
 
 Examples:
-unipdf-cli split input_file.pdf output_file.pdf 1-2
-unipdf-cli split -p pass input_file.pd output_file.pdf 1-2,4
+unipdf split input_file.pdf output_file.pdf 1-2
+unipdf split -p pass input_file.pd output_file.pdf 1-2,4
 
 PAGES argument example: 1-3,4,6-7
 Only pages 1,2,3 (1-3), 4 and 6,7 (6-7) will be present in the output file,
@@ -104,7 +104,7 @@ as a ZIP archive.
 
 ```
 Usage:
-unipdf-cli explode [FLAG]... INPUT_FILE
+unipdf explode [FLAG]... INPUT_FILE
 
 Flags:
 -o, --output-file string   Output file
@@ -112,10 +112,10 @@ Flags:
 -p, --password string      Input file password
 
 Examples:
-unipdf-cli explode input_file.pdf
-unipdf-cli explode -o pages.zip input_file.pdf
-unipdf-cli explode -o pages.zip -P 1-3 input_file.pdf
-unipdf-cli explode -o pages.zip -P 1-3 -p pass input_file.pdf
+unipdf explode input_file.pdf
+unipdf explode -o pages.zip input_file.pdf
+unipdf explode -o pages.zip -P 1-3 input_file.pdf
+unipdf explode -o pages.zip -P 1-3 -p pass input_file.pdf
 
 Pages flag example: 1-3,4,6-7
 Pages 1,2,3 (1-3), 4 and 6,7 (6-7) will be extracted, while page
@@ -129,7 +129,7 @@ specified, along with a set of user permissions. The encryption algorithm
 used for protecting the file is configurable.
 
 ```
-unipdf-cli encrypt [FLAG]... INPUT_FILE OWNER_PASSWORD [USER_PASSWORD]
+unipdf encrypt [FLAG]... INPUT_FILE OWNER_PASSWORD [USER_PASSWORD]
 
 Flags:
 -m, --mode string         Algorithm to use for encrypting the file (default "rc4")
@@ -137,11 +137,11 @@ Flags:
 -P, --perms string        User permissions (default "all")
 
 Examples:
-unipdf-cli encrypt input_file.pdf owner_pass
-unipdf-cli encrypt input_file.pdf owner_pass user_pass
-unipdf-cli encrypt -o output_file.pdf -m aes256 input_file.pdf owner_pass user_pass
-unipdf-cli encrypt -o output_file.pdf -P none -m aes256 input_file.pdf owner_pass user_pass
-unipdf-cli encrypt -o output_file.pdf -P modify,annotate -m aes256 input_file.pdf owner_pass user
+unipdf encrypt input_file.pdf owner_pass
+unipdf encrypt input_file.pdf owner_pass user_pass
+unipdf encrypt -o output_file.pdf -m aes256 input_file.pdf owner_pass user_pass
+unipdf encrypt -o output_file.pdf -P none -m aes256 input_file.pdf owner_pass user_pass
+unipdf encrypt -o output_file.pdf -P modify,annotate -m aes256 input_file.pdf owner_pass user
 
 Supported encryption algorithms:
 - rc4 (default)
@@ -166,15 +166,15 @@ Supported user permissions:
 Remove password protection from PDF files.
 
 ```
-unipdf-cli decrypt [FLAG]... INPUT_FILE
+unipdf decrypt [FLAG]... INPUT_FILE
 
 Flags:
 -o, --output-file string   Output file
 -p, --password string      PDF file password
 
 Examples:
-unipdf-cli decrypt -p pass input_file.pdf
-unipdf-cli decrypt -p pass -o output_file.pdf input_file.pdf
+unipdf decrypt -p pass input_file.pdf
+unipdf decrypt -p pass -o output_file.pdf input_file.pdf
 ```
 
 #### Passwd
@@ -182,16 +182,16 @@ unipdf-cli decrypt -p pass -o output_file.pdf input_file.pdf
 Change protected PDF user/owner password.
 
 ```
-unipdf-cli passwd [FLAG]... INPUT_FILE NEW_OWNER_PASSWORD [NEW_USER_PASSWORD]
+unipdf passwd [FLAG]... INPUT_FILE NEW_OWNER_PASSWORD [NEW_USER_PASSWORD]
 
 Flags:
 -o, --output-file string   Output file
 -p, --password string      PDF file password
 
 Examples:
-unipdf-cli passwd -p pass input_file.pdf new_owner_pass
-unipdf-cli passwd -p pass -o output_file.pdf input_file.pdf new_owner_pass
-unipdf-cli passwd -p pass -o output_file.pdf input_file.pdf new_owner_pass new_user_pass
+unipdf passwd -p pass input_file.pdf new_owner_pass
+unipdf passwd -p pass -o output_file.pdf input_file.pdf new_owner_pass
+unipdf passwd -p pass -o output_file.pdf input_file.pdf new_owner_pass new_user_pass
 ```
 
 #### Optimize
@@ -214,7 +214,7 @@ Common pixels per inch values are 100 (screen), 150-300 (print), 600 (art). If
 not specified, the PPI of the output images is 100.
 
 ```
-unipdf-cli optimize [FLAG]... INPUT_FILES...
+unipdf optimize [FLAG]... INPUT_FILES...
 
 Flags:
 -P, --image-ppi float     output images pixels per inch (default 100)
@@ -225,14 +225,14 @@ Flags:
 -t, --target-dir string   output directory
 
 Examples:
-unipdf-cli optimize file_1.pdf file_n.pdf
-unipdf-cli optimize -O file_1.pdf file_n.pdf
-unipdf-cli optimize -O -r file_1.pdf file_n.pdf dir_1 dir_n
-unipdf-cli optimize -t out_dir file_1.pdf file_n.pdf dir_1 dir_n
-unipdf-cli optimize -t out_dir -r file_1.pdf file_n.pdf dir_1 dir_n
-unipdf-cli optimize -t out_dir -r -q 75 file_1.pdf file_n.pdf dir_1 dir_n
-unipdf-cli optimize -t out_dir -r -q 75 -P 100 file_1.pdf file_n.pdf dir_1 dir_n
-unipdf-cli optimize -t out_dir -r -q 75 -P 100 -p pass file_1.pdf file_n.pdf dir_1 dir_n
+unipdf optimize file_1.pdf file_n.pdf
+unipdf optimize -O file_1.pdf file_n.pdf
+unipdf optimize -O -r file_1.pdf file_n.pdf dir_1 dir_n
+unipdf optimize -t out_dir file_1.pdf file_n.pdf dir_1 dir_n
+unipdf optimize -t out_dir -r file_1.pdf file_n.pdf dir_1 dir_n
+unipdf optimize -t out_dir -r -q 75 file_1.pdf file_n.pdf dir_1 dir_n
+unipdf optimize -t out_dir -r -q 75 -P 100 file_1.pdf file_n.pdf dir_1 dir_n
+unipdf optimize -t out_dir -r -q 75 -P 100 -p pass file_1.pdf file_n.pdf dir_1 dir_n
 ```
 
 #### Rotate
@@ -241,7 +241,7 @@ Rotate PDF file pages by a specified angle. The angle argument is specified in
 degrees and it must be a multiple of 90.
 
 ```
-unipdf-cli rotate [FLAG]... INPUT_FILE ANGLE
+unipdf rotate [FLAG]... INPUT_FILE ANGLE
 
 Flags:
 -o, --output-file string   Output file
@@ -249,11 +249,11 @@ Flags:
 -p, --password string      PDF file password
 
 Examples:
-unipdf-cli rotate input_file.pdf 90
-unipdf-cli rotate -- input_file.pdf -270
-unipdf-cli rotate -o output_file.pdf input_file.pdf 90
-unipdf-cli rotate -o output_file.pdf -P 1-3 input_file.pdf 90
-unipdf-cli rotate -o output_file.pdf -P 1-3 -p pass input_file.pdf 90
+unipdf rotate input_file.pdf 90
+unipdf rotate -- input_file.pdf -270
+unipdf rotate -o output_file.pdf input_file.pdf 90
+unipdf rotate -o output_file.pdf -P 1-3 input_file.pdf 90
+unipdf rotate -o output_file.pdf -P 1-3 -p pass input_file.pdf 90
 
 Pages flag example: 1-3,4,6-7
 Only pages 1,2,3 (1-3), 4 and 6,7 (6-7) will be rotated, while
@@ -265,7 +265,7 @@ page number 5 is skipped.
 Add watermark images to PDF files.
 
 ```
-unipdf-cli watermark [FLAG]... INPUT_FILE WATERMARK_IMAGE
+unipdf watermark [FLAG]... INPUT_FILE WATERMARK_IMAGE
 
 Flags:
 -o, --output-file string   Output file
@@ -273,10 +273,10 @@ Flags:
 -p, --password string      PDF file password
 
 Examples:
-unipdf-cli watermark input_file.pdf watermark.png
-unipdf-cli watermark -o output file.png input_file.pdf watermark.png
-unipdf-cli watermark -o output file.png -P 1-3 input_file.pdf watermark.png
-unipdf-cli watermark -o output file.png -P 1-3 -p pass input_file.pdf watermark.png
+unipdf watermark input_file.pdf watermark.png
+unipdf watermark -o output file.png input_file.pdf watermark.png
+unipdf watermark -o output file.png -P 1-3 input_file.pdf watermark.png
+unipdf watermark -o output file.png -P 1-3 -p pass input_file.pdf watermark.png
 
 Pages flag example: 1-3,4,6-7
 Watermark will only be applied to pages 1,2,3 (1-3), 4 and 6,7 (6-7), while
@@ -288,7 +288,7 @@ page number 5 is skipped.
 Convert PDF files to grayscale.
 
 ```
-unipdf-cli grayscale [FLAG]... INPUT_FILE
+unipdf grayscale [FLAG]... INPUT_FILE
 
 Flags:
 -o, --output-file string   Output file
@@ -296,10 +296,10 @@ Flags:
 -p, --password string      PDF file password
 
 Examples:
-unipdf-cli grayscale input_file.pdf
-unipdf-cli grayscale -o output_file input_file.pdf
-unipdf-cli grayscale -o output_file -P 1-3 input_file.pdf
-unipdf-cli grayscale -o output_file -P 1-3 -p pass input_file.pdf
+unipdf grayscale input_file.pdf
+unipdf grayscale -o output_file input_file.pdf
+unipdf grayscale -o output_file -P 1-3 input_file.pdf
+unipdf grayscale -o output_file -P 1-3 -p pass input_file.pdf
 
 Pages flag example: 1-3,4,6-7
 Only pages 1,2,3 (1-3), 4 and 6,7 (6-7) will be converted to grayscale, while
@@ -311,14 +311,14 @@ page number 5 is skipped.
 Outputs file information. Also does some basic validation.
 
 ```
-unipdf-cli info [FLAG]... INPUT_FILE
+unipdf info [FLAG]... INPUT_FILE
 
 Flags:
 -p, --password string   PDF file password
 
 Examples:
-unipdf-cli info input_file.pdf
-unipdf-cli info -p pass input_file.pdf
+unipdf info input_file.pdf
+unipdf info -p pass input_file.pdf
 ```
 
 #### Extract text
@@ -326,16 +326,16 @@ unipdf-cli info -p pass input_file.pdf
 Extracts PDF text. The extracted text is always printed to STDOUT.
 
 ```
-unipdf-cli extract text [FLAG]... INPUT_FILE
+unipdf extract text [FLAG]... INPUT_FILE
 
 Flags:
 -P, --pages string           Pages to extract text from
 -p, --user-password string   Input file password
 
 Examples:
-unipdf-cli extract text input_file.pdf
-unipdf-cli extract text -P 1-3 input_file.pdf
-unipdf-cli extract text -P 1-3 -p pass input_file.pdf
+unipdf extract text input_file.pdf
+unipdf extract text -P 1-3 input_file.pdf
+unipdf extract text -P 1-3 -p pass input_file.pdf
 
 Pages flag example: 1-3,4,6-7
 Text will only be extracted from pages 1,2,3 (1-3), 4 and 6,7 (6-7), while
@@ -349,7 +349,7 @@ destination specified by the --output-file parameter. If no output file is
 specified, the ZIP archive is saved in the same directory as the input file.
 
 ```
-unipdf-cli extract [FLAG]... INPUT_FILE
+unipdf extract [FLAG]... INPUT_FILE
 
 Flags:
 -S, --include-inline-stencil-masks   Include inline stencil masks
@@ -358,9 +358,9 @@ Flags:
 -p, --password string                Input file password
 
 Examples:
-unipdf-cli extract images input_file.pdf
-unipdf-cli extract images -o images.zip input_file.pdf
-unipdf-cli extract images -P 1-3 -p pass -o images.zip input_file.pdf
+unipdf extract images input_file.pdf
+unipdf extract images -o images.zip input_file.pdf
+unipdf extract images -P 1-3 -p pass -o images.zip input_file.pdf
 
 Pages flag example: 1-3,4,6-7
 Images will only be extracted from pages 1,2,3 (1-3), 4 and 6,7 (6-7), while
@@ -372,14 +372,14 @@ page number 5 is skipped.
 Search text in PDF files.
 
 ```
-unipdf-cli search [FLAG]... INPUT_FILE TEXT
+unipdf search [FLAG]... INPUT_FILE TEXT
 
 Flags:
 -p, --password string   PDF file password
 
 Examples:
-unipdf-cli search input_file.pdf text_to_search
-unipdf-cli search -p pass input_file.pdf text_to_search
+unipdf search input_file.pdf text_to_search
+unipdf search -p pass input_file.pdf text_to_search
 ```
 
 #### Form Export
@@ -390,15 +390,15 @@ By default, the resulting JSON content is printed to STDOUT. The output can be
 saved to a file by using the --output-file flag.
 
 ```
-unipdf-cli form export [FLAG]... INPUT_FILE
+unipdf form export [FLAG]... INPUT_FILE
 
 Flags:
 -o, --output-file string   output file
 
 Examples:
-unipdf-cli form export in_file.pdf
-unipdf-cli form export in_file.pdf > out_file.json
-unipdf-cli form export -o out_file.json in_file.pdf
+unipdf form export in_file.pdf
+unipdf form export in_file.pdf > out_file.json
+unipdf form export -o out_file.json in_file.pdf
 ```
 
 #### Form Fill
@@ -422,7 +422,7 @@ The command can search for PDF files inside the subdirectories of the
 specified input directories by using the --recursive flag.
 
 ```
-unipdf-cli form fill [FLAG]... JSON_FILE INPUT_FILES...
+unipdf form fill [FLAG]... JSON_FILE INPUT_FILES...
 
 Flags:
 -f, --flatten             flatten form annotations
@@ -432,12 +432,12 @@ Flags:
 -t, --target-dir string   output directory
 
 Examples:
-unipdf-cli form fill fields.json file_1.pdf file_n.pdf
-unipdf-cli form fill -O fields.json file_1.pdf file_n.pdf
-unipdf-cli form fill -O -r -f fields.json file_1.pdf file_n.pdf dir_1 dir_n
-unipdf-cli form fill -t out_dir fields.json file_1.pdf file_n.pdf dir_1 dir_n
-unipdf-cli form fill -t out_dir -r fields.json file_1.pdf file_n.pdf dir_1 dir_n
-unipdf-cli form fill -t out_dir -r -p pass fields.json file_1.pdf file_n.pdf dir_1 dir_n
+unipdf form fill fields.json file_1.pdf file_n.pdf
+unipdf form fill -O fields.json file_1.pdf file_n.pdf
+unipdf form fill -O -r -f fields.json file_1.pdf file_n.pdf dir_1 dir_n
+unipdf form fill -t out_dir fields.json file_1.pdf file_n.pdf dir_1 dir_n
+unipdf form fill -t out_dir -r fields.json file_1.pdf file_n.pdf dir_1 dir_n
+unipdf form fill -t out_dir -r -p pass fields.json file_1.pdf file_n.pdf dir_1 dir_n
 ```
 #### FDF Merge
 
@@ -461,7 +461,7 @@ specified input directories by using the --recursive flag.
 
 ```
 Usage:
-unipdf-cli form fdfmerge [FLAG]... FDF_FILE INPUT_FILES...
+unipdf form fdfmerge [FLAG]... FDF_FILE INPUT_FILES...
 
 Flags:
 -f, --flatten             flatten form annotations
@@ -471,12 +471,12 @@ Flags:
 -t, --target-dir string   output directory
 
 Examples:
-unipdf-cli form fdfmerge fields.fdf file_1.pdf file_n.pdf
-unipdf-cli form fdfmerge -O fields.fdf file_1.pdf file_n.pdf
-unipdf-cli form fdfmerge -O -r -f fields.fdf file_1.pdf file_n.pdf dir_1 dir_n
-unipdf-cli form fdfmerge -t out_dir fields.fdf file_1.pdf file_n.pdf dir_1 dir_n
-unipdf-cli form fdfmerge -t out_dir -r fields.fdf file_1.pdf file_n.pdf dir_1 dir_n
-unipdf-cli form fdfmerge -t out_dir -r -p pass fields.fdf file_1.pdf file_n.pdf dir_1 dir_n
+unipdf form fdfmerge fields.fdf file_1.pdf file_n.pdf
+unipdf form fdfmerge -O fields.fdf file_1.pdf file_n.pdf
+unipdf form fdfmerge -O -r -f fields.fdf file_1.pdf file_n.pdf dir_1 dir_n
+unipdf form fdfmerge -t out_dir fields.fdf file_1.pdf file_n.pdf dir_1 dir_n
+unipdf form fdfmerge -t out_dir -r fields.fdf file_1.pdf file_n.pdf dir_1 dir_n
+unipdf form fdfmerge -t out_dir -r -p pass fields.fdf file_1.pdf file_n.pdf dir_1 dir_n
 ```
 
 #### Form Flatten
@@ -497,7 +497,7 @@ The command can search for PDF files inside the subdirectories of the
 specified input directories by using the --recursive flag.
 
 ```
-unipdf-cli form flatten [FLAG]... INPUT_FILES...
+unipdf form flatten [FLAG]... INPUT_FILES...
 
 Flags:
 -O, --overwrite           overwrite input files
@@ -506,12 +506,12 @@ Flags:
 -t, --target-dir string   output directory
 
 Examples:
-unipdf-cli form flatten file_1.pdf file_n.pdf
-unipdf-cli form flatten -O file_1.pdf file_n.pdf
-unipdf-cli form flatten -O -r file_1.pdf file_n.pdf dir_1 dir_n
-unipdf-cli form flatten -t out_dir file_1.pdf file_n.pdf dir_1 dir_n
-unipdf-cli form flatten -t out_dir -r file_1.pdf file_n.pdf dir_1 dir_n
-unipdf-cli form flatten -t out_dir -r -p pass file_1.pdf file_n.pdf dir_1 dir_n
+unipdf form flatten file_1.pdf file_n.pdf
+unipdf form flatten -O file_1.pdf file_n.pdf
+unipdf form flatten -O -r file_1.pdf file_n.pdf dir_1 dir_n
+unipdf form flatten -t out_dir file_1.pdf file_n.pdf dir_1 dir_n
+unipdf form flatten -t out_dir -r file_1.pdf file_n.pdf dir_1 dir_n
+unipdf form flatten -t out_dir -r -p pass file_1.pdf file_n.pdf dir_1 dir_n
 ```
 
 ## License
