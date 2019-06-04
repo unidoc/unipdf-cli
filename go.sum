@@ -105,6 +105,8 @@ github.com/ugorji/go v1.1.4/go.mod h1:uQMGLiO92mf5W77hV/PUCpI3pbzQx3CRekS0kk+RGr
 github.com/unidoc/unipdf-cli v0.2.0 h1:N15iFv/Zb2MfVGfRCbyti3XWSzAO0ruwe0vaM/zY3sM=
 github.com/unidoc/unipdf/v3 v3.0.0 h1:qHvKUVGNYGJG2Dgb0x8U4+yefO8/rZzRkQSk6WI2nIM=
 github.com/unidoc/unipdf/v3 v3.0.0/go.mod h1:xq0X+xxSAgPpoQNyPtXmKOdGV3iZBPQQxuV2roDhECw=
+github.com/unidoc/unipdf/v3 v3.0.1 h1:uNZDtuog6OT4bBTbZvfcZcxT75chcujQAWn9ukAd+EY=
+github.com/unidoc/unipdf/v3 v3.0.1/go.mod h1:xq0X+xxSAgPpoQNyPtXmKOdGV3iZBPQQxuV2roDhECw=
 github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2/go.mod h1:UETIi67q53MR2AWcXfiuqkDkRtnGDLqkBTpCHuJHxtU=
 github.com/xordataexchange/crypt v0.0.3-0.20170626215501-b2862e3d0a77/go.mod h1:aYKd//L2LvnjZzWKhF00oedf4jCCReLcmhLdhm1A27Q=
 go.etcd.io/bbolt v1.3.2/go.mod h1:IbVyRI1SCnLcuJnV2u8VeU0CEYM7e686BmAb1XKL+uU=
