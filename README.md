@@ -28,6 +28,7 @@ powered by the [UniPDF](https://github.com/unidoc/unipdf-cli) PDF library.
 - [Fill PDF form fields from JSON file](#form-fill)
 - [Fill PDF form fields from FDF file](#fdf-merge)
 - [Flatten PDF form fields](#form-flatten)
+- [Render PDF pages to images](#render)
 
 ## Short demo
 
@@ -512,6 +513,44 @@ unipdf form flatten -O -r file_1.pdf file_n.pdf dir_1 dir_n
 unipdf form flatten -t out_dir file_1.pdf file_n.pdf dir_1 dir_n
 unipdf form flatten -t out_dir -r file_1.pdf file_n.pdf dir_1 dir_n
 unipdf form flatten -t out_dir -r -p pass file_1.pdf file_n.pdf dir_1 dir_n
+```
+
+#### Render
+
+Render PDF pages to image targets.
+
+The rendered image files are saved in a ZIP file, at the location specified
+by the --output-file parameter. If no output file is specified, the ZIP file
+is saved in the same directory as the input file.
+
+The format of the rendered image files can be specified using
+the --image-format flag (default jpeg). The quality of the image files can be
+configured through the --image-quality flag (default 100, only applies to
+JPEG images).
+```
+unipdf render [FLAG]... INPUT_FILE
+
+Flags:
+-f, --image-format string   format of the output images (default "jpeg")
+-q, --image-quality int     quality of the output images (default 100)
+-o, --output-file string    output file
+-P, --pages string          pages to render from the input file
+-p, --password string       input file password
+
+Examples:
+unipdf render in_file.pdf
+unipdf render -o images.zip in_file.pdf
+unipdf render -o images.zip -P 1-3 in_file.pdf
+unipdf render -o images.zip -P 1-3 -p pass in_file.pdf
+unipdf render -o images.zip -P 1-3 -p pass -f jpeg -q 100 in_file.pdf
+
+Pages flag example: 1-3,4,6-7
+Images will only be rendered for pages 1,2,3 (1-3), 4 and 6,7 (6-7), while
+page number 5 is skipped.
+
+Supported image formats:
+  - jpeg (default)
+  - png
 ```
 
 ## License
