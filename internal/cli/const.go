@@ -29,6 +29,11 @@ var logLevelMap = map[string]unicommon.LogLevel{
 	"error":   unicommon.LogLevelError,
 }
 
+var imageFormats = map[string]struct{}{
+	"jpeg": struct{}{},
+	"png":  struct{}{},
+}
+
 func parseEncryptionMode(mode string) (unipdf.EncryptionAlgorithm, error) {
 	algo, ok := encryptAlgoMap[mode]
 	if !ok {
