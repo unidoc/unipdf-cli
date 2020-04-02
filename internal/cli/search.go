@@ -62,5 +62,5 @@ var searchCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(searchCmd)
 
-	searchCmd.Flags().StringP("password", "p", "", "PDF file password")
+	searchCmd.Flags().StringP("password", "p", "", "input file password")
 }

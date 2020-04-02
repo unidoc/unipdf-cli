@@ -112,7 +112,7 @@ var encryptCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(encryptCmd)
 
-	encryptCmd.Flags().StringP("output-file", "o", "", "Output file")
-	encryptCmd.Flags().StringP("perms", "P", "all", "User permissions")
-	encryptCmd.Flags().StringP("mode", "m", "rc4", "Algorithm to use for encrypting the file")
+	encryptCmd.Flags().StringP("output-file", "o", "", "output file")
+	encryptCmd.Flags().StringP("perms", "P", "all", "user permissions")
+	encryptCmd.Flags().StringP("mode", "m", "rc4", "algorithm to use for encrypting the file")
 }

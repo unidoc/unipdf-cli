@@ -86,7 +86,7 @@ var rotateCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(rotateCmd)
 
-	rotateCmd.Flags().StringP("pages", "P", "", "Pages to rotate")
-	rotateCmd.Flags().StringP("output-file", "o", "", "Output file")
-	rotateCmd.Flags().StringP("password", "p", "", "PDF file password")
+	rotateCmd.Flags().StringP("pages", "P", "", "pages to rotate")
+	rotateCmd.Flags().StringP("output-file", "o", "", "putput file")
+	rotateCmd.Flags().StringP("password", "p", "", "input file password")
 }

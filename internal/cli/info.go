@@ -83,5 +83,5 @@ var infoCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(infoCmd)
 
-	infoCmd.Flags().StringP("password", "p", "", "PDF file password")
+	infoCmd.Flags().StringP("password", "p", "", "input file password")
 }

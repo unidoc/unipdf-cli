@@ -105,7 +105,7 @@ func init() {
 	rootCmd.AddCommand(renderCmd)
 
 	renderCmd.Flags().StringP("password", "p", "", "input file password")
-	renderCmd.Flags().StringP("output-file", "o", "", "output file path")
+	renderCmd.Flags().StringP("output-file", "o", "", "output file")
 	renderCmd.Flags().StringP("pages", "P", "", "pages to render from the input file")
 	renderCmd.Flags().StringP("image-format", "f", "jpeg", "format of the output images")
 	renderCmd.Flags().IntP("image-quality", "q", 100, "quality of the output images")

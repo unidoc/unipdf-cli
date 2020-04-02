@@ -72,5 +72,5 @@ var splitCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(splitCmd)
 
-	splitCmd.Flags().StringP("password", "p", "", "PDF file password")
+	splitCmd.Flags().StringP("password", "p", "", "input file password")
 }

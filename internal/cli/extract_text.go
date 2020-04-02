@@ -71,6 +71,6 @@ var extractTextCmd = &cobra.Command{
 func init() {
 	extractCmd.AddCommand(extractTextCmd)
 
-	extractTextCmd.Flags().StringP("password", "p", "", "Input file password")
-	extractTextCmd.Flags().StringP("pages", "P", "", "Pages to extract text from")
+	extractTextCmd.Flags().StringP("password", "p", "", "input file password")
+	extractTextCmd.Flags().StringP("pages", "P", "", "pages to extract text from")
 }

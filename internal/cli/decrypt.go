@@ -58,6 +58,6 @@ var decryptCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(decryptCmd)
 
-	decryptCmd.Flags().StringP("password", "p", "", "PDF file password")
-	decryptCmd.Flags().StringP("output-file", "o", "", "Output file")
+	decryptCmd.Flags().StringP("password", "p", "", "input file password")
+	decryptCmd.Flags().StringP("output-file", "o", "", "output file")
 }

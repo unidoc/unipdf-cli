@@ -66,6 +66,6 @@ var passwdCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(passwdCmd)
 
-	passwdCmd.Flags().StringP("output-file", "o", "", "Output file")
-	passwdCmd.Flags().StringP("password", "p", "", "Input file password")
+	passwdCmd.Flags().StringP("output-file", "o", "", "output file")
+	passwdCmd.Flags().StringP("password", "p", "", "input file password")
 }

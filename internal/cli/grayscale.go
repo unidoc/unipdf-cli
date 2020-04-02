@@ -77,7 +77,7 @@ var grayscaleCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(grayscaleCmd)
 
-	grayscaleCmd.Flags().StringP("output-file", "o", "", "Output file")
-	grayscaleCmd.Flags().StringP("password", "p", "", "PDF file password")
-	grayscaleCmd.Flags().StringP("pages", "P", "", "Pages to convert to grayscale")
+	grayscaleCmd.Flags().StringP("output-file", "o", "", "output file")
+	grayscaleCmd.Flags().StringP("password", "p", "", "input file password")
+	grayscaleCmd.Flags().StringP("pages", "P", "", "pages to convert to grayscale")
 }

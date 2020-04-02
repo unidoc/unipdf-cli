@@ -78,7 +78,7 @@ var watermarkCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(watermarkCmd)
 
-	watermarkCmd.Flags().StringP("output-file", "o", "", "Output file")
-	watermarkCmd.Flags().StringP("password", "p", "", "PDF file password")
-	watermarkCmd.Flags().StringP("pages", "P", "", "Pages on which to add watermark")
+	watermarkCmd.Flags().StringP("output-file", "o", "", "output file")
+	watermarkCmd.Flags().StringP("password", "p", "", "input file password")
+	watermarkCmd.Flags().StringP("pages", "P", "", "pages on which to add watermark")
 }

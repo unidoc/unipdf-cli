@@ -95,8 +95,8 @@ var extractImagesCmd = &cobra.Command{
 func init() {
 	extractCmd.AddCommand(extractImagesCmd)
 
-	extractImagesCmd.Flags().StringP("password", "p", "", "Input file password")
-	extractImagesCmd.Flags().StringP("output-file", "o", "", "Output file")
-	extractImagesCmd.Flags().StringP("pages", "P", "", "Pages to extract images from")
-	extractImagesCmd.Flags().BoolP("include-inline-stencil-masks", "S", false, "Include inline stencil masks")
+	extractImagesCmd.Flags().StringP("password", "p", "", "input file password")
+	extractImagesCmd.Flags().StringP("output-file", "o", "", "output file")
+	extractImagesCmd.Flags().StringP("pages", "P", "", "pages to extract images from")
+	extractImagesCmd.Flags().BoolP("include-inline-stencil-masks", "S", false, "include inline stencil masks")
 }
