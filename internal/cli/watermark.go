@@ -30,7 +30,7 @@ var watermarkCmdExample = fmt.Sprintf("%s\n%s\n%s\n%s\n",
 	fmt.Sprintf("%s watermark -o output file.png -P 1-3 -p pass input_file.pdf watermark.png", appName),
 )
 
-// watermarkCmd represents the watermark command
+// watermarkCmd represents the watermark command.
 var watermarkCmd = &cobra.Command{
 	Use:                   "watermark [FLAG]... INPUT_FILE WATERMARK_IMAGE",
 	Short:                 "Add watermark to PDF files",

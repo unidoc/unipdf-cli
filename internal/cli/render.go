@@ -45,7 +45,7 @@ var renderCmdExample = fmt.Sprintf("%s\n%s\n%s\n%s\n%s\n",
 	fmt.Sprintf("%s render -o images.zip -P 1-3 -p pass -f jpeg -q 100 input_file.pdf", appName),
 )
 
-// renderCmd represents the render command
+// renderCmd represents the render command.
 var renderCmd = &cobra.Command{
 	Use:                   "render [FLAG]... INPUT_FILE",
 	Short:                 "Render PDF pages to images",

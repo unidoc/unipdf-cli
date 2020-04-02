@@ -30,7 +30,7 @@ var splitCmdExample = fmt.Sprintf("%s\n%s\n",
 	fmt.Sprintf("%s split -p pass input_file.pd output_file.pdf 1-2,4", appName),
 )
 
-// splitCmd represents the split command
+// splitCmd represents the split command.
 var splitCmd = &cobra.Command{
 	Use:                   "split [FLAG]... INPUT_FILE OUTPUT_FILE [PAGES]",
 	Short:                 "Split PDF files",

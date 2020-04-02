@@ -22,7 +22,7 @@ var infoCmdExample = fmt.Sprintf("%s\n%s\n",
 	fmt.Sprintf("%s info -p pass input_file.pdf", appName),
 )
 
-// infoCmd represents the info command
+// infoCmd represents the info command.
 var infoCmd = &cobra.Command{
 	Use:                   "info [FLAG]... INPUT_FILE",
 	Short:                 "Output PDF information",

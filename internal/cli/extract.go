@@ -11,7 +11,7 @@ import (
 
 const extractCmdDesc = `Extract PDF resources.`
 
-// extractCmd represents the extract command
+// extractCmd represents the extract command.
 var extractCmd = &cobra.Command{
 	Use:   "extract [FLAG]... COMMAND",
 	Short: "Extract PDF resources",

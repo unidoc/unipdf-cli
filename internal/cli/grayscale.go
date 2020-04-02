@@ -30,7 +30,7 @@ var grayscaleCmdExample = fmt.Sprintf("%s\n%s\n%s\n%s\n",
 	fmt.Sprintf("%s grayscale -o output_file -P 1-3 -p pass input_file.pdf", appName),
 )
 
-// grayscaleCmd represents the grayscale command
+// grayscaleCmd represents the grayscale command.
 var grayscaleCmd = &cobra.Command{
 	Use:                   "grayscale [FLAG]... INPUT_FILE",
 	Short:                 "Convert PDF to grayscale",

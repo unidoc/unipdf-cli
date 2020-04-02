@@ -11,7 +11,7 @@ import (
 
 const formCmdDesc = `PDF form operations.`
 
-// formCmd represents the form command
+// formCmd represents the form command.
 var formCmd = &cobra.Command{
 	Use:   "form [FLAG]... COMMAND",
 	Short: "PDF form operations",

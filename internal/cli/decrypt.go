@@ -20,7 +20,7 @@ var decryptCmdExample = fmt.Sprintf("%s\n%s\n",
 	fmt.Sprintf("%s decrypt -p pass -o output_file.pdf input_file.pdf", appName),
 )
 
-// decryptCmd represents the decrypt command
+// decryptCmd represents the decrypt command.
 var decryptCmd = &cobra.Command{
 	Use:                   "decrypt [FLAG]... INPUT_FILE",
 	Short:                 "Decrypt PDF files",

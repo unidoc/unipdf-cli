@@ -34,7 +34,7 @@ var explodeCmdExample = fmt.Sprintf("%s\n%s\n%s\n%s\n",
 	fmt.Sprintf("%s explode -o pages.zip -P 1-3 -p pass input_file.pdf", appName),
 )
 
-// explodeCmd represents the explode command
+// explodeCmd represents the explode command.
 var explodeCmd = &cobra.Command{
 	Use:                   "explode [FLAG]... INPUT_FILE",
 	Short:                 "Explodes the input file into separate single page PDF files",

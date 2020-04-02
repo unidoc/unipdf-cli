@@ -36,7 +36,7 @@ var extractImagesCmdExample = fmt.Sprintf("%s\n%s\n%s\n%s\n",
 	fmt.Sprintf("%s extract images -P 1-3 -p pass -o images.zip -S input_file.pdf", appName),
 )
 
-// extractImagesCmd represents the extract images command
+// extractImagesCmd represents the extract images command.
 var extractImagesCmd = &cobra.Command{
 	Use:                   "images [FLAG]... INPUT_FILE",
 	Short:                 "Extract PDF images",

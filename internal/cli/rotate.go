@@ -33,7 +33,7 @@ var rotateCmdExample = fmt.Sprintf("%s\n%s\n%s\n%s\n%s\n",
 	fmt.Sprintf("%s rotate -o output_file.pdf -P 1-3 -p pass input_file.pdf 90", appName),
 )
 
-// rotateCmd represents the rotate command
+// rotateCmd represents the rotate command.
 var rotateCmd = &cobra.Command{
 	Use:                   "rotate [FLAG]... INPUT_FILE ANGLE",
 	Short:                 "Rotate PDF file pages",

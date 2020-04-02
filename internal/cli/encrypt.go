@@ -45,7 +45,7 @@ var encryptCmdExample = fmt.Sprintf("%s\n%s\n%s\n%s\n%s\n",
 	fmt.Sprintf("%s encrypt -o output_file.pdf -P modify,annotate -m aes256 input_file.pdf owner_pass user_pass", appName),
 )
 
-// encryptCmd represents the encrypt command
+// encryptCmd represents the encrypt command.
 var encryptCmd = &cobra.Command{
 	Use:                   "encrypt [FLAG]... INPUT_FILE OWNER_PASSWORD [USER_PASSWORD]",
 	Short:                 "Encrypt PDF files",

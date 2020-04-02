@@ -43,7 +43,7 @@ var formFDFMergeCmdExample = fmt.Sprintf("%s\n%s\n%s\n%s\n%s\n%s\n",
 	fmt.Sprintf("%s form fdfmerge -t out_dir -r -p pass fields.fdf file_1.pdf file_n.pdf dir_1 dir_n", appName),
 )
 
-// formFDFMergeCmd represents the form fdfmerge command
+// formFDFMergeCmd represents the form fdfmerge command.
 var formFDFMergeCmd = &cobra.Command{
 	Use:                   "fdfmerge [FLAG]... FDF_FILE INPUT_FILES...",
 	Short:                 "Fill form fields from FDF file",

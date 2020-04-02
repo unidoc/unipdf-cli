@@ -31,7 +31,7 @@ var extractTextCmdExample = fmt.Sprintf("%s\n%s\n%s\n",
 	fmt.Sprintf("%s extract text -P 1-3 -p pass input_file.pdf", appName),
 )
 
-// extractTextCmd represents the extract text command
+// extractTextCmd represents the extract text command.
 var extractTextCmd = &cobra.Command{
 	Use:                   "text [FLAG]... INPUT_FILE",
 	Short:                 "Extract PDF text",

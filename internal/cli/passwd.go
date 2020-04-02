@@ -21,7 +21,7 @@ var passwdCmdExample = fmt.Sprintf("%s\n%s\n%s\n",
 	fmt.Sprintf("%s passwd -p pass -o output_file.pdf input_file.pdf new_owner_pass new_user_pass", appName),
 )
 
-// passwdCmd represents the passwd command
+// passwdCmd represents the passwd command.
 var passwdCmd = &cobra.Command{
 	Use:                   "passwd [FLAG]... INPUT_FILE NEW_OWNER_PASSWORD [NEW_USER_PASSWORD]",
 	Short:                 "Change PDF passwords",

@@ -46,7 +46,7 @@ var formFillCmdExample = fmt.Sprintf("%s\n%s\n%s\n%s\n%s\n%s\n",
 	fmt.Sprintf("%s form fill -t out_dir -r -p pass fields.json file_1.pdf file_n.pdf dir_1 dir_n", appName),
 )
 
-// formFillCmd represents the form fill command
+// formFillCmd represents the form fill command.
 var formFillCmd = &cobra.Command{
 	Use:                   "fill [FLAG]... JSON_FILE INPUT_FILES...",
 	Short:                 "Fill form fields from JSON file",
