@@ -30,7 +30,7 @@ var grayscaleCmdExample = fmt.Sprintf("%s\n%s\n%s\n%s\n",
 	fmt.Sprintf("%s grayscale -o output_file -P 1-3 -p pass input_file.pdf", appName),
 )
 
-// grayscaleCmd represents the grayscale command
+// grayscaleCmd represents the grayscale command.
 var grayscaleCmd = &cobra.Command{
 	Use:                   "grayscale [FLAG]... INPUT_FILE",
 	Short:                 "Convert PDF to grayscale",
@@ -77,7 +77,7 @@ var grayscaleCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(grayscaleCmd)
 
-	grayscaleCmd.Flags().StringP("output-file", "o", "", "Output file")
-	grayscaleCmd.Flags().StringP("password", "p", "", "PDF file password")
-	grayscaleCmd.Flags().StringP("pages", "P", "", "Pages to convert to grayscale")
+	grayscaleCmd.Flags().StringP("output-file", "o", "", "output file")
+	grayscaleCmd.Flags().StringP("password", "p", "", "input file password")
+	grayscaleCmd.Flags().StringP("pages", "P", "", "pages to convert to grayscale")
 }

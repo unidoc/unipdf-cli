@@ -45,7 +45,7 @@ var optimizeCmdExample = fmt.Sprintf("%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n",
 	fmt.Sprintf("%s optimize -t out_dir -r -q 75 -P 100 -p pass file_1.pdf file_n.pdf dir_1 dir_n", appName),
 )
 
-// optimizeCmd represents the optimize command
+// optimizeCmd represents the optimize command.
 var optimizeCmd = &cobra.Command{
 	Use:                   "optimize [FLAG]... INPUT_FILES...",
 	Short:                 "Optimize PDF files",

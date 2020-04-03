@@ -30,7 +30,7 @@ var formExportCmdExample = fmt.Sprintf("%s\n%s\n%s\n",
 	fmt.Sprintf("%s form export -o out_file.json in_file.pdf", appName),
 )
 
-// formExportCmd represents the form export command
+// formExportCmd represents the form export command.
 var formExportCmd = &cobra.Command{
 	Use:                   "export [FLAG]... INPUT_FILE",
 	Short:                 "Export form fields as JSON",

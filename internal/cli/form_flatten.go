@@ -40,7 +40,7 @@ var formFlattenCmdExample = fmt.Sprintf("%s\n%s\n%s\n%s\n%s\n%s\n",
 	fmt.Sprintf("%s form flatten -t out_dir -r -p pass file_1.pdf file_n.pdf dir_1 dir_n", appName),
 )
 
-// formFlattenCmd represents the form flatten command
+// formFlattenCmd represents the form flatten command.
 var formFlattenCmd = &cobra.Command{
 	Use:                   "flatten [FLAG]... INPUT_FILES...",
 	Short:                 "Flatten form annotations",

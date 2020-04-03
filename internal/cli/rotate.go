@@ -33,7 +33,7 @@ var rotateCmdExample = fmt.Sprintf("%s\n%s\n%s\n%s\n%s\n",
 	fmt.Sprintf("%s rotate -o output_file.pdf -P 1-3 -p pass input_file.pdf 90", appName),
 )
 
-// rotateCmd represents the rotate command
+// rotateCmd represents the rotate command.
 var rotateCmd = &cobra.Command{
 	Use:                   "rotate [FLAG]... INPUT_FILE ANGLE",
 	Short:                 "Rotate PDF file pages",
@@ -86,7 +86,7 @@ var rotateCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(rotateCmd)
 
-	rotateCmd.Flags().StringP("pages", "P", "", "Pages to rotate")
-	rotateCmd.Flags().StringP("output-file", "o", "", "Output file")
-	rotateCmd.Flags().StringP("password", "p", "", "PDF file password")
+	rotateCmd.Flags().StringP("pages", "P", "", "pages to rotate")
+	rotateCmd.Flags().StringP("output-file", "o", "", "putput file")
+	rotateCmd.Flags().StringP("password", "p", "", "input file password")
 }

@@ -20,7 +20,7 @@ var decryptCmdExample = fmt.Sprintf("%s\n%s\n",
 	fmt.Sprintf("%s decrypt -p pass -o output_file.pdf input_file.pdf", appName),
 )
 
-// decryptCmd represents the decrypt command
+// decryptCmd represents the decrypt command.
 var decryptCmd = &cobra.Command{
 	Use:                   "decrypt [FLAG]... INPUT_FILE",
 	Short:                 "Decrypt PDF files",
@@ -58,6 +58,6 @@ var decryptCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(decryptCmd)
 
-	decryptCmd.Flags().StringP("password", "p", "", "PDF file password")
-	decryptCmd.Flags().StringP("output-file", "o", "", "Output file")
+	decryptCmd.Flags().StringP("password", "p", "", "input file password")
+	decryptCmd.Flags().StringP("output-file", "o", "", "output file")
 }

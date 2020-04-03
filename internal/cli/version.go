@@ -16,7 +16,7 @@ var versionCmdExample = fmt.Sprintf("%s\n",
 	fmt.Sprintf("%s version", appName),
 )
 
-// versionCmd represents the version command
+// versionCmd represents the version command.
 var versionCmd = &cobra.Command{
 	Use:                   "version",
 	Short:                 "Output version information and exit",
@@ -25,8 +25,8 @@ var versionCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		version := pdf.Version()
 
-		fmt.Printf("%s %s\n", appName, appVersion)
-		fmt.Printf("unidoc %s\n", version.Lib)
+		fmt.Printf("%s v%s\n", appName, appVersion)
+		fmt.Printf("Powered by unipdf v%s\n", version.Lib)
 		fmt.Printf("\nLicense info\n%s", version.License)
 	},
 }

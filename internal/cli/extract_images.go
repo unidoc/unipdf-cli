@@ -36,7 +36,7 @@ var extractImagesCmdExample = fmt.Sprintf("%s\n%s\n%s\n%s\n",
 	fmt.Sprintf("%s extract images -P 1-3 -p pass -o images.zip -S input_file.pdf", appName),
 )
 
-// extractImagesCmd represents the extract images command
+// extractImagesCmd represents the extract images command.
 var extractImagesCmd = &cobra.Command{
 	Use:                   "images [FLAG]... INPUT_FILE",
 	Short:                 "Extract PDF images",
@@ -95,8 +95,8 @@ var extractImagesCmd = &cobra.Command{
 func init() {
 	extractCmd.AddCommand(extractImagesCmd)
 
-	extractImagesCmd.Flags().StringP("password", "p", "", "Input file password")
-	extractImagesCmd.Flags().StringP("output-file", "o", "", "Output file")
-	extractImagesCmd.Flags().StringP("pages", "P", "", "Pages to extract images from")
-	extractImagesCmd.Flags().BoolP("include-inline-stencil-masks", "S", false, "Include inline stencil masks")
+	extractImagesCmd.Flags().StringP("password", "p", "", "input file password")
+	extractImagesCmd.Flags().StringP("output-file", "o", "", "output file")
+	extractImagesCmd.Flags().StringP("pages", "P", "", "pages to extract images from")
+	extractImagesCmd.Flags().BoolP("include-inline-stencil-masks", "S", false, "include inline stencil masks")
 }

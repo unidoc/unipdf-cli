@@ -20,7 +20,7 @@ var searchCmdExample = fmt.Sprintf("%s\n%s\n",
 	fmt.Sprintf("%s search -p pass input_file.pdf text_to_search", appName),
 )
 
-// searchCmd represents the search command
+// searchCmd represents the search command.
 var searchCmd = &cobra.Command{
 	Use:                   "search [FLAG]... INPUT_FILE TEXT",
 	Short:                 "Search text in PDF files",
@@ -62,5 +62,5 @@ var searchCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(searchCmd)
 
-	searchCmd.Flags().StringP("password", "p", "", "PDF file password")
+	searchCmd.Flags().StringP("password", "p", "", "input file password")
 }
