@@ -29,6 +29,7 @@ powered by the [UniPDF](https://github.com/unidoc/unipdf-cli) PDF library.
 - [Fill PDF form fields from FDF file](#fdf-merge)
 - [Flatten PDF form fields](#form-flatten)
 - [Render PDF pages to images](#render)
+- [Compare PDF/A verification rules with VeraPdf](#compare-pdfa)
 
 ## Short demo
 
@@ -551,6 +552,36 @@ page number 5 is skipped.
 Supported image formats:
   - jpeg (default)
   - png
+```
+
+#### Compare PDF/A
+
+Compare UniPdf PDF/A validation implementation with the 'VeraPDF' XML report.
+
+The VeraPDF report could have different form depending on the way it was obtained.
+Define the 'report-type' flag with one of the following values:
+- report obtained from online tool - 'online' - https://demo.verapdf.org/
+- report obtained from verapdf CLI - 'cli'
+- report obtained from verapdf-gui - 'gui'
+The command requires two arguments:
+- VeraPDF XML report
+- Pdf file for which given report was generated.
+Currently, only two VeraPDF profiles are supported:
+- PDF/A-1A
+- PDF/A-1B
+
+```shell
+Usage:
+  unipdf compare-pdfa [FLAG]... INPUT_VERAPDF_XML_REPORT_FILE INPUT_PDF_DOCUMENT_FILE
+
+Examples:
+unipdf compare-pdfa --report-type online report.xml document.pdf
+unipdf compare-pdfa -r cli report.xml document.pdf
+unipdf compare-pdfa -r gui report.xml document.pdf
+
+Flags:
+  -h, --help                      help for compare-pdfa
+  -r, --report-type report-type   verapdf type of the report (default unknown)
 ```
 
 ## License
