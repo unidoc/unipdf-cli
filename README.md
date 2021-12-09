@@ -553,21 +553,25 @@ Supported image formats:
   - png
 ```
 
+#### License Info
+
+Get information about license key that being loaded by unipdf-cli.
+
+```
+Example:
+unipdf license_info
+```
+
 ## License
 
-The application is licensed under the same conditions as the
-[UniPDF](https://github.com/unidoc/unipdf) library.
-It has a dual license, a commercial one suitable for closed source projects
-and an AGPL license that can be used in open source software.
+unipdf-cli requires license codes to operate, there are two options:
+- Metered License API keys: Free ones can be obtained at https://cloud.unidoc.io
+- Offline Perpetual codes: Can be purchased at https://unidoc.io/pricing
 
-Depending on your needs, you can choose one of them and follow its policies.
-A detail of the policies and agreements for each license type are available in
-the [LICENSE.COMMERCIAL](LICENSE.COMMERCIAL) and [LICENSE.AGPL](LICENSE.AGPL)
-files.
-
-Please see [pricing](http://unidoc.io/pricing) to purchase a commercial
-[UniPDF](https://github.com/unidoc/unipdf) license or contact sales at
-sales@unidoc.io for more info.
+## Offline License
+Offline licenses are cryptography based and contain full signed information that is verified based on signatures without making any outbound connections,
+hence the name "offline". This kind of license is suitable for users deploying OEM products to their customers or where there are strict restrictions
+on outbound connections due to firewalls and/or compliance requirements.
 
 If you have a license for [UniPDF](https://github.com/unidoc/unipdf), you can
 set it through the UNIDOC_LICENSE_FILE and UNIDOC_LICENSE_CUSTOMER environment
@@ -576,4 +580,14 @@ variables.
 ```
 export UNIDOC_LICENSE_FILE="PATH_TO_LICENSE_FILE"
 export UNIDOC_LICENSE_CUSTOMER="CUSTOMER_NAME"
+```
+
+## Metered License (API keys)
+The metered license is the most convenient way to get started with UniDoc products and the Free tier enables a powerful way to get started for free.
+Anyone can get a free metered API key by signing up on http://cloud.unidoc.io/
+
+If you have a metered license (API keys), you can set it through the UNIDOC_LICENSE_API_KEY environment variable.
+
+```
+export UNIDOC_LICENSE_API_KEY="unidoc_metered_api_key"
 ```
