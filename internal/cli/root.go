@@ -60,6 +60,12 @@ func readEnv() {
 		pdf.SetLicense(licensePath, licenseCustomer)
 	}
 
+	// Set license key using metered api key.
+	licenseMeteredKey := os.Getenv("UNIDOC_LICENSE_API_KEY")
+	if licenseMeteredKey != "" {
+		pdf.SetMeteredKey(licenseMeteredKey)
+	}
+
 	// Set log level.
 	logLevel, err := parseLogLevel(os.Getenv("UNIDOC_LOG_LEVEL"))
 	if err != nil {
