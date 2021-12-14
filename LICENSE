@@ -6,5 +6,5 @@ code to operate.
 The use of this software package is governed by the end-user license agreement
 (EULA) available at: https://unidoc.io/eula/
 
-To obtain a Trial license code to evaluate the software, please visit
+To get a free metered code to evaluate the software, please visit
 https://unidoc.io/
