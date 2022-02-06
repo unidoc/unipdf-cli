@@ -8,6 +8,7 @@ package cli
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/spf13/cobra"
 	"github.com/unidoc/unipdf-cli/pkg/pdf"
@@ -15,9 +16,9 @@ import (
 
 const licenseInfoCmdDesc = `Outputs information about the license key.`
 
-var licenseInfoCmdExample = fmt.Sprintf("%s",
+var licenseInfoCmdExample = strings.Join([]string{
 	fmt.Sprintf("%s license_info", appName),
-)
+}, "\n")
 
 // licenseInfoCmd represents the license info command.
 var licenseInfoCmd = &cobra.Command{

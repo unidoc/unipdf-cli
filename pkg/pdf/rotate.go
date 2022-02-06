@@ -69,7 +69,7 @@ func Rotate(inputPath, outputPath string, angle int, password string, pages []in
 			return "", err
 		}
 
-		rotate, _ := selectedPages[numPage]
+		rotate := selectedPages[numPage]
 		if !rotate || angle == 0 {
 			continue
 		}

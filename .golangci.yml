@@ -9,7 +9,7 @@ linters:
     - nakedret
     - typecheck
     - gosec
-    - golint
+    - revive
     - unconvert
     - misspell
   disable:
@@ -43,22 +43,6 @@ issues:
     - linters:
       - gosec
       text: "weak cryptographic primitive"
-
-    # We disagree with this, in our package philosophy as sometimes stuttering is fine.
-    - linters:
-      - golint
-      text: "and that stutters"
-
-    # This is also not compatible with our ideas. This does not really matter, "Pdf" or "PDF" etc.
-    # Id or ID. The camelcase is fine in many cases. Hard to update also, as would require major changes.
-    - linters:
-      - golint
-      text: " should be "
-
-    # Sometimes can be valid not to export the type.
-    - linters:
-        - golint
-      text: " returns unexported type "
 
 # output configuration options
 output:
