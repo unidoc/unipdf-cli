@@ -14,7 +14,7 @@ import (
 )
 
 const appName = "unipdf"
-const appVersion = "0.4.0"
+const appVersion = "0.5.0"
 
 const rootCmdDesc = ` is a CLI application for working with PDF files.
 It supports the most common PDF operations. A full list of the supported
@@ -55,10 +55,11 @@ func readEnv() {
 	// Set license key.
 	licensePath := os.Getenv("UNIDOC_LICENSE_FILE")
 	licenseCustomer := os.Getenv("UNIDOC_LICENSE_CUSTOMER")
-
 	if licensePath != "" {
 		pdf.SetLicense(licensePath, licenseCustomer)
 	}
+	
+	// OR... alternatively... load a License API key.
 
 	// Set license key using metered api key.
 	licenseMeteredKey := os.Getenv("UNIDOC_LICENSE_API_KEY")
