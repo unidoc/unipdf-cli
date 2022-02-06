@@ -1,0 +1,69 @@
+linters:
+  enable-all: false
+  enable:
+    - exportloopref
+    - staticcheck
+    - megacheck
+    - govet
+    - gosimple
+    - nakedret
+    - typecheck
+    - gosec
+    - golint
+    - unconvert
+    - misspell
+  disable:
+    - ineffassign
+    - errcheck
+    - varcheck
+    - deadcode
+    - unused
+    - structcheck
+    - lll
+    - gofmt
+    - goconst
+    - scopelint
+run:
+  concurrency: 4
+  timeout: 3m
+  # Keep exit code 0 until we fix all this, i.e. get the baseline set.
+  issues-exit-code: 0
+  # Keep this false until we address all the non-test files and set baseline.
+  tests: true
+
+  skip-files:
+    - ".*_test.go$"
+
+  skip-dirs:
+    - testdata
+
+issues:
+  exclude-rules:
+    # We don't control the ciphers as we are just implementing standards.
+    - linters:
+      - gosec
+      text: "weak cryptographic primitive"
+
+    # We disagree with this, in our package philosophy as sometimes stuttering is fine.
+    - linters:
+      - golint
+      text: "and that stutters"
+
+    # This is also not compatible with our ideas. This does not really matter, "Pdf" or "PDF" etc.
+    # Id or ID. The camelcase is fine in many cases. Hard to update also, as would require major changes.
+    - linters:
+      - golint
+      text: " should be "
+
+    # Sometimes can be valid not to export the type.
+    - linters:
+        - golint
+      text: " returns unexported type "
+
+# output configuration options
+output:
+  format: colored-line-number
+  print-issued-lines: true
+  print-linter-name: true
+  uniq-by-line: true
+  path-prefix: ""
