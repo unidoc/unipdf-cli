@@ -36,22 +36,11 @@ powered by the [UniPDF](https://github.com/unidoc/unipdf-cli) PDF library.
 
 ## Installation
 
-Minimum required Go version: 1.11
+Minimum required Go version: 1.13. We officially support the 3 latest minor versions of Go, but it may work on earlier ones as well.
 
 ```
 git clone git@github.com:unidoc/unipdf-cli.git
 cd unipdf-cli/cmd/unipdf
-go build
-```
-
-In Go 1.11 modules are disabled by default in GOPATH/src (`GO111MODULE=auto`).
-Newer versions will have Go modules enabled by default. If you choose to clone
-the project somewhere in this location, you must explicitly enable Go modules.
-
-```
-git clone git@github.com:unidoc/unipdf-cli.git
-cd unipdf-cli/cmd/unipdf
-export GO111MODULE=on
 go build
 ```
 
