@@ -54,7 +54,6 @@ func GetMeteredState() {
 	}
 	fmt.Printf("Credits: %v\n", state.Credits)
 	fmt.Printf("Used credits: %v\n", state.Used)
-	return
 }
 
 // SetLogLevel sets the verbosity of the output produced by the Unidoc library.
