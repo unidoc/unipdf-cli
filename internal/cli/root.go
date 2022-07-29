@@ -26,6 +26,11 @@ UNIDOC_LICENSE_FILE and UNIDOC_LICENSE_CUSTOMER environment variables.
 export UNIDOC_LICENSE_FILE="PATH_TO_LICENSE_FILE"
 export UNIDOC_LICENSE_CUSTOMER="CUSTOMER_NAME"
 
+Or alternatively, you can set the Metered API Key license through the
+UNIDOC_LICENSE_API_KEY environment variable.
+
+export UNIDOC_LICENSE_API_KEY="YOUR_API_KEY_HERE"
+
 By default, the application only displays error messages on command execution
 failure. To change the verbosity of the output, set the UNIDOC_LOG_LEVEL
 environment variable.
@@ -58,7 +63,7 @@ func readEnv() {
 	if licensePath != "" {
 		pdf.SetLicense(licensePath, licenseCustomer)
 	}
-	
+
 	// OR... alternatively... load a License API key.
 
 	// Set license key using metered api key.
