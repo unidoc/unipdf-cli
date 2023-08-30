@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Get golangci-lint
         run: |
-          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.43.0
+          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.52.2
       - name: Run golangci-lint
         run: |
           ./bin/golangci-lint run --out-format=github-actions --issues-exit-code=1
