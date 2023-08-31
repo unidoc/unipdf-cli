@@ -13,7 +13,7 @@ import (
 	unilicense "github.com/unidoc/unipdf/v3/common/license"
 )
 
-// SetLicense sets the license for using the Unidoc library.
+// SetLicense sets the license for using the UniDoc library.
 func SetLicense(licensePath string, customer string) error {
 	// Read license file
 	content, err := ioutil.ReadFile(licensePath)
@@ -21,7 +21,7 @@ func SetLicense(licensePath string, customer string) error {
 		return err
 	}
 
-	return unilicense.SetLicenseKey(string(content), "")
+	return unilicense.SetLicenseKey(string(content), customer)
 }
 
 // SetMeteredKey sets the license key for using the UniDoc library with metered api key.
@@ -56,7 +56,7 @@ func GetMeteredState() {
 	fmt.Printf("Used credits: %v\n", state.Used)
 }
 
-// SetLogLevel sets the verbosity of the output produced by the Unidoc library.
+// SetLogLevel sets the verbosity of the output produced by the UniDoc library.
 func SetLogLevel(level unicommon.LogLevel) {
 	unicommon.SetLogger(unicommon.NewConsoleLogger(level))
 }
