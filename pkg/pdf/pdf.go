@@ -56,7 +56,7 @@ func GetMeteredState() {
 	fmt.Printf("Used credits: %v\n", state.Used)
 }
 
-// SetLogLevel sets the verbosity of the output produced by the UniDOC library.
+// SetLogLevel sets the verbosity of the output produced by the UniDoc library.
 func SetLogLevel(level unicommon.LogLevel) {
 	unicommon.SetLogger(unicommon.NewConsoleLogger(level))
 }
