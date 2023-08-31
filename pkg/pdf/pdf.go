@@ -13,7 +13,7 @@ import (
 	unilicense "github.com/unidoc/unipdf/v3/common/license"
 )
 
-// SetLicense sets the license for using the UniDOC library.
+// SetLicense sets the license for using the UniDoc library.
 func SetLicense(licensePath string, customer string) error {
 	// Read license file
 	content, err := ioutil.ReadFile(licensePath)
