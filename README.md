@@ -6,7 +6,7 @@
 
 unipdf-cli is a CLI tool which makes working with PDF files very easy. It supports
 the most common PDF operations. The application is written in Golang and is
-powered by the [UniPDF](https://github.com/unidoc/unipdf-cli) PDF library.
+powered by the [UniPDF](https://github.com/unidoc/unipdf) PDF library.
 
 ## Features
 
