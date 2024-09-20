@@ -8,7 +8,6 @@ package cli
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -59,7 +58,8 @@ var formExportCmd = &cobra.Command{
 			return
 		}
 
-		err = ioutil.WriteFile(outputPath, []byte(json), os.ModePerm)
+		// #nosec G306
+		err = os.WriteFile(outputPath, []byte(json), 0644)
 		if err != nil {
 			printErr("Could not export form fields: %s\n", err)
 		}
@@ -67,7 +67,7 @@ var formExportCmd = &cobra.Command{
 		fmt.Printf("Form fields successfully exported from %s\n", inputPath)
 		fmt.Printf("Output file saved to %s\n", outputPath)
 	},
-	Args: func(cmd *cobra.Command, args []string) error {
+	Args: func(_ *cobra.Command, args []string) error {
 		if len(args) < 1 {
 			return errors.New("must provide the input file")
 		}

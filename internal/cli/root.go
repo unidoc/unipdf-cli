@@ -14,7 +14,7 @@ import (
 )
 
 const appName = "unipdf"
-const appVersion = "0.5.0"
+const appVersion = "0.6.0"
 
 const rootCmdDesc = ` is a CLI application for working with PDF files.
 It supports the most common PDF operations. A full list of the supported

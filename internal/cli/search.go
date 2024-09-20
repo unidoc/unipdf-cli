@@ -50,7 +50,7 @@ var searchCmd = &cobra.Command{
 
 		fmt.Printf("Total occurrences: %d\n", totalOccurrences)
 	},
-	Args: func(cmd *cobra.Command, args []string) error {
+	Args: func(_ *cobra.Command, args []string) error {
 		if len(args) < 2 {
 			return errors.New("must provide a PDF file and the text to search")
 		}

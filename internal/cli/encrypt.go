@@ -100,7 +100,7 @@ var encryptCmd = &cobra.Command{
 		fmt.Printf("File %s successfully encrypted\n", inputPath)
 		fmt.Printf("Output file saved to %s\n", outputPath)
 	},
-	Args: func(cmd *cobra.Command, args []string) error {
+	Args: func(_ *cobra.Command, args []string) error {
 		if len(args) < 2 {
 			return errors.New("must provide the input file and the owner password")
 		}

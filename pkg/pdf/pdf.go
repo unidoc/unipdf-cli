@@ -7,7 +7,7 @@ package pdf
 
 import (
 	"fmt"
-	"io/ioutil"
+	"os"
 
 	unicommon "github.com/unidoc/unipdf/v3/common"
 	unilicense "github.com/unidoc/unipdf/v3/common/license"
@@ -16,7 +16,7 @@ import (
 // SetLicense sets the license for using the UniDoc library.
 func SetLicense(licensePath string, customer string) error {
 	// Read license file
-	content, err := ioutil.ReadFile(licensePath)
+	content, err := os.ReadFile(licensePath)
 	if err != nil {
 		return err
 	}

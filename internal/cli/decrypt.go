@@ -46,7 +46,7 @@ var decryptCmd = &cobra.Command{
 		fmt.Printf("Successfully decrypted %s\n", inputPath)
 		fmt.Printf("Output file saved to %s\n", outputPath)
 	},
-	Args: func(cmd *cobra.Command, args []string) error {
+	Args: func(_ *cobra.Command, args []string) error {
 		if len(args) < 1 {
 			return errors.New("must provide the PDF file to decrypt")
 		}

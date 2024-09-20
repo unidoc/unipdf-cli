@@ -26,7 +26,7 @@ var mergeCmd = &cobra.Command{
 	Long:                  mergeCmdDesc,
 	Example:               mergeCmdExample,
 	DisableFlagsInUseLine: true,
-	Run: func(cmd *cobra.Command, args []string) {
+	Run: func(_ *cobra.Command, args []string) {
 		outputPath := args[0]
 		inputPaths := args[1:]
 
@@ -37,7 +37,7 @@ var mergeCmd = &cobra.Command{
 		fmt.Printf("Successfully merged input files\n")
 		fmt.Printf("Output file saved to %s\n", outputPath)
 	},
-	Args: func(cmd *cobra.Command, args []string) error {
+	Args: func(_ *cobra.Command, args []string) error {
 		if len(args) < 3 {
 			return errors.New("must provide the output file and at least two input files")
 		}
