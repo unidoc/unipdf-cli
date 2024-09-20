@@ -27,7 +27,7 @@ var licenseInfoCmd = &cobra.Command{
 	Long:                  licenseInfoCmdDesc,
 	Example:               licenseInfoCmdExample,
 	DisableFlagsInUseLine: true,
-	Run: func(cmd *cobra.Command, args []string) {
+	Run: func(_ *cobra.Command, _ []string) {
 		licenseKey := os.Getenv("UNIDOC_LICENSE_API_KEY")
 		if licenseKey != "" {
 			// To get your free API key for metered license, sign up on: https://cloud.unidoc.io

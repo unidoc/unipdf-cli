@@ -373,7 +373,7 @@ func transformContentStreamToGrayscale(contents string, resources *unipdf.PdfPag
 	// Add handler for image related handling.  Note that inline images are completely stored with a ContentStreamInlineImage
 	// object as the parameter for BI.
 	processor.AddHandler(unicontent.HandlerConditionEnumOperand, "BI",
-		func(op *unicontent.ContentStreamOperation, gs unicontent.GraphicsState, resources *unipdf.PdfPageResources) error {
+		func(op *unicontent.ContentStreamOperation, _ unicontent.GraphicsState, resources *unipdf.PdfPageResources) error {
 			if len(op.Params) != 1 {
 				fmt.Printf("BI Error invalid number of params\n")
 				return errors.New("invalid number of parameters")
@@ -446,7 +446,7 @@ func transformContentStreamToGrayscale(contents string, resources *unipdf.PdfPag
 	processedXObjects := map[string]bool{} // Keep track of processed XObjects to avoid repetition.
 
 	processor.AddHandler(unicontent.HandlerConditionEnumOperand, "Do",
-		func(op *unicontent.ContentStreamOperation, gs unicontent.GraphicsState, resources *unipdf.PdfPageResources) error {
+		func(op *unicontent.ContentStreamOperation, _ unicontent.GraphicsState, resources *unipdf.PdfPageResources) error {
 			if len(op.Params) < 1 {
 				fmt.Printf("ERROR: Invalid number of params for Do object.\n")
 				return errors.New("range check")

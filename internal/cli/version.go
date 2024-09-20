@@ -22,7 +22,7 @@ var versionCmd = &cobra.Command{
 	Short:                 "Output version information and exit",
 	Example:               versionCmdExample,
 	DisableFlagsInUseLine: true,
-	Run: func(cmd *cobra.Command, args []string) {
+	Run: func(_ *cobra.Command, _ []string) {
 		version := pdf.Version()
 
 		fmt.Printf("%s CLI v%s\n", appName, appVersion)

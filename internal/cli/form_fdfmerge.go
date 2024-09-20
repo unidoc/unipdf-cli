@@ -95,7 +95,7 @@ var formFDFMergeCmd = &cobra.Command{
 			fmt.Println(strings.Repeat("-", 10))
 		}
 	},
-	Args: func(cmd *cobra.Command, args []string) error {
+	Args: func(_ *cobra.Command, args []string) error {
 		if len(args) < 2 {
 			return errors.New("must provide the FDF file and at least one input file")
 		}
