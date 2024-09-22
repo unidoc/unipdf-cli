@@ -59,7 +59,7 @@ var organizeCmd = &cobra.Command{
 		fmt.Printf("Successfully organized file %s\n", inputPath)
 		fmt.Printf("Output file saved to %s\n", outputPath)
 	},
-	Args: func(cmd *cobra.Command, args []string) error {
+	Args: func(_ *cobra.Command, args []string) error {
 		if len(args) < 2 {
 			return errors.New("must provide at least the input and output files")
 		}

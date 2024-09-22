@@ -104,7 +104,7 @@ func parsePageRangeUnsorted(pageRange string) ([]int, error) {
 		if lenIndices == 2 {
 			start, err := strconv.Atoi(indices[0])
 			if err != nil {
-				return nil, errors.New("invalid page number")
+				return nil, errors.New("invalid start page number")
 			}
 			if start < 1 {
 				return nil, errors.New("page range start must be greater than 0")
@@ -112,7 +112,7 @@ func parsePageRangeUnsorted(pageRange string) ([]int, error) {
 
 			end, err := strconv.Atoi(indices[1])
 			if err != nil {
-				return nil, errors.New("invalid page number")
+				return nil, errors.New("invalid end page number")
 			}
 			if end < 1 {
 				return nil, errors.New("page range end must be greater than 0")
