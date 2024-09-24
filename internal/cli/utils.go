@@ -39,7 +39,6 @@ func parsePageRange(pageRange string) ([]int, error) {
 		}
 
 		indices := strings.Split(rng, "-")
-
 		lenIndices := len(indices)
 		if lenIndices > 2 {
 			return nil, errors.New("invalid page range")
@@ -96,7 +95,6 @@ func parsePageRangeUnsorted(pageRange string) ([]int, error) {
 		}
 
 		indices := strings.Split(rng, "-")
-
 		lenIndices := len(indices)
 		if lenIndices > 2 {
 			return nil, errors.New("invalid page range")
