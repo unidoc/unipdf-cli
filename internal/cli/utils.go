@@ -39,7 +39,6 @@ func parsePageRange(pageRange string) ([]int, error) {
 		}
 
 		indices := strings.Split(rng, "-")
-
 		lenIndices := len(indices)
 		if lenIndices > 2 {
 			return nil, errors.New("invalid page range")
@@ -82,6 +81,61 @@ func parsePageRange(pageRange string) ([]int, error) {
 
 	pages = uniqueIntSlice(pages)
 	sort.Ints(pages)
+
+	return pages, nil
+}
+
+func parsePageRangeUnsorted(pageRange string) ([]int, error) {
+	var pages []int
+
+	rngs := strings.Split(removeSpaces(pageRange), ",")
+	for _, rng := range rngs {
+		if rng == "" {
+			continue
+		}
+
+		indices := strings.Split(rng, "-")
+		lenIndices := len(indices)
+		if lenIndices > 2 {
+			return nil, errors.New("invalid page range")
+		}
+		if lenIndices == 2 {
+			start, err := strconv.Atoi(indices[0])
+			if err != nil {
+				return nil, errors.New("invalid start page number")
+			}
+			if start < 1 {
+				return nil, errors.New("page range start must be greater than 0")
+			}
+
+			end, err := strconv.Atoi(indices[1])
+			if err != nil {
+				return nil, errors.New("invalid end page number")
+			}
+			if end < 1 {
+				return nil, errors.New("page range end must be greater than 0")
+			}
+
+			if start > end {
+				return nil, errors.New("page range end must be greater than the start")
+			}
+
+			for page := start; page <= end; page++ {
+				pages = append(pages, page)
+			}
+
+			continue
+		}
+
+		page, err := strconv.Atoi(indices[0])
+		if err != nil {
+			return nil, errors.New("invalid page number")
+		}
+
+		pages = append(pages, page)
+	}
+
+	pages = uniqueIntSlice(pages)
 
 	return pages, nil
 }
