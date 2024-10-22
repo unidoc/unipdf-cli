@@ -31,13 +31,13 @@ run:
   # Keep this false until we address all the non-test files and set baseline.
   tests: true
 
-  skip-files:
-    - ".*_test.go$"
-
-  skip-dirs:
+issues:
+  exclude-dirs:
     - testdata
 
-issues:
+  exclude-files:
+    - ".*_test.go$"
+
   exclude-rules:
     # We don't control the ciphers as we are just implementing standards.
     - linters:
