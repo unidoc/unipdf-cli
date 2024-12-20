@@ -2,7 +2,7 @@ module github.com/unidoc/unipdf-cli
 
 require (
 	github.com/spf13/cobra v0.0.3
-	github.com/unidoc/unipdf/v3 v3.63.0
+	github.com/unidoc/unipdf/v3 v3.64.0
 )
 
 require (
@@ -17,9 +17,7 @@ require (
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/spf13/pflag v1.0.3 // indirect
 	github.com/stretchr/testify v1.9.0 // indirect
-	github.com/trimmer-io/go-xmp v1.0.0 // indirect
 	github.com/unidoc/freetype v0.2.3 // indirect
-	github.com/unidoc/garabic v0.0.0-20220702200334-8c7cb25baa11 // indirect
 	github.com/unidoc/pkcs7 v0.2.0 // indirect
 	github.com/unidoc/timestamp v0.0.0-20200412005513-91597fd3793a // indirect
 	github.com/unidoc/unichart v0.3.0 // indirect
