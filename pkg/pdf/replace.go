@@ -191,7 +191,7 @@ func searchReplacePageText(page *model.PdfPage, searchText, replaceText string) 
 
 	processor := contentstream.NewContentStreamProcessor(*ops)
 	processor.AddHandler(contentstream.HandlerConditionEnumAllOperands, "",
-		func(op *contentstream.ContentStreamOperation, gs contentstream.GraphicsState, resources *model.PdfPageResources) error {
+		func(op *contentstream.ContentStreamOperation, _ contentstream.GraphicsState, resources *model.PdfPageResources) error {
 			switch op.Operand {
 			case `Tj`, `'`:
 				if len(op.Params) != 1 {
