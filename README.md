@@ -24,6 +24,7 @@ powered by the [UniPDF](https://github.com/unidoc/unipdf) PDF library.
 - [Extract text from PDF files](#extract-text)
 - [Extract images from PDF files](#extract-images)
 - [Search text in PDF files](#search)
+- [Replace text in PDF files](#replace)
 - [Export PDF form fields as JSON](#form-export)
 - [Fill PDF form fields from JSON file](#form-fill)
 - [Fill PDF form fields from FDF file](#fdf-merge)
@@ -36,7 +37,7 @@ powered by the [UniPDF](https://github.com/unidoc/unipdf) PDF library.
 
 ## Installation
 
-Minimum required Go version: 1.13. We officially support the 3 latest minor versions of Go, but it may work on earlier ones as well.
+Minimum required Go version: 1.18. We officially support the 3 latest minor versions of Go, but it may work on earlier ones as well.
 
 ```
 git clone git@github.com:unidoc/unipdf-cli.git
@@ -371,6 +372,26 @@ Examples:
 unipdf search input_file.pdf text_to_search
 unipdf search -p pass input_file.pdf text_to_search
 ```
+
+#### Replace
+
+Replace text in PDF files.
+
+```
+unipdf replace [FLAG]... INPUT_FILE TEXT
+
+Flags:
+-o, --output-file string   output file
+-r, - replace-text string   replacement text
+-p, --password string   PDF file password
+
+Examples:
+unipdf replace input_file.pdf text_to_search
+unipdf replace -o output_file.pdf input_file.pdf text_to_search
+unipdf replace -o output_file.pdf -r replacement_text input_file.pdf text_to_search
+unipdf replace -o output_file.pdf -r replacement_text -p pass input_file.pdf text_to_search
+```
+
 
 #### Form Export
 
