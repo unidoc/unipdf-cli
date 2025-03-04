@@ -37,7 +37,7 @@ powered by the [UniPDF](https://github.com/unidoc/unipdf) PDF library.
 
 ## Installation
 
-Minimum required Go version: 1.18. We officially support the 3 latest minor versions of Go, but it may work on earlier ones as well.
+Minimum required Go version: 1.20. We officially support the 5 latest minor versions of Go, but it may work on earlier ones as well.
 
 ```
 git clone git@github.com:unidoc/unipdf-cli.git
