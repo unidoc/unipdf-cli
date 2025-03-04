@@ -1,9 +1,7 @@
 linters:
   enable-all: false
   enable:
-    - exportloopref
     - staticcheck
-    - megacheck
     - govet
     - gosimple
     - nakedret
@@ -15,14 +13,10 @@ linters:
   disable:
     - ineffassign
     - errcheck
-    - varcheck
-    - deadcode
     - unused
-    - structcheck
     - lll
     - gofmt
     - goconst
-    - scopelint
 run:
   concurrency: 4
   timeout: 3m
