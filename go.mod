@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/spf13/cobra v1.9.1
-	github.com/unidoc/unipdf/v3 v3.67.0
+	github.com/unidoc/unipdf/v4 v4.0.0
 )
 
 require (
@@ -22,7 +22,7 @@ require (
 	github.com/unidoc/freetype v0.2.3 // indirect
 	github.com/unidoc/pkcs7 v0.2.0 // indirect
 	github.com/unidoc/timestamp v0.0.0-20200412005513-91597fd3793a // indirect
-	github.com/unidoc/unichart v0.3.0 // indirect
+	github.com/unidoc/unichart v0.4.0 // indirect
 	github.com/unidoc/unitype v0.5.1 // indirect
 	golang.org/x/crypto v0.33.0 // indirect
 	golang.org/x/image v0.24.0 // indirect

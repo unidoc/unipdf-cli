@@ -8,9 +8,9 @@ package pdf
 import (
 	"fmt"
 
-	unicommon "github.com/unidoc/unipdf/v3/common"
-	unicore "github.com/unidoc/unipdf/v3/core"
-	unipdf "github.com/unidoc/unipdf/v3/model"
+	unicommon "github.com/unidoc/unipdf/v4/common"
+	unicore "github.com/unidoc/unipdf/v4/core"
+	unipdf "github.com/unidoc/unipdf/v4/model"
 )
 
 // Merge merges all the PDF files specified by the inputPaths parameter and

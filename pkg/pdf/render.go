@@ -16,7 +16,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/unidoc/unipdf/v3/render"
+	"github.com/unidoc/unipdf/v4/render"
 )
 
 // RenderOpts represents the options used for rendering PDF pages to images.

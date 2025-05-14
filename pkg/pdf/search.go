@@ -8,7 +8,7 @@ package pdf
 import (
 	"strings"
 
-	uniextractor "github.com/unidoc/unipdf/v3/extractor"
+	uniextractor "github.com/unidoc/unipdf/v4/extractor"
 )
 
 // SearchResult contains information about a found search term inside a PDF page.

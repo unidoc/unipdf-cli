@@ -6,8 +6,8 @@
 package pdf
 
 import (
-	"github.com/unidoc/unipdf/v3/common"
-	unipdf "github.com/unidoc/unipdf/v3/model"
+	"github.com/unidoc/unipdf/v4/common"
+	unipdf "github.com/unidoc/unipdf/v4/model"
 )
 
 // Organize extracts the provided page list from PDF file specified by the
@@ -130,7 +130,7 @@ func Organize(inputPath, outputPath, password string, pages []int) error {
 		}
 	}
 
-        // Copy StructTreeRoot dictionary.
+	// Copy StructTreeRoot dictionary.
 	structTreeRoot, found := pdfReader.GetCatalogStructTreeRoot()
 	if found {
 		err := pdfWriter.SetCatalogStructTreeRoot(structTreeRoot)

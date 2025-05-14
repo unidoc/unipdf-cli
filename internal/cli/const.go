@@ -9,9 +9,9 @@ import (
 	"errors"
 	"strings"
 
-	unicommon "github.com/unidoc/unipdf/v3/common"
-	unisecurity "github.com/unidoc/unipdf/v3/core/security"
-	unipdf "github.com/unidoc/unipdf/v3/model"
+	unicommon "github.com/unidoc/unipdf/v4/common"
+	unisecurity "github.com/unidoc/unipdf/v4/core/security"
+	unipdf "github.com/unidoc/unipdf/v4/model"
 )
 
 var encryptAlgoMap = map[string]unipdf.EncryptionAlgorithm{

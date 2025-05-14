@@ -9,11 +9,11 @@ import (
 	"errors"
 	"fmt"
 
-	unicommon "github.com/unidoc/unipdf/v3/common"
-	unicontent "github.com/unidoc/unipdf/v3/contentstream"
-	unicore "github.com/unidoc/unipdf/v3/core"
-	unipdf "github.com/unidoc/unipdf/v3/model"
-	"github.com/unidoc/unipdf/v3/ps"
+	unicommon "github.com/unidoc/unipdf/v4/common"
+	unicontent "github.com/unidoc/unipdf/v4/contentstream"
+	unicore "github.com/unidoc/unipdf/v4/core"
+	unipdf "github.com/unidoc/unipdf/v4/model"
+	"github.com/unidoc/unipdf/v4/ps"
 )
 
 // Grayscale converts the pages of the PDF file specified by the inputPath
@@ -82,7 +82,7 @@ func convertPageToGrayscale(page *unipdf.PdfPage) error {
 	}
 	page.SetContentStreams([]string{string(grayContent)}, unicore.NewFlateEncoder())
 
-	//fmt.Printf("Processed contents: %s\n", grayContent)
+	// fmt.Printf("Processed contents: %s\n", grayContent)
 
 	return nil
 }
@@ -464,7 +464,7 @@ func transformContentStreamToGrayscale(contents string, resources *unipdf.PdfPag
 
 			_, xtype := resources.GetXObjectByName(*name)
 			if xtype == unipdf.XObjectTypeImage {
-				//fmt.Printf(" XObject Image: %s\n", *name)
+				// fmt.Printf(" XObject Image: %s\n", *name)
 
 				ximg, err := resources.GetXObjectImageByName(*name)
 				if err != nil {
@@ -520,7 +520,7 @@ func transformContentStreamToGrayscale(contents string, resources *unipdf.PdfPag
 					return err
 				}
 			} else if xtype == unipdf.XObjectTypeForm {
-				//fmt.Printf(" XObject Form: %s\n", *name)
+				// fmt.Printf(" XObject Form: %s\n", *name)
 
 				// Go through the XObject Form content stream.
 				xform, err := resources.GetXObjectFormByName(*name)
@@ -567,14 +567,14 @@ func transformContentStreamToGrayscale(contents string, resources *unipdf.PdfPag
 
 	// For debug purposes: (high level logging).
 	//
-	//fmt.Printf("=== Unprocessed - Full list\n")
-	//for idx, op := range operations {
+	// fmt.Printf("=== Unprocessed - Full list\n")
+	// for idx, op := range operations {
 	//	fmt.Printf("U. Operation %d: %s - Params: %v\n", idx+1, op.Operand, op.Params)
-	//}
-	//fmt.Printf("=== Processed - Full list\n")
-	//for idx, op := range *processedOperations {
+	// }
+	// fmt.Printf("=== Processed - Full list\n")
+	// for idx, op := range *processedOperations {
 	//	fmt.Printf("P. Operation %d: %s - Params: %v\n", idx+1, op.Operand, op.Params)
-	//}
+	// }
 
 	return processedOperations.Bytes(), nil
 }
