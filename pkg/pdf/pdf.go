@@ -9,8 +9,8 @@ import (
 	"fmt"
 	"os"
 
-	unicommon "github.com/unidoc/unipdf/v3/common"
-	unilicense "github.com/unidoc/unipdf/v3/common/license"
+	unicommon "github.com/unidoc/unipdf/v4/common"
+	unilicense "github.com/unidoc/unipdf/v4/common/license"
 )
 
 // SetLicense sets the license for using the UniDoc library.

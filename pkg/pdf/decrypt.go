@@ -5,7 +5,7 @@
 
 package pdf
 
-import unipdf "github.com/unidoc/unipdf/v3/model"
+import unipdf "github.com/unidoc/unipdf/v4/model"
 
 // Decrypt decrypts the PDF file specified by the inputPath parameter,
 // using the specified password and saves the result to the destination

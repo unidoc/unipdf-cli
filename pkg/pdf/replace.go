@@ -8,11 +8,11 @@ package pdf
 import (
 	"strings"
 
-	"github.com/unidoc/unipdf/v3/common"
-	"github.com/unidoc/unipdf/v3/contentstream"
-	"github.com/unidoc/unipdf/v3/core"
-	"github.com/unidoc/unipdf/v3/model"
-	unipdf "github.com/unidoc/unipdf/v3/model"
+	"github.com/unidoc/unipdf/v4/common"
+	"github.com/unidoc/unipdf/v4/contentstream"
+	"github.com/unidoc/unipdf/v4/core"
+	"github.com/unidoc/unipdf/v4/model"
+	unipdf "github.com/unidoc/unipdf/v4/model"
 )
 
 type textChunk struct {

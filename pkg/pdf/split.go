@@ -6,7 +6,7 @@
 package pdf
 
 import (
-	unipdf "github.com/unidoc/unipdf/v3/model"
+	unipdf "github.com/unidoc/unipdf/v4/model"
 )
 
 // Split extracts the provided page list from PDF file specified by the
