@@ -263,12 +263,12 @@ func generateOutputPath(inputPath, outputDir, nameSuffix string, overwrite bool)
 	return filepath.Join(dir, fmt.Sprintf("%s_%s.pdf", name, nameSuffix))
 }
 
-func clampInt(val, min, max int) int {
-	if val < min {
-		return min
+func clampInt(val, minimum, maximum int) int {
+	if val < minimum {
+		return minimum
 	}
-	if val > max {
-		return max
+	if val > maximum {
+		return maximum
 	}
 
 	return val
