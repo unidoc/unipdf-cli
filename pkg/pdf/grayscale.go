@@ -463,7 +463,8 @@ func transformContentStreamToGrayscale(contents string, resources *unipdf.PdfPag
 			processedXObjects[string(*name)] = true
 
 			_, xtype := resources.GetXObjectByName(*name)
-			if xtype == unipdf.XObjectTypeImage {
+			switch xtype {
+			case unipdf.XObjectTypeImage:
 				// fmt.Printf(" XObject Image: %s\n", *name)
 
 				ximg, err := resources.GetXObjectImageByName(*name)
@@ -519,7 +520,7 @@ func transformContentStreamToGrayscale(contents string, resources *unipdf.PdfPag
 					fmt.Printf("Failed setting x object: %v (%s)\n", err, string(*name))
 					return err
 				}
-			} else if xtype == unipdf.XObjectTypeForm {
+			case unipdf.XObjectTypeForm:
 				// fmt.Printf(" XObject Form: %s\n", *name)
 
 				// Go through the XObject Form content stream.

@@ -12,7 +12,6 @@ import (
 	"github.com/unidoc/unipdf/v5/contentstream"
 	"github.com/unidoc/unipdf/v5/core"
 	"github.com/unidoc/unipdf/v5/model"
-	unipdf "github.com/unidoc/unipdf/v5/model"
 )
 
 type textChunk struct {
@@ -108,7 +107,7 @@ func (tc *textChunks) replace(search, replacement string) {
 		currMatchIdx += matchIdx + 1
 	}
 
-	tc.text = strings.Replace(tc.text, search, replacement, -1)
+	tc.text = strings.ReplaceAll(tc.text, search, replacement)
 }
 
 // Replace searches the provided text in the PDF file specified by the inputPath
@@ -121,7 +120,7 @@ func Replace(inputPath, outputPath, text, replaceText, password string) error {
 		return err
 	}
 
-	w := unipdf.NewPdfWriter()
+	w := model.NewPdfWriter()
 
 	// Search specified text.
 	for i := 0; i < pages; i++ {

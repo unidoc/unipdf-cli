@@ -1,22 +1,4 @@
-linters:
-  enable-all: false
-  enable:
-    - staticcheck
-    - govet
-    - gosimple
-    - nakedret
-    - typecheck
-    - gosec
-    - revive
-    - unconvert
-    - misspell
-  disable:
-    - ineffassign
-    - errcheck
-    - unused
-    - lll
-    - gofmt
-    - goconst
+version: "2"
 run:
   concurrency: 4
   timeout: 3m
@@ -25,23 +7,49 @@ run:
   # Keep this false until we address all the non-test files and set baseline.
   tests: true
 
-issues:
-  exclude-dirs:
-    - testdata
-
-  exclude-files:
-    - ".*_test.go$"
-
-  exclude-rules:
-    # We don't control the ciphers as we are just implementing standards.
-    - linters:
-      - gosec
-      text: "weak cryptographic primitive"
-
-# output configuration options
 output:
-  format: colored-line-number
-  print-issued-lines: true
-  print-linter-name: true
-  uniq-by-line: true
+  formats:
+    text:
+      path: stdout
+      print-linter-name: true
+      print-issued-lines: true
   path-prefix: ""
+
+linters:
+  enable:
+    - staticcheck
+    - govet
+    - gosec
+    - misspell
+    - nakedret
+    - revive
+    - unconvert
+
+  disable:
+    - errcheck
+    - goconst
+    - ineffassign
+    - lll
+    - unused
+
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+
+    rules:
+      # We don't control the ciphers as we are just implementing standards.
+      - linters:
+          - gosec
+        text: "weak cryptographic primitive"
+
+    paths:
+      - testdata
+      - ".*_test.go$"
+
+formatters:
+  exclusions:
+    generated: lax
