@@ -30,8 +30,8 @@ var logLevelMap = map[string]unicommon.LogLevel{
 }
 
 var imageFormats = map[string]struct{}{
-	"jpeg": struct{}{},
-	"png":  struct{}{},
+	"jpeg": {},
+	"png":  {},
 }
 
 func parseEncryptionMode(mode string) (unipdf.EncryptionAlgorithm, error) {

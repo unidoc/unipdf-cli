@@ -21,7 +21,6 @@ jobs:
         uses: golangci/golangci-lint-action@v8
         with:
           version: v2.13.1
-          args: --issues-exit-code=1
 
   build:
     name: Build Go ${{ matrix.go }}

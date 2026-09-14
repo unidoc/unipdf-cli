@@ -2,9 +2,9 @@ version: "2"
 run:
   concurrency: 4
   timeout: 3m
-  # Keep exit code 0 until we fix all this, i.e. get the baseline set.
-  issues-exit-code: 0
-  # Keep this false until we address all the non-test files and set baseline.
+  # The baseline is clean, so lint findings fail the build.
+  issues-exit-code: 1
+  # Test files are also linted; see the exclusions below for the current scope.
   tests: true
 
 output:
@@ -51,5 +51,7 @@ linters:
       - ".*_test.go$"
 
 formatters:
+  enable:
+    - gofmt
   exclusions:
     generated: lax
