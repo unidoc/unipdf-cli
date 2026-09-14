@@ -6,7 +6,7 @@
 package pdf
 
 import (
-	unicreator "github.com/unidoc/unipdf/v4/creator"
+	unicreator "github.com/unidoc/unipdf/v5/creator"
 )
 
 // Watermark adds the watermark image specified by the watermarkPath parameter

@@ -16,7 +16,7 @@ import (
 	"strings"
 	"time"
 
-	uniextractor "github.com/unidoc/unipdf/v4/extractor"
+	uniextractor "github.com/unidoc/unipdf/v5/extractor"
 )
 
 // ExtractText returns all text content from the PDF file specified by the

@@ -6,8 +6,8 @@
 package pdf
 
 import (
-	"github.com/unidoc/unipdf/v4/common"
-	unipdf "github.com/unidoc/unipdf/v4/model"
+	"github.com/unidoc/unipdf/v5/common"
+	unipdf "github.com/unidoc/unipdf/v5/model"
 )
 
 // Organize extracts the provided page list from PDF file specified by the

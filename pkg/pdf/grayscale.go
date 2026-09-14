@@ -9,11 +9,11 @@ import (
 	"errors"
 	"fmt"
 
-	unicommon "github.com/unidoc/unipdf/v4/common"
-	unicontent "github.com/unidoc/unipdf/v4/contentstream"
-	unicore "github.com/unidoc/unipdf/v4/core"
-	unipdf "github.com/unidoc/unipdf/v4/model"
-	"github.com/unidoc/unipdf/v4/ps"
+	unicommon "github.com/unidoc/unipdf/v5/common"
+	unicontent "github.com/unidoc/unipdf/v5/contentstream"
+	unicore "github.com/unidoc/unipdf/v5/core"
+	unipdf "github.com/unidoc/unipdf/v5/model"
+	"github.com/unidoc/unipdf/v5/ps"
 )
 
 // Grayscale converts the pages of the PDF file specified by the inputPath
