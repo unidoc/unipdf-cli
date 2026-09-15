@@ -9,9 +9,9 @@ import (
 	"errors"
 	"strings"
 
-	unicommon "github.com/unidoc/unipdf/v4/common"
-	unisecurity "github.com/unidoc/unipdf/v4/core/security"
-	unipdf "github.com/unidoc/unipdf/v4/model"
+	unicommon "github.com/unidoc/unipdf/v5/common"
+	unisecurity "github.com/unidoc/unipdf/v5/core/security"
+	unipdf "github.com/unidoc/unipdf/v5/model"
 )
 
 var encryptAlgoMap = map[string]unipdf.EncryptionAlgorithm{
@@ -30,8 +30,8 @@ var logLevelMap = map[string]unicommon.LogLevel{
 }
 
 var imageFormats = map[string]struct{}{
-	"jpeg": struct{}{},
-	"png":  struct{}{},
+	"jpeg": {},
+	"png":  {},
 }
 
 func parseEncryptionMode(mode string) (unipdf.EncryptionAlgorithm, error) {

@@ -9,11 +9,11 @@ import (
 	"errors"
 	"fmt"
 
-	unicommon "github.com/unidoc/unipdf/v4/common"
-	unicontent "github.com/unidoc/unipdf/v4/contentstream"
-	unicore "github.com/unidoc/unipdf/v4/core"
-	unipdf "github.com/unidoc/unipdf/v4/model"
-	"github.com/unidoc/unipdf/v4/ps"
+	unicommon "github.com/unidoc/unipdf/v5/common"
+	unicontent "github.com/unidoc/unipdf/v5/contentstream"
+	unicore "github.com/unidoc/unipdf/v5/core"
+	unipdf "github.com/unidoc/unipdf/v5/model"
+	"github.com/unidoc/unipdf/v5/ps"
 )
 
 // Grayscale converts the pages of the PDF file specified by the inputPath
@@ -463,7 +463,8 @@ func transformContentStreamToGrayscale(contents string, resources *unipdf.PdfPag
 			processedXObjects[string(*name)] = true
 
 			_, xtype := resources.GetXObjectByName(*name)
-			if xtype == unipdf.XObjectTypeImage {
+			switch xtype {
+			case unipdf.XObjectTypeImage:
 				// fmt.Printf(" XObject Image: %s\n", *name)
 
 				ximg, err := resources.GetXObjectImageByName(*name)
@@ -519,7 +520,7 @@ func transformContentStreamToGrayscale(contents string, resources *unipdf.PdfPag
 					fmt.Printf("Failed setting x object: %v (%s)\n", err, string(*name))
 					return err
 				}
-			} else if xtype == unipdf.XObjectTypeForm {
+			case unipdf.XObjectTypeForm:
 				// fmt.Printf(" XObject Form: %s\n", *name)
 
 				// Go through the XObject Form content stream.

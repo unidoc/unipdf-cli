@@ -6,7 +6,7 @@
 package pdf
 
 import (
-	unipdf "github.com/unidoc/unipdf/v4/model"
+	unipdf "github.com/unidoc/unipdf/v5/model"
 )
 
 // Passwd changes the owner and user password of an encrypted PDF file.

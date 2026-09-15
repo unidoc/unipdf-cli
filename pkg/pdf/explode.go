@@ -12,7 +12,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	unipdf "github.com/unidoc/unipdf/v4/model"
+	unipdf "github.com/unidoc/unipdf/v5/model"
 )
 
 // Explode splits the PDF file specified by the inputPath parameter into single

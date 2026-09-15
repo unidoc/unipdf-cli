@@ -6,8 +6,8 @@
 package pdf
 
 import (
-	unicommon "github.com/unidoc/unipdf/v4/common"
-	unilicense "github.com/unidoc/unipdf/v4/common/license"
+	unicommon "github.com/unidoc/unipdf/v5/common"
+	unilicense "github.com/unidoc/unipdf/v5/common/license"
 )
 
 // VersionInfo contains version and license information
